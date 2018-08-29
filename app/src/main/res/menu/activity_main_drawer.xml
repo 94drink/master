@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/drinkwater"
+            android:icon="@drawable/nav_drink"
+            android:title="@string/drinkwater" />
+        <item
+            android:id="@+id/drinklog"
+            android:icon="@drawable/nav_log"
+            android:title="@string/drinklog" />
+        <item
+            android:id="@+id/drinkreport"
+            android:icon="@drawable/nav_report"
+            android:title="@string/drinkreport" />
+        <item
+            android:id="@+id/weightreport"
+            android:icon="@drawable/nav_weight"
+            android:title="@string/weightreport" />
+    </group>
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/reminders"
+            android:icon="@drawable/nav_reminders"
+            android:title="@string/reminders" />
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/nav_settings"
+            android:title="@string/nav_settings" />
+        <item
+            android:id="@+id/widgets"
+            android:icon="@drawable/nav_widgets"
+            android:title="@string/widgets" />
+        <item
+            android:id="@+id/nav_share"
+            android:icon="@drawable/nav_share"
+            android:title="@string/nav_share" />
+    </group>
+
+</menu>

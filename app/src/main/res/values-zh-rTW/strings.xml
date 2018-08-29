@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">喝就對了</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">設定</string>
+
+    <string name="drinkwater">喝水</string>
+    <string name="drinklog">喝水紀錄</string>
+    <string name="drinkreport">喝水圖表</string>
+    <string name="weightreport">體重圖表</string>
+    <string name="reminders">通知設置</string>
+    <string name="nav_settings">基本設置</string>
+    <string name="widgets">小工具</string>
+    <string name="nav_share">分享給朋友</string>
+    <string name="backup">備份及恢復</string>
+</resources>
