@@ -26,7 +26,7 @@ public class WaterDbProvider extends ContentProvider {
     private static HashMap<String, String> WaterMap;
 //    private static HashMap<String, String> WeightMap;
 
-    public static final String PROVIDER_NAME = "com.example.gautham.dr.database.WaterProvider";
+    public static final String PROVIDER_NAME = "tw.com.justdrink.database.WaterProvider";
 
     public static final String URL = "content://" + PROVIDER_NAME + "/WaterTable";
 //    public static final String URL_WEIGHT = "content://" + PROVIDER_NAME + "/WeightTable";

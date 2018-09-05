@@ -1,8 +1,8 @@
 package tw.com.justdrink.main;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import tw.com.justdrink.R;
 import tw.com.justdrink.database.WaterBottlesData;
@@ -32,10 +33,11 @@ import java.util.TimeZone;
 
 public class ContentMainFragment extends Fragment {
 
-    public FloatingActionButton floatingActionButtonAdd, floatingActionButtonSelect;
+    public FloatingActionButton fabAdd, fabSelect;
     String time, date;
     TextView drinked, goal;
-    Button btn;
+    Button waterSetting;
+    Context context;
     public static MediaPlayer mp;
 
     static ProgressBar progressBar;
@@ -44,8 +46,6 @@ public class ContentMainFragment extends Fragment {
     public static String weight_flie = "weight_unit";
     SharedPreferences sharedDataWeightUnit, sharedDataWeight;
     String total_weight, prefs_unit;
-
-    Cursor weight_cursor;
     int drink_target;
 
     @Override
@@ -64,18 +64,13 @@ public class ContentMainFragment extends Fragment {
 
         drinked = (TextView) view.findViewById(R.id.drinked);
         goal = (TextView) view.findViewById(R.id.goal);
-        btn = (Button) view.findViewById(R.id.water_settings);
+        waterSetting = (Button) view.findViewById(R.id.water_setting);
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
 
         final FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         Fragment fragment = new BottleGrid();
         fragmentTransaction.replace(R.id.bottle_container, fragment).commit();
-
-//        Cursor c1 = getActivity().getContentResolver().query(WaterDbProvider.CONTENT_WEIGHT_URI, null, null, null, null);
-//        int weight_data = getWeight(c1);
-//        Log.e("WEIGHT", weight_data + "");
-//        drink_target= calTarget(weight_data);
 
         sharedDataWeight = getActivity().getSharedPreferences(weight, 0);
         String weight_prefs = sharedDataWeight.getString("weight", 0 + "");
@@ -91,26 +86,33 @@ public class ContentMainFragment extends Fragment {
         sharedDataWeight = getActivity().getSharedPreferences(weight, 0);
         total_weight = sharedDataWeight.getString("weight", "00");
 
-        btn.setOnClickListener(new View.OnClickListener() {
+        // 修改喝水目標
+        waterSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 WaterSettings waterSettings = new WaterSettings();
                 waterSettings.show(fragmentManager, "Water");
             }
         });
-        floatingActionButtonSelect = (FloatingActionButton) view.findViewById(R.id.fab_select);
-        floatingActionButtonAdd = (FloatingActionButton) view.findViewById(R.id.fab_add);
-        floatingActionButtonSelect.setOnClickListener(new View.OnClickListener() {
+
+        // 選擇水杯
+        fabSelect = (FloatingActionButton) view.findViewById(R.id.fab_select);
+        fabSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(context, fabSelect.toString(), Toast.LENGTH_LONG).show();
                 SelectGlass selectGlass = new SelectGlass();
                 selectGlass.show(fragmentManager, "Glasses");
             }
         });
-        floatingActionButtonSelect.setImageResource(WaterBottlesData.getData().get(SelectGlass.position).imageId);
-        floatingActionButtonAdd.setOnClickListener(new View.OnClickListener() {
+        fabSelect.setImageResource(WaterBottlesData.getData().get(SelectGlass.position).imageId);
+
+        // 新增水杯(直接使用上次選擇的杯子)
+        fabAdd = (FloatingActionButton) view.findViewById(R.id.fab_add);
+        fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(context, fabAdd.toString(), Toast.LENGTH_LONG).show();
                 mp.start();
                 ContentValues values = new ContentValues();
                 values.clear();
@@ -166,21 +168,6 @@ public class ContentMainFragment extends Fragment {
         return data_y;
 
     }
-
-   /* public int getWeight(Cursor c1) {
-        weight_cursor = c1;
-        if (weight_cursor.getCount() > 0) {
-            weight_array = new int[weight_cursor.getCount() + 1];
-            weight_cursor.moveToFirst();
-            int i = 0;
-            while (!weight_cursor.isAfterLast()) {
-                weight_array[i] = weight_cursor.getColumnIndex(WaterDatabase.KEY_WEIGHT);
-                i++;
-                weight_cursor.moveToNext();
-            }
-        }
-        return weight_array[0];
-    }*/
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

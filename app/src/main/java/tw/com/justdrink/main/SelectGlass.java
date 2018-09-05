@@ -35,9 +35,6 @@ import tw.com.justdrink.database.WaterBottlesData;
 import tw.com.justdrink.database.WaterDatabase;
 import tw.com.justdrink.database.WaterDbProvider;
 
-/**
- * Created by GAUTHAM on 4/12/2016.
- */
 
 public class SelectGlass extends DialogFragment {
 
