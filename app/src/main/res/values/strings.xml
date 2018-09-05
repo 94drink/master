@@ -12,6 +12,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="weight" />
     <!--<string name="nav_share">Share</string>-->
     <!--<string name="widgets">Widgets</string>-->
     <!--<string name="backup">Backup and Restore</string>-->
