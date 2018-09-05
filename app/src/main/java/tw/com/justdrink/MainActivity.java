@@ -5,6 +5,7 @@ import android.support.design.internal.NavigationMenuView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -18,13 +19,17 @@ import android.widget.TextView;
 
 
 public class MainActivity extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener {
+    //先把會用到的變數宣告出來，方便在後面各個生命週期或方法中使用
     private DrawerLayout drawerLayout;
-    private MenuItem navItem;
     private NavigationView navigationView;
     private Toolbar toolbar;
     private ActionBarDrawerToggle toggle;
     private CharSequence mTitle;
     private TextView toolbar_text;
+    private FloatingActionButton fab;
+    private FragmentManager fragmentManager;
+    private FragmentTransaction fragmentTransaction;
+    private DrawerLayout drawer;
 
 //    private void disableNavigationViewScrollbars(NavigationView navigationView) {
 //        if (navigationView != null) {
@@ -45,11 +50,12 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        //實現TOOLBAR上層
+         //重要指令!!setSupportActionBar必須放在這裡，如果註解掉或是
+         //移到下面的區塊就可能導致Toolbar右邊的漢堡條無法作用
         setSupportActionBar(toolbar);
 
-     //fab
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+     //fab按鈕宣告及監聽
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override//MAIL點擊觸發
             public void onClick(View view) {
@@ -61,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
     // disableNavigationViewScrollbars(navigationView);
 
+     //整合navigation跟Toolbar功能，就是按漢堡條抽屜會拉出來，點選單抽屜會收起來
      toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
          @Override
          public void onDrawerOpened(View drawerView) {
@@ -75,14 +82,13 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
          }
      };
 
+     //判斷是否剛開啟系統，若是的話就導向指定頁面，否則就留在原本頁面
      if (savedInstanceState == null) {
          navigationView.getMenu().performIdentifierAction(R.id.drinkwater, 0);
-         //toolbar_text.setText(R.string.drinkwater);
+         toolbar_text.setText(R.string.drinkwater);
      }
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
     }
 
 //    @Override
@@ -95,6 +101,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 //        }
 //    }
 
+    //建立Toolbar的menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -102,6 +109,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         return true;
     }
 
+    //監聽Toolbar被點選的動作
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -116,14 +124,14 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         return super.onOptionsItemSelected(item);
     }
 
+    //監聽Navigation被點選的動作
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        navItem = item;
-        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
         if (id == R.id.drinkwater) {
             DrinkWater fragment = new DrinkWater();
             toolbar_text.setText(R.string.drinkwater);
@@ -166,19 +174,9 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
         }
 
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
-    @Override
-    public void setTitle(CharSequence title) {
-        mTitle = title;
-        getActionBar().setTitle(mTitle);
-    }
-//    public void setActionbarTitle(String title){
-//        toolbar.setTitle(title);
-//        (MainActivity)g
-//    }
 }
