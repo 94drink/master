@@ -24,29 +24,19 @@ public class WaterDbProvider extends ContentProvider {
     WaterDatabase waterDatabase;
 
     private static HashMap<String, String> WaterMap;
-//    private static HashMap<String, String> WeightMap;
 
     public static final String PROVIDER_NAME = "tw.com.justdrink.database.WaterProvider";
-
-    public static final String URL = "content://" + PROVIDER_NAME + "/WaterTable";
-//    public static final String URL_WEIGHT = "content://" + PROVIDER_NAME + "/WeightTable";
-
+    public static final String URL = "content://" + PROVIDER_NAME + "/Water";
     public static final Uri CONTENT_URI = Uri.parse(URL);
-//    public static final Uri CONTENT_WEIGHT_URI = Uri.parse(URL_WEIGHT);
 
     private static final int Water = 1;
     private static final int Water_Id = 2;
-//    private static final int Weight = 3;
-//    private static final int Weight_Id = 4;
-
     private static final UriMatcher uriMatcher;
 
     static {
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-        uriMatcher.addURI(PROVIDER_NAME, "WaterTable", Water);
-        uriMatcher.addURI(PROVIDER_NAME, "WaterTable/#", Water);
-//        uriMatcher.addURI(PROVIDER_NAME, "WeightTable", Weight);
-//        uriMatcher.addURI(PROVIDER_NAME, "WeightTable/#", Weight);
+        uriMatcher.addURI(PROVIDER_NAME, "Water", Water);
+        uriMatcher.addURI(PROVIDER_NAME, "Water/#", Water);
     }
 
     public WaterDbProvider() {
@@ -70,7 +60,6 @@ public class WaterDbProvider extends ContentProvider {
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
         int uriType = uriMatcher.match(uri);
         qb.setTables(WATER_TABLE);
-//        qb.setTables(WEIGHT_TABLE);
         switch (uriType) {
             case Water:
                 qb.setProjectionMap(WaterMap);
@@ -78,12 +67,6 @@ public class WaterDbProvider extends ContentProvider {
             case Water_Id:
                 qb.appendWhere(WaterDatabase.KEY_ID + "=" + uri.getLastPathSegment());
                 break;
-           /* case Weight:
-                qb.setProjectionMap(WeightMap);
-                break;
-            case Weight_Id:
-                qb.appendWhere(WaterDatabase.KEY_ID + "=" + uri.getLastPathSegment());
-                break;*/
             default:
                 throw new IllegalArgumentException("Invalid URI: " + uri);
         }
@@ -101,9 +84,9 @@ public class WaterDbProvider extends ContentProvider {
 
         switch (uriMatcher.match(uri)) {
             case Water:
-                return "vnd.android.cursor.dir/WaterTable";
+                return "vnd.android.cursor.dir/Water";
             case Water_Id:
-                return "vnd.android.cursor.item/WeightTable/#";
+                return "vnd.android.cursor.item/Water/#";
             default:
                 throw new IllegalArgumentException("Invalid URI: " + uri);
         }
@@ -121,13 +104,6 @@ public class WaterDbProvider extends ContentProvider {
                     getContext().getContentResolver().notifyChange(_uri, null);
                 }
                 break;
-            /*case Weight:
-                long rowID1 = sqLiteDatabase.insert(WEIGHT_TABLE, null, values);
-                if (rowID1 > 0) {
-                    _uri = ContentUris.withAppendedId(CONTENT_WEIGHT_URI, rowID1);
-                    getContext().getContentResolver().notifyChange(_uri, null);
-                }
-                break;*/
             default:
                 throw new SQLException("Error inserting into table: " + WATER_TABLE);
         }

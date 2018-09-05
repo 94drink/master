@@ -7,18 +7,14 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class WaterDatabase extends SQLiteOpenHelper {
 
-
     // Database Version
     static final int DATABASE_VERSION = 1;
 
     // Database Name
-    static final String DATABASE_NAME = "WATER_DATABASE";
+    static final String DATABASE_NAME = "JustDrink";
 
     // Contacts table name
-    static final String WATER_TABLE = "WaterTable";
-
-    //weight table name
-    static final String WEIGHT_TABLE = "WeightTable";
+    static final String WATER_TABLE = "Water";
 
     // Contacts Table Columns names
     public static final String KEY_ID = "_id";
@@ -26,13 +22,9 @@ public class WaterDatabase extends SQLiteOpenHelper {
     public static final String KEY_DATE = "Current_date";
     public static final String KEY_TIME = "Current_time";
 
-    //    Weight table columns
-    public static final String KEY_WEIGHT = "weight";
-
     public WaterDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
-
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -43,7 +35,6 @@ public class WaterDatabase extends SQLiteOpenHelper {
                 + KEY_DATE + " text, "
                 + KEY_TIME + " text "
                 + " ) ";
-
         db.execSQL(sql);
     }
 

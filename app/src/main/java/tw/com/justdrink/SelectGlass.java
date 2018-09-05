@@ -1,4 +1,4 @@
-package tw.com.justdrink.main;
+package tw.com.justdrink;
 
 import android.app.Dialog;
 import android.content.ContentValues;
@@ -29,11 +29,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.TimeZone;
 
-import tw.com.justdrink.R;
 import tw.com.justdrink.database.Information;
 import tw.com.justdrink.database.WaterBottlesData;
 import tw.com.justdrink.database.WaterDatabase;
 import tw.com.justdrink.database.WaterDbProvider;
+import tw.com.justdrink.main.BottleGrid;
 
 
 public class SelectGlass extends DialogFragment {
@@ -118,7 +118,7 @@ public class SelectGlass extends DialogFragment {
                     public void onClick(View v) {
                         Toast.makeText(v.getContext(), getPosition() + "", Toast.LENGTH_SHORT).show();
 
-                        ContentMainFragment.mp.start();
+                        Drinklog.mp.start();
 
                         //Database code
                         WaterDatabase wdb = new WaterDatabase(context);
@@ -129,7 +129,7 @@ public class SelectGlass extends DialogFragment {
                         String time = sdf.format(c.getTime());
                         String date = df.format(c.getTime());
                         position = getPosition();
-                        ContentMainFragment.updateProgress(position);
+                        Drinklog.updateProgress(position);
                         ContentValues values = new ContentValues();
                         values.clear();
                         values.put(WaterDatabase.KEY_POS, position);
