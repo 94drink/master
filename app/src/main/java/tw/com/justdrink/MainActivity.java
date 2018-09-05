@@ -1,6 +1,5 @@
 package tw.com.justdrink;
 
-import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.design.internal.NavigationMenuView;
 import android.support.design.widget.FloatingActionButton;
@@ -15,7 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.TextView;
 
 
 public class MainActivity extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener {
@@ -25,27 +24,31 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     private Toolbar toolbar;
     private ActionBarDrawerToggle toggle;
     private CharSequence mTitle;
+    private TextView toolbar_text;
 
-    private void disableNavigationViewScrollbars(NavigationView navigationView) {
-        if (navigationView != null) {
-            NavigationMenuView navigationMenuView = (NavigationMenuView) navigationView.getChildAt(0);
-            if (navigationMenuView != null) {
-                navigationMenuView.setVerticalScrollBarEnabled(false);
-            }
-        }
-    }
+//    private void disableNavigationViewScrollbars(NavigationView navigationView) {
+//        if (navigationView != null) {
+//            NavigationMenuView navigationMenuView = (NavigationMenuView) navigationView.getChildAt(0);
+//            if (navigationMenuView != null) {
+//                navigationMenuView.setVerticalScrollBarEnabled(false);
+//            }
+//        }
+//    }
 
  @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //實現TOOLBAR上層
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar_text = (TextView)findViewById(R.id.tbtext);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        //實現TOOLBAR上層
+        setSupportActionBar(toolbar);
 
+     //fab
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override//MAIL點擊觸發
@@ -55,9 +58,8 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
             }
         });
 
-//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-//                this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-     disableNavigationViewScrollbars(navigationView);
+
+    // disableNavigationViewScrollbars(navigationView);
 
      toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
          @Override
@@ -75,25 +77,23 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
      if (savedInstanceState == null) {
          navigationView.getMenu().performIdentifierAction(R.id.drinkwater, 0);
-         toolbar.setTitle(R.string.drinkwater);
+         //toolbar_text.setText(R.string.drinkwater);
      }
-
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
-        setSupportActionBar(toolbar);
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
+//    @Override
+//    public void onBackPressed() {
+//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        if (drawer.isDrawerOpen(GravityCompat.START)) {
+//            drawer.closeDrawer(GravityCompat.START);
+//        } else {
+//            super.onBackPressed();
+//        }
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -126,37 +126,37 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         if (id == R.id.drinkwater) {
             DrinkWater fragment = new DrinkWater();
-            //toolbar.setTitle(R.string.drinkwater);
+            toolbar_text.setText(R.string.drinkwater);
             fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
             drawerLayout.closeDrawers();
             return true;
         } else if (id == R.id.drinklog) {
+            toolbar_text.setText(R.string.drinklog);
             Drinklog fragment = new Drinklog();
-            //toolbar.setTitle(R.string.drinklog);
             fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
             drawerLayout.closeDrawers();
             return true;
         } else if (id == R.id.drinkreport) {
             Drinkreport fragment = new Drinkreport();
-            //toolbar.setTitle(R.string.drinkreport);
+            toolbar_text.setText(R.string.drinkreport);
             fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
             drawerLayout.closeDrawers();
             return true;
         } else if (id == R.id.weightreport) {
             Weightreport fragment = new Weightreport();
-            //toolbar.setTitle(R.string.weightreport);
+            toolbar_text.setText(R.string.weightreport);
             fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
             drawerLayout.closeDrawers();
             return true;
         } else if (id == R.id.reminders) {
             Reminders fragment = new Reminders();
-            //toolbar.setTitle(R.string.reminders);
+            toolbar_text.setText(R.string.reminders);
             fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
             drawerLayout.closeDrawers();
             return true;
         } else if (id == R.id.nav_settings) {
             Setting fragment = new Setting();
-            //toolbar.setTitle(R.string.nav_settings);
+            toolbar_text.setText(R.string.nav_settings);
             fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
             drawerLayout.closeDrawers();
             return true;
