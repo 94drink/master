@@ -10,6 +10,12 @@
     <string name="reminders">Reminders</string>
     <string name="nav_settings">Settings</string>
 
+    <!--設定區-->
+    <string name="set_reminder">Reminder</string>
+    <string name="set_cup_size">Customize cup Size</string>
+    <string name="set_weight_goal">Weight and Goal</string>
+    <string name="set_units_format">Units and Format</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <!--<string name="nav_share">Share</string>-->
