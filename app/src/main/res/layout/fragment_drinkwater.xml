@@ -112,5 +112,6 @@
         android:layout_marginRight="@dimen/fab_margin"
         android:layout_marginBottom="10dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        app:backgroundTint="@color/greenyellow"/>
 </RelativeLayout>

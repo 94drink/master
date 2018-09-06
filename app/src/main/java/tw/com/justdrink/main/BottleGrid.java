@@ -60,24 +60,16 @@ public class BottleGrid extends Fragment {
         gridView.invalidateViews();
         gridView.setSelection(gridView.getAdapter().getCount() - 1);
 
-
-        final FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
+        final FragmentManager fm = getFragmentManager();
         gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 pos = position;
-                Log.e("POSITION", pos + "");
                 Bottle bottle = new Bottle();
-                bottle.show(fragmentManager, "Bottle");
+                bottle.show(fm, "Bottle");
                 return true;
             }
         });
-
-        Log.e("FORMATED_DATE", date + "");
-        Log.e("FORMATED_DATE", time + "");
-
         return view;
     }
 
@@ -91,8 +83,8 @@ public class BottleGrid extends Fragment {
             getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
             setCancelable(false);
             View view = inflater.inflate(R.layout.bottle, container, false);
-            ok = (Button) view.findViewById(R.id.button);
-            cancel = (Button) view.findViewById(R.id.button2);
+            ok = (Button) view.findViewById(R.id.ok);
+            cancel = (Button) view.findViewById(R.id.cancel);
             delete = (Button) view.findViewById(R.id.delete);
             cancel.setOnClickListener(this);
             delete.setOnClickListener(this);
@@ -109,16 +101,15 @@ public class BottleGrid extends Fragment {
                     getActivity().getContentResolver().delete(WaterDbProvider.CONTENT_URI,
                             WaterDatabase.KEY_ID + " = ?", selectionArgs);
                     Fragment fragment = new BottleGrid();
-                    FragmentManager fragmentManager = getFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.bottle_container, fragment).addToBackStack(null).commit();
+                    FragmentManager fm = getFragmentManager();
+                    FragmentTransaction ft = fm.beginTransaction();
+                    ft.replace(R.id.bottle_container, fragment).addToBackStack(null).commit();
                     getDialog().dismiss();
                     break;
-                case R.id.button2:
+                case R.id.cancel:
                     getDialog().dismiss();
                     break;
-                case R.id.button:
-
+                case R.id.ok:
                     break;
             }
         }

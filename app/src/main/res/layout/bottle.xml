@@ -34,7 +34,7 @@
         android:layout_marginTop="@dimen/activity_horizontal_margin"
         android:textColor="@color/colorPrimary"
         style="@style/Widget.AppCompat.Button.Borderless"
-        android:id="@+id/button"
+        android:id="@+id/ok"
         android:layout_below="@+id/editText"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
@@ -46,10 +46,10 @@
         android:textColor="@color/colorPrimary"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_marginTop="@dimen/activity_horizontal_margin"
-        android:id="@+id/button2"
+        android:id="@+id/cancel"
         android:layout_below="@+id/editText"
-        android:layout_toStartOf="@+id/button"
-        android:layout_toLeftOf="@+id/button"/>
+        android:layout_toStartOf="@+id/ok"
+        android:layout_toLeftOf="@+id/ok"/>
 
     <Button
         android:id="@+id/delete"
@@ -60,5 +60,5 @@
         android:textColor="@color/colorPrimary"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_below="@+id/editText"
-        android:layout_toLeftOf="@+id/button2"/>
+        android:layout_toLeftOf="@+id/cancel"/>
 </RelativeLayout>
