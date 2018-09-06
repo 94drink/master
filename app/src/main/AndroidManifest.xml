@@ -18,6 +18,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:name="tw.com.justdrink.database.WaterDbProvider"
+            android:authorities="tw.com.justdrink.database.WaterProvider"
+            android:exported="true" />
     </application>
 
 </manifest>
