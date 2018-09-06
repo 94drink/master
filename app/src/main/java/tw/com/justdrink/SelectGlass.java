@@ -116,10 +116,6 @@ public class SelectGlass extends DialogFragment {
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(v.getContext(), getPosition() + "", Toast.LENGTH_SHORT).show();
-
-                        Drinklog.mp.start();
-
                         //Database code
                         WaterDatabase wdb = new WaterDatabase(context);
                         Calendar c = Calendar.getInstance();
@@ -129,7 +125,7 @@ public class SelectGlass extends DialogFragment {
                         String time = sdf.format(c.getTime());
                         String date = df.format(c.getTime());
                         position = getPosition();
-                        Drinklog.updateProgress(position);
+                        DrinkWater.updateProgress(position);
                         ContentValues values = new ContentValues();
                         values.clear();
                         values.put(WaterDatabase.KEY_POS, position);

@@ -27,9 +27,5 @@
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
-    <!--
-    <include layout="@layout/content_main" />
-    android:layout_height="?attr/actionBarSize"
-    -->
 
 </android.support.design.widget.CoordinatorLayout>
