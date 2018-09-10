@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
             drawerLayout.closeDrawers();
             return true;
         } else if (id == R.id.drinkreport) {
-            Drinkreport fragment = new Drinkreport();
+            DrinkReport fragment = new DrinkReport();
             toolbar_text.setText(R.string.drinkreport);
             fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
             drawerLayout.closeDrawers();
