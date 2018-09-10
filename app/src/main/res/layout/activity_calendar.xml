@@ -9,7 +9,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="@color/colorPrimaryDark"
     android:orientation="vertical"
-    tools:context="com.a000webhost.marklcyndi01.calendarviewangga.CalendarActivity"
+    tools:context="tw.com.justdrink.calendar.CalendarActivity"
     android:weightSum="1">
 
     <LinearLayout

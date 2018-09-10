@@ -6,13 +6,30 @@
 
     <string name="action_settings">設定</string>
 
+    <!--menu/activity_main_drawer-->
     <string name="drinkwater">喝水</string>
     <string name="drinklog">喝水紀錄</string>
     <string name="drinkreport">喝水圖表</string>
     <string name="weightreport">體重圖表</string>
     <string name="reminders">通知設置</string>
     <string name="nav_settings">基本設置</string>
-    <!--<string name="widgets">小工具</string>-->
-    <!--<string name="nav_share">分享給朋友</string>-->
-    <!--<string name="backup">備份及恢復</string>-->
+    <!--
+    <string name="widgets">小工具</string>
+    <string name="nav_share">分享給朋友</string>
+    <string name="backup">備份及恢復</string>
+    -->
+
+    <!--layout/fragment_drinkwater-->
+    <string name="drink_target">喝水目標</string>
+    <string name="drinked">500</string>
+    <string name="goal">/3000</string>
+
+    <!--layout/water_settings_list-->
+    <string-array name="water_settings_array">
+        <item>體重</item>
+        <item>自訂增量</item>
+        <item>天氣</item>
+        <item>運動</item>
+        <item>總計：</item>
+    </string-array>
 </resources>
