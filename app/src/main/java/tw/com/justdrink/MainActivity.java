@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
                 toolbar_text.setText(R.string.drinklog);
                 break;
             case R.id.drinkreport:
-                fragment = new Drinkreport();
+                fragment = new DrinkReport();
                 toolbar_text.setText(R.string.drinkreport);
                 break;
             case R.id.weightreport:
