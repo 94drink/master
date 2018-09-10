@@ -12,7 +12,17 @@
     <string name="weightreport">體重圖表</string>
     <string name="reminders">通知設置</string>
     <string name="nav_settings">基本設置</string>
+    <string name="drink_target">喝水目標</string>
+    <string name="drinked">500</string>
+    <string name="goal">/3000</string>
     <!--<string name="widgets">小工具</string>-->
     <!--<string name="nav_share">分享給朋友</string>-->
     <!--<string name="backup">備份及恢復</string>-->
+    <string-array name="water_settings_array">
+        <item>體重</item>
+        <item>自訂增量</item>
+        <item>天氣</item>
+        <item>運動</item>
+        <item>總計：</item>
+    </string-array>
 </resources>
