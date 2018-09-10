@@ -31,7 +31,6 @@ import tw.com.justdrink.database.Information;
 import tw.com.justdrink.database.WaterBottlesData;
 import tw.com.justdrink.database.WaterDatabase;
 import tw.com.justdrink.database.WaterDbProvider;
-import tw.com.justdrink.main.BottleGrid;
 
 
 public class SelectGlass extends DialogFragment {

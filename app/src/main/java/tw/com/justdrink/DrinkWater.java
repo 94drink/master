@@ -24,8 +24,6 @@ import java.util.TimeZone;
 import tw.com.justdrink.database.WaterBottlesData;
 import tw.com.justdrink.database.WaterDatabase;
 import tw.com.justdrink.database.WaterDbProvider;
-import tw.com.justdrink.main.BottleGrid;
-import tw.com.justdrink.main.WaterSettings;
 
 
 public class DrinkWater extends Fragment {
