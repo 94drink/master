@@ -13,14 +13,16 @@ public class WaterDatabase extends SQLiteOpenHelper {
     // Database Name
     static final String DATABASE_NAME = "JustDrink";
 
-    // Contacts table name
+    // Table name
     static final String WATER_TABLE = "Water";
+    static final String WEIGHT_TABLE = "Weight";
 
-    // Contacts Table Columns names
+    // Table Columns names
     public static final String KEY_ID = "_id";
     public static final String KEY_POS = "position";
-    public static final String KEY_DATE = "Current_date";
-    public static final String KEY_TIME = "Current_time";
+    public static final String KEY_DATE = "date";
+    public static final String KEY_TIME = "time";
+    public static final String KEY_WEIGHT = "weight";
 
     public WaterDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -29,18 +31,28 @@ public class WaterDatabase extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        String sql = "create table " + WATER_TABLE + " ( "
-                + KEY_ID + " integer primary key , "
-                + KEY_POS + " text, "
-                + KEY_DATE + " text, "
-                + KEY_TIME + " text "
+        String water_sql = "CREATE TABLE " + WATER_TABLE + " ( "
+                + KEY_ID + " integer PRIMARY KEY, "
+                + KEY_POS + " text NOT NULL, "
+                + KEY_DATE + " text NOT NULL, "
+                + KEY_TIME + " text NOT NULL"
                 + " ) ";
-        db.execSQL(sql);
+
+        String weight_sql = "CREATE TABLE " + WEIGHT_TABLE + " ( "
+                + KEY_ID + " integer PRIMARY KEY, "
+                + KEY_WEIGHT + " int NOT NULL, "
+                + KEY_DATE + " text NOT NULL, "
+                + KEY_TIME + " text NOT NULL"
+                + " ) ";
+
+        db.execSQL(water_sql);
+        db.execSQL(weight_sql);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + WATER_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + WEIGHT_TABLE);
         onCreate(db);
     }
 }

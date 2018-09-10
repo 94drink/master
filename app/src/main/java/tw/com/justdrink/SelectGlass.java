@@ -13,7 +13,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +21,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -133,11 +131,11 @@ public class SelectGlass extends DialogFragment {
                         values.put(WaterDatabase.KEY_TIME, time);
                         Uri uri = WaterDbProvider.CONTENT_URI;
                         Uri newUri = context.getContentResolver().insert(uri, values);
-                        Log.e("DATA", newUri + "");
+                        //Log.e("DATA", newUri + "");
                         Fragment fragment = new BottleGrid();
-                        FragmentManager fragmentManager = getFragmentManager();
-                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.bottle_container, fragment).addToBackStack(null).commit();
+                        FragmentManager fm = getFragmentManager();
+                        FragmentTransaction ft = fm.beginTransaction();
+                        ft.replace(R.id.bottle_container, fragment).addToBackStack(null).commit();
                         dialog.dismiss();
 
                     }

@@ -8,7 +8,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,14 +16,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.TimeZone;
+
 import tw.com.justdrink.database.WaterBottlesData;
 import tw.com.justdrink.database.WaterDatabase;
 import tw.com.justdrink.database.WaterDbProvider;
 import tw.com.justdrink.main.BottleGrid;
 import tw.com.justdrink.main.WaterSettings;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.TimeZone;
 
 
 public class DrinkWater extends Fragment {
@@ -149,7 +150,7 @@ public class DrinkWater extends Fragment {
 
     private int calTarget(int weight_data) {
         int data_y = weight_data * 33;
-        Log.e("TARGET", data_y + "");
+        //Log.e("TARGET", data_y + "");
         return data_y;
 
     }
