@@ -13,7 +13,7 @@ import tw.com.justdrink.database.WaterDatabase;
 import tw.com.justdrink.database.WaterDbProvider;
 
 
-public class Drinklog extends Fragment {
+public class DrinkLog extends Fragment {
 
     ListView recyclerView;
     CustomAdapter customAdapter;
