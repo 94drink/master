@@ -34,9 +34,9 @@ public class DrinkReport extends Fragment {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getFragmentManager());
-        adapter.addFragment(new D_report_fragment_1(), "WEEK");
-        adapter.addFragment(new D_report_fragment_2(), "MONTH");
-        adapter.addFragment(new D_report_fragment_3(), "YEAR");
+        adapter.addFragment(new D_report_fragment_1(), getResources().getString(R.string.week));
+        adapter.addFragment(new D_report_fragment_2(), getResources().getString(R.string.month));
+        adapter.addFragment(new D_report_fragment_3(), getResources().getString(R.string.year));
         viewPager.setAdapter(adapter);
     }
 

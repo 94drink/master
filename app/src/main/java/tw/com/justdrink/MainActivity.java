@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         //實現TOOLBAR上層
-        //setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);
 
         toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
             @Override

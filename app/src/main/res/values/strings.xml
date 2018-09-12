@@ -28,9 +28,13 @@
     <string name="week">Week</string>
     <string name="month">Month</string>
     <string name="year">Year</string>
-    <string name="week_report">Week_Report</string>
-    <string name="month_report">Month_Report</string>
-    <string name="year_report">Year_Report</string>
+    <string name="today">Today</string>
+    <string name="weekly_average">Weekly average</string>
+    <string name="weekly_Drink">Weekly Drinking water</string>
+    <string name="monthly_average">Monthly average</string>
+    <string name="monthly_Drink">Monthly Drinking water</string>
+    <string name="year_average">Year average</string>
+    <string name="year_Drink">Year Drinking water</string>
 
     <!--layout/water_settings_list-->
     <string-array name="water_settings_array">
