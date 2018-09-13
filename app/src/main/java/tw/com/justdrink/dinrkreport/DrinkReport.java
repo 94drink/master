@@ -1,4 +1,4 @@
-package tw.com.justdrink;
+package tw.com.justdrink.dinrkreport;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import tw.com.justdrink.R;
 
 public class DrinkReport extends Fragment {
 

@@ -1,4 +1,4 @@
-package tw.com.justdrink;
+package tw.com.justdrink.dinrkreport;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -25,45 +24,46 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class D_report_fragment_3 extends Fragment {
+import tw.com.justdrink.R;
+
+public class D_report_fragment_1 extends Fragment {
 
     LineChart chart;
     LineData data;
     ArrayList<String> xVals = new ArrayList<String>();
     ArrayList <String> yVals = new ArrayList<String>();
-    private Button drep3_btn1;
-    private Button drep3_btn2;
-    private Button drep3_btn3;
+    private Button drep1_btn1;
+    private Button drep1_btn2;
+    private Button drep1_btn3;
     private Context context;
-    private TextView drep3_date1,drep3_date2,drep3_text2,drep3_text3,drep3_text5,drep3_text6;
-    //private TextView drep3_text1,drep3_text4;
-
+    private TextView drep1_date1,drep1_date2,drep1_text2,drep1_text3,drep1_text5,drep1_text6;
+    //private TextView drep1_text1,drep1_text4;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_d_report_fragment_3, container, false);
+        final View view = inflater.inflate(R.layout.fragment_d_report_fragment_1, container, false);
         context = view.getContext();
-        chart = (LineChart) view.findViewById(R.id.yearchart);
-        drep3_btn1 = (Button)view.findViewById(R.id.drep3_btn1);
-        drep3_btn2 = (Button)view.findViewById(R.id.drep3_btn2);
-        drep3_btn3 = (Button)view.findViewById(R.id.drep3_btn3);
-        drep3_date1 = (TextView)view.findViewById(R.id.drep3_date1);
-        drep3_date2 = (TextView)view.findViewById(R.id.drep3_date2);
-        //drep3_text1 = (TextView)view.findViewById(R.id.drep3_text1);
-        drep3_text2 = (TextView)view.findViewById(R.id.drep3_text2);
-        drep3_text3 = (TextView)view.findViewById(R.id.drep3_text3);
-        //drep3_text4 = (TextView)view.findViewById(R.id.drep3_text4);
-        drep3_text5 = (TextView)view.findViewById(R.id.drep3_text5);
-        drep3_text6 = (TextView)view.findViewById(R.id.drep3_text6);
+        chart = (LineChart) view.findViewById(R.id.weekchart);
+        drep1_btn1 = (Button)view.findViewById(R.id.drep1_btn1);
+        drep1_btn2 = (Button)view.findViewById(R.id.drep1_btn2);
+        drep1_btn3 = (Button)view.findViewById(R.id.drep1_btn3);
+        drep1_date1 = (TextView)view.findViewById(R.id.drep1_date1);
+        drep1_date2 = (TextView)view.findViewById(R.id.drep1_date2);
+        //drep1_text1 = (TextView)view.findViewById(R.id.drep1_text1);
+        drep1_text2 = (TextView)view.findViewById(R.id.drep1_text2);
+        drep1_text3 = (TextView)view.findViewById(R.id.drep1_text3);
+        //drep1_text4 = (TextView)view.findViewById(R.id.drep1_text4);
+        drep1_text5 = (TextView)view.findViewById(R.id.drep1_text5);
+        drep1_text6 = (TextView)view.findViewById(R.id.drep1_text6);
 
         //取得今天日期
         String date = getDate();
         //取得7天前日期
-        final String date_lw = getDateafter(date, 365);
+        String date_lw = getDateafter(date, 7);
         //設定顯示今天日期
-        drep3_date1.setText(date_lw);
-        drep3_date2.setText(date);
+        drep1_date1.setText(date_lw);
+        drep1_date2.setText(date);
 
         //chart.setDescription("說明文字");
         chart.setDescription("");
@@ -71,39 +71,43 @@ public class D_report_fragment_3 extends Fragment {
         //設置圖表資料
         chart.setData(getLineData());
         //預設不顯示右邊2顆按鈕
-        drep3_btn2.setVisibility(View.INVISIBLE);
-        drep3_btn3.setVisibility(View.INVISIBLE);
+        drep1_btn2.setVisibility(View.INVISIBLE);
+        drep1_btn3.setVisibility(View.INVISIBLE);
 
         //監聽最左邊按鈕動作
-        drep3_btn1.setOnClickListener(new View.OnClickListener() {
+        drep1_btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //案過按鈕之後顯示右邊2顆按鈕
-                drep3_btn2.setVisibility(View.VISIBLE);
-                drep3_btn3.setVisibility(View.VISIBLE);
+                drep1_btn2.setVisibility(View.VISIBLE);
+                drep1_btn3.setVisibility(View.VISIBLE);
                 //取得目前顯示的起始日期放到date
-                String date = drep3_date1.getText().toString();
+                String date = drep1_date1.getText().toString();
                 //把date丟到getDateafter函式計算7天前日期
-                String date_lw = getDateafter(date, 365);
+                String date_lw = getDateafter(date, 7);
                 //更新上方日期顯示
-                drep3_date1.setText(date_lw);
-                drep3_date2.setText(date);
+                drep1_date1.setText(date_lw);
+                drep1_date2.setText(date);
                 //重新呼叫刷新圖表
                 chart.clear();
                 chart.setData(getLineData());
+
+                //----***開發中測試***----//
+
+                //----***開發中測試***----//
             }
         });
 
         //監聽最中間按鈕動作
-        drep3_btn2.setOnClickListener(new View.OnClickListener() {
+        drep1_btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String date = getDate();
-                String date_lw = getDateafter(date, 365);
-                drep3_date1.setText(date_lw);
-                drep3_date2.setText(date);
-                drep3_btn2.setVisibility(View.INVISIBLE);
-                drep3_btn3.setVisibility(View.INVISIBLE);
+                String date_lw = getDateafter(date, 7);
+                drep1_date1.setText(date_lw);
+                drep1_date2.setText(date);
+                drep1_btn2.setVisibility(View.INVISIBLE);
+                drep1_btn3.setVisibility(View.INVISIBLE);
                 //重新呼叫刷新圖表
                 chart.clear();
                 chart.setData(getLineData());
@@ -111,51 +115,42 @@ public class D_report_fragment_3 extends Fragment {
         });
 
         //監聽最右邊按鈕動作
-        drep3_btn3.setOnClickListener(new View.OnClickListener() {
+        drep1_btn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //drep3_btn2.setVisibility(View.VISIBLE);
+                drep1_btn2.setVisibility(View.VISIBLE);
                 //取得目前顯示的結束日期放到date
-                String date = drep3_date2.getText().toString();
-                 //把date丟到getDatebefore函式計算7天後日期
-                String date_lw = getDatebefore(date, 365);
+                String date = drep1_date2.getText().toString();
+                //把date丟到getDatebefore函式計算7天後日期
+                String date_lw = getDatebefore(date, 7);
                 //更新上方日期顯示
-                drep3_date1.setText(date);
-                drep3_date2.setText(date_lw);
-                 //判斷是否到今天，是則隱藏右方按鈕
-                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM");
-                String tempdate = df.format(new java.util.Date());
-                Date date1 = null;
-                Date date2 = null;
-                try {
-                    date1 = df.parse(tempdate);
-                    date2 = df.parse(date);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                if ((tempdate.equals(date_lw)) || (date2.after(date1))){
-
-                    drep3_btn2.setVisibility(View.INVISIBLE);
-                    drep3_btn3.setVisibility(View.INVISIBLE);
+                drep1_date1.setText(date);
+                drep1_date2.setText(date_lw);
+                //判斷是否到今天，是則隱藏右方按鈕
+                String tempdate = getDate();
+                if (tempdate.equals(date_lw)){
+                    drep1_btn2.setVisibility(View.INVISIBLE);
+                    drep1_btn3.setVisibility(View.INVISIBLE);
                 }
                 //重新呼叫刷新圖表
                 chart.clear();
                 chart.setData(getLineData());
             }
         });
+
         return view;
     }
 
-    //取得現在月份
+    //取得現在日期
     private String getDate(){
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         String date_now = df.format(new java.util.Date());
         return date_now;
     }
 
-    //計算出前一個月
+    //計算7天前日期(7天為參數Num)
     public static String getDateafter(String day,int Num) {
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         Date nowDate = null;
         try {
             nowDate = df.parse(day);
@@ -164,14 +159,14 @@ public class D_report_fragment_3 extends Fragment {
         }
         //如果需要向后计算日期 -改为+
         Date newDate2 = new Date(nowDate.getTime() - (long)Num * 24 * 60 * 60 * 1000);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String dateOk = simpleDateFormat.format(newDate2);
         return dateOk;
     }
 
-    //計算出後一個月
+    //計算7天後日期(7天為參數Num)
     public static String getDatebefore(String day,int Num) {
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         Date nowDate = null;
         try {
             nowDate = df.parse(day);
@@ -180,7 +175,7 @@ public class D_report_fragment_3 extends Fragment {
         }
         //如果需要向后计算日期 +改为-
         Date newDate2 = new Date(nowDate.getTime() + (long)Num * 24 * 60 * 60 * 1000);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String dateOk = simpleDateFormat.format(newDate2);
         return dateOk;
     }
@@ -188,9 +183,9 @@ public class D_report_fragment_3 extends Fragment {
     //圖表建立函示
     private LineData getLineData(){
         final int DATA_COUNT = 7;  //设置折线图横跨距离
-        LineDataSet dataSetA = new LineDataSet( getChartAvg(DATA_COUNT, 1), getResources().getString(R.string.year_average));
+        LineDataSet dataSetA = new LineDataSet( getChartAvg(DATA_COUNT, 1), getResources().getString(R.string.weekly_average));
         //设置折线数据 getChartData返回一个List<Entry>键值对集合标识 折线点的横纵坐标，"A"代表折线标识
-        LineDataSet dataSetB = new LineDataSet( getChartData(DATA_COUNT, 2), getResources().getString(R.string.year_Drink));
+        LineDataSet dataSetB = new LineDataSet( getChartData(DATA_COUNT, 2), getResources().getString(R.string.weekly_Drink));
 
         List<LineDataSet> dataSets = new ArrayList<>();
         //資料集A加入圖表
