@@ -1,7 +1,11 @@
 package tw.com.justdrink;
 
+import android.app.DatePickerDialog;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
@@ -10,15 +14,24 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.Calendar;
+
+import tw.com.justdrink.calendar.CalendarDialog;
+
+import tw.com.justdrink.dinrkreport.DrinkReport;
 
 
 public class MainActivity extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
-    private Toolbar toolbar;
+    public Toolbar toolbar;
     private ActionBarDrawerToggle toggle;
     private CharSequence mTitle;
     private TextView toolbar_text;
@@ -33,7 +46,8 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         //實現TOOLBAR上層
-        //setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setOnMenuItemClickListener(onMenuItemClickListener); //設置監聽器
 
         toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
             @Override
@@ -61,7 +75,10 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+//        Inflate the menu; this adds items to the action bar if it is present.
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.main,menu);
+
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
@@ -71,14 +88,11 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+
         return super.onOptionsItemSelected(item);
     }
+
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -95,6 +109,45 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         getActionBar().setTitle(mTitle);
     }
 
+    public Toolbar.OnMenuItemClickListener onMenuItemClickListener=new Toolbar.OnMenuItemClickListener() {
+
+        Fragment fragment  = null;
+        @Override
+        public boolean onMenuItemClick(MenuItem menuItem) {
+            switch (menuItem.getItemId())
+            {
+                case R.id.reminders:
+
+                    Intent i =  new Intent(getBaseContext(),Reminders.class);
+                    startActivity(i);
+                    toolbar_text.setText(R.string.reminders);
+                    break;
+                case R.id.calendar_button:
+//                  Intent intent = new Intent(MainActivity.this,CalendarDialog.class);
+//                  startActivity(intent);//Intent 方式不知道該怎麼接上<calendar-CalendarDialog->
+                    final int mYear, mMonth, mDay;//設置時間變數
+                    final java.util.Calendar c = java.util.Calendar.getInstance();  //final 是無法被修改的 類別 函數 或變數
+
+                    mYear = c.get(java.util.Calendar.YEAR);
+                    mMonth = c.get(java.util.Calendar.MONTH);
+                    mDay = c.get(java.util.Calendar.DAY_OF_MONTH);
+
+                    new DatePickerDialog(MainActivity.this, new DatePickerDialog.OnDateSetListener() {//OnDateSetListener 為內建方法 將使用者輸入完成後的日期傳回
+                        @Override
+                        public void onDateSet(DatePicker view, int mYear, int mMonth, int mDay) {
+                             toolbar_text.setText(mYear+"/"+String.valueOf(mMonth+1)+"/"+mDay);//顯示在toolbar上的日期 //轉用到ToolBar上的setTitle
+                                  }
+                    }, mYear,mMonth, mDay).show();
+             }
+            return true;
+
+        }
+
+    };
+
+
+
+
     public void displayView(int viewId) {
 
         Fragment fragment = null;
@@ -104,18 +157,18 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
                 toolbar_text.setText(R.string.drinkwater);
                 break;
             case R.id.drinklog:
-                fragment = new Drinklog();
+                fragment = new DrinkLog();
                 toolbar_text.setText(R.string.drinklog);
                 break;
             case R.id.drinkreport:
-                fragment = new Drinkreport();
+                fragment = new DrinkReport();
                 toolbar_text.setText(R.string.drinkreport);
                 break;
             case R.id.weightreport:
                 fragment = new Weightreport();
                 toolbar_text.setText(R.string.weightreport);
                 break;
-            case R.id.reminders:
+            case R.id.reminders://
                 fragment = new Reminders();
                 toolbar_text.setText(R.string.reminders);
                 break;

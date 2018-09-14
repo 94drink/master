@@ -1,4 +1,4 @@
-package tw.com.justdrink.main;
+package tw.com.justdrink;
 
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -8,8 +8,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ListView;
-
-import tw.com.justdrink.R;
 
 
 public class WaterSettings extends DialogFragment {

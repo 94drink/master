@@ -5,13 +5,15 @@
         <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/royalblue</item>
-        <item name="colorPrimaryDark">@color/royalblue</item>
+        <item name="colorPrimaryDark">@color/cornflowerblue</item>
         <item name="colorAccent">@color/cornflowerblue</item>
+        <item name="android:navigationBarColor">@color/cornflowerblue</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+
     </style>
 
     <style name="CustomProgressBarHorizontal" parent="android:Widget.ProgressBar.Horizontal">
