@@ -4,7 +4,10 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">設定</string>
+    <!--toolbar-->
+    <string name="weight_setting">體重設定</string>
+    <string name="calendar">日曆</string>
+    <string name="reminder_setting">提醒設定</string>
 
     <!--menu/activity_main_drawer-->
     <string name="drinkwater">喝水</string>
