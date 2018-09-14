@@ -4,6 +4,11 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
+    <!--toolbar-->
+    <string name="weight_setting">體重設定</string>
+    <string name="calendar">日曆</string>
+    <string name="reminder_setting">提醒設定</string>
+
     <!--menu/activity_main_drawer-->
     <string name="drinkwater">喝水</string>
     <string name="drinklog">喝水紀錄</string>
@@ -21,6 +26,18 @@
     <string name="drink_target">喝水目標</string>
     <string name="drinked">500</string>
     <string name="goal">/3000</string>
+
+    <!-- 喝水圖表使用字串 -->
+    <string name="week">週</string>
+    <string name="month">月</string>
+    <string name="year">年</string>
+    <string name="today">今天</string>
+    <string name="weekly_average">週平均</string>
+    <string name="weekly_Drink">週飲水量</string>
+    <string name="monthly_average">月平均</string>
+    <string name="monthly_Drink">月飲水量</string>
+    <string name="year_average">年平均</string>
+    <string name="year_Drink">年飲水量</string>
 
     <!--layout/water_settings_list-->
     <string-array name="water_settings_array">

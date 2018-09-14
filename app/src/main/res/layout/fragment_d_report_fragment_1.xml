@@ -4,63 +4,179 @@ android:orientation="vertical"
 android:layout_width="match_parent"
 android:layout_height="match_parent">
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="&lt;"
+            android:id="@+id/drep1_btn1"
+            android:layout_weight="1" />
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="&lt;"
+            android:layout_weight="1"
+            android:visibility="invisible" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2018-09-01"
+            android:id="@+id/drep1_date1"
+            android:layout_weight="3"
+            android:layout_gravity="center"
+            android:textAlignment="center" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="~"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:textAlignment="center" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2018-09-01"
+            android:id="@+id/drep1_date2"
+            android:layout_weight="3"
+            android:layout_gravity="center"
+            android:textAlignment="center" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=">>"
+            android:id="@+id/drep1_btn2"
+            android:layout_weight="1" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=">"
+            android:id="@+id/drep1_btn3"
+            android:layout_weight="1" />
+    </LinearLayout>
+
     <android.support.v7.widget.CardView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        card_view:cardElevation="5dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
         android:orientation="horizontal"
-        card_view:cardBackgroundColor="@android:color/black"
         card_view:cardCornerRadius="5dp">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-<LinearLayout
-    android:orientation="horizontal"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/weekchart"
+                android:layout_width="match_parent"
+                android:layout_height="260dp" />
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="&lt;&lt;"
-        android:id="@+id/button"
-        android:layout_weight="1" />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="2018-09-01"
-        android:id="@+id/textView3"
-        android:layout_weight="3"
-        android:layout_gravity="center"
-        android:textAlignment="center" />
+        android:layout_height="10dp"
+        android:text=""/>
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="->|"
-        android:id="@+id/button3"
-        android:layout_weight="1" />
+    <android.support.v7.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="99dp"
+        card_view:cardElevation="5dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:orientation="horizontal"
+        card_view:cardCornerRadius="5dp">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=">>"
-        android:id="@+id/button4"
-        android:layout_weight="1" />
-</LinearLayout>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
 
-<com.github.mikephil.charting.charts.LineChart
-    android:id="@+id/chart"
-    android:layout_width="match_parent"
-    android:layout_height="240dp" />
-</android.support.v7.widget.CardView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:text="@string/today"
+                    android:id="@+id/drep1_text1" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceListItem"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:text="1059ml"
+                    android:id="@+id/drep1_text2" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceListItem"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:text="78%"
+                    android:id="@+id/drep1_text3" />
 
-<TextView
-    android:id="@+id/Dreport_frag1_text"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="@string/week_report"/>
+            </LinearLayout>
+            <TextView
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/textview_border"/>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:text="@string/weekly_average"
+                    android:id="@+id/drep1_text4" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceListItem"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:text="788ml"
+                    android:id="@+id/drep1_text5" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceListItem"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:text="58%"
+                    android:id="@+id/drep1_text6" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
 </LinearLayout>

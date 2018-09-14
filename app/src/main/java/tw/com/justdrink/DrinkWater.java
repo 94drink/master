@@ -126,6 +126,5 @@ public class DrinkWater extends Fragment {
         return target;
 
     }
-
 }
 
