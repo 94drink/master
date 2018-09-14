@@ -1,4 +1,4 @@
-package tw.com.justdrink.main;
+package tw.com.justdrink;
 
 import android.database.Cursor;
 import android.net.Uri;
@@ -17,7 +17,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 
-import tw.com.justdrink.R;
 import tw.com.justdrink.database.WaterDatabase;
 import tw.com.justdrink.database.WaterDbProvider;
 

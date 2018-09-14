@@ -1,4 +1,4 @@
-package tw.com.justdrink.main;
+package tw.com.justdrink;
 
 import android.content.Context;
 import android.graphics.Color;

@@ -26,6 +26,18 @@
     <string name="drinked">500</string>
     <string name="goal">/3000</string>
 
+    <!-- 喝水圖表使用字串 -->
+    <string name="week">Week</string>
+    <string name="month">Month</string>
+    <string name="year">Year</string>
+    <string name="today">Today</string>
+    <string name="weekly_average">Weekly average</string>
+    <string name="weekly_Drink">Weekly Drinking water</string>
+    <string name="monthly_average">Monthly average</string>
+    <string name="monthly_Drink">Monthly Drinking water</string>
+    <string name="year_average">Year average</string>
+    <string name="year_Drink">Year Drinking water</string>
+
     <!--layout/water_settings_list-->
     <string-array name="water_settings_array">
         <item>Weight</item>
