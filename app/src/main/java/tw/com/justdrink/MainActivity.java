@@ -25,6 +25,8 @@ import java.util.Calendar;
 
 import tw.com.justdrink.calendar.CalendarDialog;
 
+import tw.com.justdrink.dinrkreport.DrinkReport;
+
 
 public class MainActivity extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawerLayout;
