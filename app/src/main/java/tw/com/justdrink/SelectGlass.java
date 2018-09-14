@@ -122,10 +122,12 @@ public class SelectGlass extends DialogFragment {
                         String time = sdf.format(c.getTime());
                         String date = df.format(c.getTime());
                         position = getPosition();
-                        DrinkWater.updateProgress(position);
+                        int ml = Integer.parseInt(WaterBottlesData.getData().get(SelectGlass.position).title);
+                        DrinkWater.progressBar.incrementProgressBy(ml);
                         ContentValues values = new ContentValues();
                         values.clear();
                         values.put(WaterDatabase.KEY_POS, position);
+                        values.put(WaterDatabase.KEY_ML, ml);
                         values.put(WaterDatabase.KEY_DATE, date);
                         values.put(WaterDatabase.KEY_TIME, time);
                         Uri uri = WaterDbProvider.CONTENT_URI;
