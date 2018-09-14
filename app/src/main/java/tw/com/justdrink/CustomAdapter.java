@@ -65,15 +65,19 @@ class CustomAdapter extends SimpleCursorAdapter {
         }
 
         if (task_day.equals(prevDate)) {
-            holder.sec_hdr.setVisibility(View.GONE);
-            holder.sec_total.setVisibility(View.GONE);
-            sec_total = getSectionTotal(priority);
-            sec_total = 0;
+            holder.sec_hdr.setVisibility(View.GONE);      //日期(隱藏)
+            holder.sec_total.setVisibility(View.GONE);    //總喝水量(隱藏)
+//            sec_total = getSectionTotal(priority);
+//            sec_total = 0;
         } else {
+            holder.sec_hdr.setVisibility(View.VISIBLE);   //日期(顯示)
+            holder.sec_total.setVisibility(View.VISIBLE); //總喝水量(顯示)
             holder.sec_hdr.setText(task_day);
+
+            //計算總喝水量
+            //getContentResolver().query(WaterDbProvider.CONTENT_URI, null, null, null, null);
             holder.sec_total.setText(String.valueOf(sec_total) + "ml");
-            holder.sec_hdr.setVisibility(View.VISIBLE);
-            holder.sec_total.setVisibility(View.VISIBLE);
+
         }
 
         holder.tvTime.setText(task_title);

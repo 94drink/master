@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     private NavigationView navigationView;
     public Toolbar toolbar;
     private ActionBarDrawerToggle toggle;
-    private CharSequence mTitle;
     private TextView toolbar_text;
 
     @Override
@@ -81,7 +80,6 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-
         displayView(item.getItemId());
         return true;
     }
@@ -146,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
                 fragment = new Weightreport();
                 toolbar_text.setText(R.string.weightreport);
                 break;
-            case R.id.reminders://
+            case R.id.reminders:
                 fragment = new Reminders();
                 toolbar_text.setText(R.string.reminders);
                 break;
