@@ -1,4 +1,4 @@
-package tw.com.justdrink;
+package tw.com.justdrink.drinkwater;
 
 import android.content.ContentValues;
 import android.content.SharedPreferences;
@@ -19,6 +19,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.TimeZone;
 
+import tw.com.justdrink.R;
+import tw.com.justdrink.WaterSettings;
 import tw.com.justdrink.database.WaterBottlesData;
 import tw.com.justdrink.database.WaterDatabase;
 import tw.com.justdrink.database.WaterDbProvider;
