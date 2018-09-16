@@ -1,4 +1,4 @@
-package tw.com.justdrink;
+package tw.com.justdrink.drinklog;
 
 import android.database.Cursor;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import tw.com.justdrink.R;
 import tw.com.justdrink.database.WaterDatabase;
 import tw.com.justdrink.database.WaterDbProvider;
 

@@ -20,6 +20,8 @@ import android.widget.Toast;
 import java.util.Calendar;
 
 import tw.com.justdrink.dinrkreport.DrinkReport;
+import tw.com.justdrink.drinklog.DrinkLog;
+import tw.com.justdrink.drinkwater.DrinkWater;
 
 
 public class MainActivity extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener {
