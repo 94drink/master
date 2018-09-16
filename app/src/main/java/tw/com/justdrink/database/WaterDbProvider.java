@@ -72,7 +72,7 @@ public class WaterDbProvider extends ContentProvider {
         }
         if (sortOrder == null || sortOrder == "") {
             // No sorting-> sort on names by default
-            sortOrder = WaterDatabase.KEY_ID;
+            sortOrder = WaterDatabase.KEY_DATE + " DESC, " + WaterDatabase.KEY_ID;
         }
         Cursor cursor = qb.query(sqLiteDatabase, projection, selection, selectionArgs, null, null, sortOrder);
         cursor.setNotificationUri(getContext().getContentResolver(), uri);
