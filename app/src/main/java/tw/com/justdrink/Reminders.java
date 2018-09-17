@@ -17,7 +17,7 @@ public class Reminders extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
+        //http://www.codedata.com.tw/mobile/android-tutorial-the-5th-class-1-broadcastreceiver-alarmmanager/ 09/18
         View rootView = inflater.inflate(R.layout.fragment_reminders, container, false);
         TextView setting_tv = (TextView)rootView.findViewById(R.id.reminders_text_view);
         //((MainActivity)getActivity()).getActionBar().setTitle(R.string.nav_settings);
