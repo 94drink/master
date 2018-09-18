@@ -1,6 +1,7 @@
 package tw.com.justdrink;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -30,6 +31,8 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     public Toolbar toolbar;
     private ActionBarDrawerToggle toggle;
     private TextView toolbar_text;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,10 +97,8 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
             switch (menuItem.getItemId())
             {
                 case R.id.reminder_setting:
-                    //Intent i =  new Intent(getBaseContext(),Reminders.class);
-                    //startActivity(i);
-                    //toolbar_text.setText(R.string.reminder_setting);
-                    Toast.makeText(MainActivity.this, R.string.reminder_setting, Toast.LENGTH_SHORT).show();
+//                    Intent i =  new Intent(getBaseContext(),Reminders.class);
+//                    startActivity(i);
                     break;
                 case R.id.calendar:
 //                  Intent intent = new Intent(MainActivity.this,CalendarDialog.class);
