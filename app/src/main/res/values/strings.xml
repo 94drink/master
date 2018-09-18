@@ -40,4 +40,14 @@
         <item>Sports</item>
         <item>Total</item>
     </string-array>
+
+        <!--設定區fragment_setting-->
+    <string-array name="setting" >
+        <item>set_reminder</item>
+        <item>set_cup_size</item>
+        <item>set_weight_goal</item>
+        <item>set_units_format</item>
+    </string-array>
+
+
 </resources>

@@ -32,4 +32,13 @@
         <item>運動</item>
         <item>總計：</item>
     </string-array>
+
+    <!--設定區fragment_setting-->
+    <string-array name="setting" >
+        <item>提醒設定</item>
+        <item>客製化杯子容量</item>
+        <item>體重與目標</item>
+        <item>備份和恢復</item>
+    </string-array>
+
 </resources>
