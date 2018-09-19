@@ -1,7 +1,6 @@
 package tw.com.justdrink;
 
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -23,6 +22,7 @@ import java.util.Calendar;
 import tw.com.justdrink.dinrkreport.DrinkReport;
 import tw.com.justdrink.drinklog.DrinkLog;
 import tw.com.justdrink.drinkwater.DrinkWater;
+import tw.com.justdrink.reminder.Reminders;
 
 
 public class MainActivity extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener {
