@@ -71,6 +71,11 @@
         <item>item11</item>
         <item>item12</item>
     </string-array>
-
+    <string name = "item1">ReminderSetting</string>
+    <string name = "item2">Reminder1</string>
+    <string name = "item3">Reminder2</string>
+    <string name = "item4">Reminder3</string>
+    <string name = "item5">Reminder4</string>
+    <string name = "item6">Reminder5</string>
 
 </resources>
