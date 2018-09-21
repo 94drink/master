@@ -47,4 +47,28 @@
         <item>運動</item>
         <item>總計：</item>
     </string-array>
+
+    <!--設定區fragment_setting-->
+    <string-array name="setting" >
+        <item>提醒設定</item>
+        <item>客製化杯子容量</item>
+        <item>體重與目標</item>
+        <item>備份和恢復</item>
+    </string-array>
+
+    <!--設定Fragment內的RecyclView物件-->
+    <string-array name="alarm">
+        <item>物件1提醒設定頁面</item>
+        <item>物件2</item>
+        <item>物件3</item>
+        <item>物件4</item>
+        <item>物件5</item>
+        <item>物件6</item>
+        <item>物件7</item>
+        <item>物件8</item>
+        <item>物件9</item>
+        <item>物件10</item>
+        <item>物件11</item>
+        <item>物件12</item>
+    </string-array>
 </resources>

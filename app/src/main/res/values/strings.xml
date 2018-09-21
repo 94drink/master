@@ -47,4 +47,30 @@
         <item>Sports</item>
         <item>Total</item>
     </string-array>
+
+        <!--設定區fragment_setting-->
+    <string-array name="setting" >
+        <item>set_reminder</item>
+        <item>set_cup_size</item>
+        <item>set_weight_goal</item>
+        <item>set_units_format</item>
+    </string-array>
+
+    <!--設定Fragment內的RecyclView物件-->
+    <string-array name="alarm">
+        <item>物件1提醒設定頁面</item>
+        <item>item2</item>
+        <item>item3</item>
+        <item>item4</item>
+        <item>item5</item>
+        <item>item6</item>
+        <item>item7</item>
+        <item>item8</item>
+        <item>item9</item>
+        <item>item10</item>
+        <item>item11</item>
+        <item>item12</item>
+    </string-array>
+
+
 </resources>
