@@ -30,7 +30,7 @@ import java.util.TimeZone;
 import tw.com.justdrink.R;
 import tw.com.justdrink.database.Information;
 import tw.com.justdrink.database.WaterBottlesData;
-import tw.com.justdrink.database.WaterDatabase;
+import tw.com.justdrink.database.WaterDBHelper;
 import tw.com.justdrink.database.WaterDbProvider;
 
 
@@ -115,7 +115,7 @@ public class SelectGlass extends DialogFragment {
                     @Override
                     public void onClick(View v) {
                         //Database code
-                        WaterDatabase wdb = new WaterDatabase(context);
+                        WaterDBHelper wdb = new WaterDBHelper(context);
                         Calendar c = Calendar.getInstance();
                         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
@@ -127,13 +127,12 @@ public class SelectGlass extends DialogFragment {
                         DrinkWater.progressBar.incrementProgressBy(ml);
                         ContentValues values = new ContentValues();
                         values.clear();
-                        values.put(WaterDatabase.KEY_POS, position);
-                        values.put(WaterDatabase.KEY_ML, ml);
-                        values.put(WaterDatabase.KEY_DATE, date);
-                        values.put(WaterDatabase.KEY_TIME, time);
-                        Uri uri = WaterDbProvider.CONTENT_URI;
+                        values.put(WaterDBHelper.KEY_POS, position);
+                        values.put(WaterDBHelper.KEY_ML, ml);
+                        values.put(WaterDBHelper.KEY_DATE, date);
+                        values.put(WaterDBHelper.KEY_TIME, time);
+                        Uri uri = WaterDbProvider.CONTENT_URI_WATER;
                         Uri newUri = context.getContentResolver().insert(uri, values);
-                        //Log.e("DATA", newUri + "");
                         Fragment fragment = new BottleGrid();
                         FragmentManager fm = getFragmentManager();
                         FragmentTransaction ft = fm.beginTransaction();

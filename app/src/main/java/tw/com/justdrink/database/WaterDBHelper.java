@@ -5,13 +5,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 
-public class WaterDatabase extends SQLiteOpenHelper {
+public class WaterDBHelper extends SQLiteOpenHelper {
 
     // Database Version
     static final int DATABASE_VERSION = 1;
 
     // Database Name
-    static final String DATABASE_NAME = "JustDrink";
+    static final String DATABASE_NAME = "JustDrink.db";
 
     // Table name
     static final String WATER_TABLE = "Water";
@@ -25,7 +25,7 @@ public class WaterDatabase extends SQLiteOpenHelper {
     public static final String KEY_WEIGHT = "weight";
     public static final String KEY_ML = "ml";
 
-    public WaterDatabase(Context context) {
+    public WaterDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 

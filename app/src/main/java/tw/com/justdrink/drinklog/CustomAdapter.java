@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import tw.com.justdrink.R;
 import tw.com.justdrink.database.WaterBottlesData;
-import tw.com.justdrink.database.WaterDatabase;
+import tw.com.justdrink.database.WaterDBHelper;
 
 
 class CustomAdapter extends SimpleCursorAdapter {
@@ -49,13 +49,13 @@ class CustomAdapter extends SimpleCursorAdapter {
         }
 
         dataCursor.moveToPosition(position);
-        int title = dataCursor.getColumnIndex(WaterDatabase.KEY_TIME);
+        int title = dataCursor.getColumnIndex(WaterDBHelper.KEY_TIME);
         String task_title = dataCursor.getString(title);
 
-        int title_date = dataCursor.getColumnIndex(WaterDatabase.KEY_DATE);
+        int title_date = dataCursor.getColumnIndex(WaterDBHelper.KEY_DATE);
         String task_day = dataCursor.getString(title_date);
 
-        int description_index = dataCursor.getColumnIndex(WaterDatabase.KEY_POS);
+        int description_index = dataCursor.getColumnIndex(WaterDBHelper.KEY_POS);
         int priority = dataCursor.getInt(description_index);
 
         String prevDate = null;
