@@ -43,7 +43,8 @@ public class BottleGrid extends Fragment {
 
         String[] projection = {WaterDBHelper.KEY_ID, WaterDBHelper.KEY_POS, WaterDBHelper.KEY_ML, WaterDBHelper.KEY_DATE, WaterDBHelper.KEY_TIME};
         String selection = WaterDBHelper.KEY_DATE + " = ?";
-        String[] selectionArgs = { date };
+        String[] selectionArgs = { "" };
+        selectionArgs[0] = date;
         Cursor cursor = getActivity().getContentResolver().query(uri, projection, selection, selectionArgs, null);
 
         String[] from = { WaterDBHelper.KEY_TIME };
