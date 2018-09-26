@@ -50,11 +50,14 @@
 
         <!--設定區fragment_setting-->
     <string-array name="setting" >
-        <item>set_reminder</item>
-        <item>set_cup_size</item>
-        <item>set_weight_goal</item>
-        <item>set_units_format</item>
+        <item>Reminder</item>
+        <item>Cup Size</item>
+        <item>Weight &amp; Goal</item>
+        <item>Units &amp; Format</item>
     </string-array>
+
+    <!-- 設定區fragment_settingadapter字串 -->
+    <string name="accept">Accept</string>
 
     <!--設定Fragment內的RecyclView物件-->
     <string-array name="alarm">

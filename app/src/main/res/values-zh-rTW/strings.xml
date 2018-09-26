@@ -56,6 +56,9 @@
         <item>備份和恢復</item>
     </string-array>
 
+    <!-- 設定區fragment_settingadapter字串 -->
+    <string name="accept">同意</string>
+
     <!--設定Fragment內的RecyclView物件-->
     <string-array name="alarm">
         <item>物件1提醒設定頁面</item>
