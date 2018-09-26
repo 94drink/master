@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import tw.com.justdrink.R;
 
@@ -13,8 +14,8 @@ import tw.com.justdrink.R;
 public class Reminders extends Fragment {
     //設定Adapter,RecyclerView 變數
 
-    ListView recyclerViewonAlarm;
-    RecyclerViewAdpater recyclerViewAdpater;
+    ListView reminderview;
+    RecyclerViewAdpater adpater;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -26,10 +27,11 @@ public class Reminders extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_reminders, container, false);
 
+        reminderview = (ListView)view.findViewById(R.id.reminderList_item);
+        adpater = new RecyclerViewAdpater(getActivity());
 
+        reminderview.setAdapter(adpater);
 
-//        recyclerViewonAlarm = (ListView) view.findViewById(R.id.list_view);
-//        recyclerViewonAlarm.setAdapter(recyclerViewAdpater);
         return view;
     }
 
