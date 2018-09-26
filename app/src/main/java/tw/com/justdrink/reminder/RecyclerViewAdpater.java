@@ -1,33 +1,44 @@
 package tw.com.justdrink.reminder;
 
-import android.support.v7.widget.RecyclerView;
+import android.content.Context;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 
-import java.util.ArrayList;
+import tw.com.justdrink.R;
 
 
-public class RecyclerViewAdpater extends RecyclerView.Adapter {
+public class RecyclerViewAdpater extends BaseAdapter {
 
-    ArrayList<String> recyclerView; //放在recycler內
+    private Context context;
+    String[] mReminderSettingTitles;
 
-    RecyclerViewAdpater(){
-        recyclerView =  new ArrayList<>();
+    public RecyclerViewAdpater(Context context){
+        this.context = context ;
+        mReminderSettingTitles = context.getResources().getStringArray(R.array.alarm);
 
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+    public Object getItem(int position) {
+        return mReminderSettingTitles[position];
     }
 
-
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public long getItemId(int position) {
+        return position;
     }
 
+    @Override
+    public int getCount() {
+        return mReminderSettingTitles.length;
+    }
 
     @Override
-    public int getItemCount() {
-        return 0;
+    public View getView(int i, View view, ViewGroup viewGroup) {
+//        View view = null;
+
+        return view;
     }
 }
+
