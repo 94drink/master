@@ -4,7 +4,10 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
+    <!--toolbar-->
+    <string name="weight_setting">Weight Setting</string>
+    <string name="calendar">Calendar</string>
+    <string name="reminder_setting">Reminder Setting</string>
 
     <!--menu/activity_main_drawer-->
     <string name="drinkwater">Drink water</string>
@@ -28,9 +31,13 @@
     <string name="week">Week</string>
     <string name="month">Month</string>
     <string name="year">Year</string>
-    <string name="week_report">Week_Report</string>
-    <string name="month_report">Month_Report</string>
-    <string name="year_report">Year_Report</string>
+    <string name="today">Today</string>
+    <string name="weekly_average">Weekly average</string>
+    <string name="weekly_Drink">Weekly Drinking water</string>
+    <string name="monthly_average">Monthly average</string>
+    <string name="monthly_Drink">Monthly Drinking water</string>
+    <string name="year_average">Year average</string>
+    <string name="year_Drink">Year Drinking water</string>
 
     <!--設定區-->
     <string name="set_reminder">Reminder</string>
@@ -46,4 +53,33 @@
         <item>Sports</item>
         <item>Total</item>
     </string-array>
+
+        <!--設定區fragment_setting-->
+    <string-array name="setting" >
+        <item>Reminder</item>
+        <item>Cup Size</item>
+        <item>Weight &amp; Goal</item>
+        <item>Units &amp; Format</item>
+    </string-array>
+
+    <!-- 設定區fragment_settingadapter字串 -->
+    <string name="accept">Accept</string>
+
+    <!--設定Fragment內的RecyclView物件-->
+    <string-array name="alarm">
+        <item>物件1提醒設定頁面</item>
+        <item>item2</item>
+        <item>item3</item>
+        <item>item4</item>
+        <item>item5</item>
+        <item>item6</item>
+        <item>item7</item>
+        <item>item8</item>
+        <item>item9</item>
+        <item>item10</item>
+        <item>item11</item>
+        <item>item12</item>
+    </string-array>
+
+
 </resources>

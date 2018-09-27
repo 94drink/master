@@ -1,7 +1,8 @@
-package tw.com.justdrink;
+package tw.com.justdrink.drinkwater;
 
 import android.content.ContentValues;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -9,8 +10,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -21,21 +20,24 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.TimeZone;
 
+import tw.com.justdrink.R;
+import tw.com.justdrink.WaterSettings;
 import tw.com.justdrink.database.WaterBottlesData;
-import tw.com.justdrink.database.WaterDatabase;
+import tw.com.justdrink.database.WaterDBHelper;
 import tw.com.justdrink.database.WaterDbProvider;
 
 
 public class DrinkWater extends Fragment {
 
     public FloatingActionButton fabAdd, fabSelect;
-    String time, date, total_weight, prefs_unit;
+    String time, date;
     TextView drinked, goal;
     Button waterSetting;
     static ProgressBar progressBar;
-    public static String weight_flie = "weight_unit", weight = "weight";
-    SharedPreferences sharedDataWeightUnit, sharedDataWeight;
-    int drink_target;
+    public static String weight = "weight";
+    SharedPreferences sharedDataWeight;
+    int drink_target, is_drinked;
+    Cursor drink_water_cursor;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -60,18 +62,18 @@ public class DrinkWater extends Fragment {
         ft.replace(R.id.bottle_container, fragment).commit();
 
         sharedDataWeight = getActivity().getSharedPreferences(weight, 0);
-        String weight_prefs = sharedDataWeight.getString("weight", 0 + "");
+        String weight_prefs = sharedDataWeight.getString("weight", "70");
         int dummy = Integer.parseInt(weight_prefs);
+
+        // 目標總水量
         drink_target = calTarget(dummy);
         goal.setText("/" + drink_target + "");
-
         progressBar.setMax(drink_target);
 
-        sharedDataWeightUnit = getActivity().getSharedPreferences(weight_flie, 0);
-        sharedDataWeight = getActivity().getSharedPreferences(weight, 0);
-        prefs_unit = sharedDataWeightUnit.getString("weight_unit", "Kg");
-        sharedDataWeight = getActivity().getSharedPreferences(weight, 0);
-        total_weight = sharedDataWeight.getString("weight", "00");
+        // 目前已喝的水量
+        is_drinked = 0;
+        drinked.setText("" + is_drinked);
+        progressBar.setProgress(is_drinked);
 
         // 修改喝水目標
         waterSetting.setOnClickListener(new View.OnClickListener() {
@@ -82,7 +84,7 @@ public class DrinkWater extends Fragment {
             }
         });
 
-        // 選擇水杯
+        // 選擇水杯並新增
         fabSelect = (FloatingActionButton) view.findViewById(R.id.fab_select);
         fabSelect.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,61 +103,31 @@ public class DrinkWater extends Fragment {
                 ContentValues values = new ContentValues();
                 values.clear();
                 int pos = SelectGlass.position;
-                values.put(WaterDatabase.KEY_POS, pos);
-                values.put(WaterDatabase.KEY_DATE, date);
-                values.put(WaterDatabase.KEY_TIME, time);
-                Uri uri = WaterDbProvider.CONTENT_URI;
+                int ml = Integer.parseInt(WaterBottlesData.getData().get(SelectGlass.position).title);
+                values.put(WaterDBHelper.KEY_POS, pos);
+                values.put(WaterDBHelper.KEY_ML, ml);
+                values.put(WaterDBHelper.KEY_DATE, date);
+                values.put(WaterDBHelper.KEY_TIME, time);
+                Uri uri = WaterDbProvider.CONTENT_URI_WATER;
                 Uri newUri = getActivity().getContentResolver().insert(uri, values);
-                updateProgress(pos);
+                progressBar.incrementProgressBy(ml);
+                is_drinked += ml;
+                drinked.setText("" + is_drinked);
                 Fragment fragment = new BottleGrid();
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.replace(R.id.bottle_container, fragment).addToBackStack(null).commit();
             }
         });
+
         setHasOptionsMenu(true);
         return view;
     }
 
-    public static void updateProgress(int position) {
-        switch (position) {
-            case 0:
-                progressBar.incrementProgressBy(100);
-                break;
-            case 1:
-                progressBar.incrementProgressBy(150);
-                break;
-            case 2:
-                progressBar.incrementProgressBy(200);
-                break;
-            case 3:
-                progressBar.incrementProgressBy(400);
-                break;
-            case 4:
-                progressBar.incrementProgressBy(500);
-                break;
-            case 5:
-                progressBar.incrementProgressBy(600);
-                break;
-            case 6:
-                progressBar.incrementProgressBy(700);
-                break;
-            case 7:
-                progressBar.incrementProgressBy(800);
-                break;
-        }
-    }
-
     private int calTarget(int weight_data) {
-        int data_y = weight_data * 33;
-        //Log.e("TARGET", data_y + "");
-        return data_y;
+        int target = weight_data * 33;
+        return target;
 
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.activity_main_drawer, menu);
     }
 }
 
