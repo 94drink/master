@@ -22,6 +22,12 @@
     <string name="backup">備份及恢復</string>
     -->
 
+    <!--設定區-->
+    <string name="set_reminder">提醒設定</string>
+    <string name="set_cup_size">客製化杯子容量</string>
+    <string name="set_weight_goal">體重與目標</string>
+    <string name="set_units_format">備份和恢復</string>
+
     <!--layout/fragment_drinkwater-->
     <string name="drink_target">喝水目標</string>
     <string name="drinked">500</string>
