@@ -1,11 +1,8 @@
 package tw.com.justdrink;
 
 import android.app.DatePickerDialog;
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
@@ -14,7 +11,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
@@ -23,9 +19,10 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 
-import tw.com.justdrink.calendar.CalendarDialog;
-
 import tw.com.justdrink.dinrkreport.DrinkReport;
+import tw.com.justdrink.drinklog.DrinkLog;
+import tw.com.justdrink.drinkwater.DrinkWater;
+import tw.com.justdrink.reminder.Reminders;
 
 
 public class MainActivity extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener {
@@ -33,8 +30,9 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     private NavigationView navigationView;
     public Toolbar toolbar;
     private ActionBarDrawerToggle toggle;
-    private CharSequence mTitle;
     private TextView toolbar_text;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,30 +81,12 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-
-
-        return super.onOptionsItemSelected(item);
-    }
-
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-
         displayView(item.getItemId());
         return true;
-    }
-
-    @Override
-    public void setTitle(CharSequence title) {
-        mTitle = title;
-        getActionBar().setTitle(mTitle);
     }
 
     public Toolbar.OnMenuItemClickListener onMenuItemClickListener=new Toolbar.OnMenuItemClickListener() {
@@ -116,21 +96,19 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         public boolean onMenuItemClick(MenuItem menuItem) {
             switch (menuItem.getItemId())
             {
-                case R.id.reminders:
-
-                    Intent i =  new Intent(getBaseContext(),Reminders.class);
-                    startActivity(i);
-                    toolbar_text.setText(R.string.reminders);
+                case R.id.reminder_setting:
+//                    Intent i =  new Intent(getBaseContext(),Reminders.class);
+//                    startActivity(i);
                     break;
-                case R.id.calendar_button:
+                case R.id.calendar:
 //                  Intent intent = new Intent(MainActivity.this,CalendarDialog.class);
 //                  startActivity(intent);//Intent 方式不知道該怎麼接上<calendar-CalendarDialog->
                     final int mYear, mMonth, mDay;//設置時間變數
-                    final java.util.Calendar c = java.util.Calendar.getInstance();  //final 是無法被修改的 類別 函數 或變數
+                    final Calendar c = Calendar.getInstance();  //final 是無法被修改的 類別 函數 或變數
 
-                    mYear = c.get(java.util.Calendar.YEAR);
-                    mMonth = c.get(java.util.Calendar.MONTH);
-                    mDay = c.get(java.util.Calendar.DAY_OF_MONTH);
+                    mYear = c.get(Calendar.YEAR);
+                    mMonth = c.get(Calendar.MONTH);
+                    mDay = c.get(Calendar.DAY_OF_MONTH);
 
                     new DatePickerDialog(MainActivity.this, new DatePickerDialog.OnDateSetListener() {//OnDateSetListener 為內建方法 將使用者輸入完成後的日期傳回
                         @Override
@@ -138,6 +116,10 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
                              toolbar_text.setText(mYear+"/"+String.valueOf(mMonth+1)+"/"+mDay);//顯示在toolbar上的日期 //轉用到ToolBar上的setTitle
                                   }
                     }, mYear,mMonth, mDay).show();
+                    break;
+                case R.id.weight_setting:
+                    Toast.makeText(MainActivity.this, R.string.weight_setting, Toast.LENGTH_SHORT).show();
+                    break;
              }
             return true;
 
@@ -145,10 +127,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
     };
 
-
-
-
-    public void displayView(int viewId) {
+    private void displayView(int viewId) {
 
         Fragment fragment = null;
         switch (viewId) {
@@ -168,7 +147,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
                 fragment = new Weightreport();
                 toolbar_text.setText(R.string.weightreport);
                 break;
-            case R.id.reminders://
+            case R.id.reminders:
                 fragment = new Reminders();
                 toolbar_text.setText(R.string.reminders);
                 break;
