@@ -23,7 +23,7 @@ public class Weight extends DialogFragment implements OnClickListener {
 
     EditText enter_weight;
     TextView unit;
-    Button choose_unit, cancel, ok;
+    Button cancel, ok;
     View v;
     String prefs_unit,weight_prefs;
     public static String weight_flie = "weight_unit";
@@ -34,7 +34,6 @@ public class Weight extends DialogFragment implements OnClickListener {
     private void init() {
         enter_weight = (EditText) v.findViewById(R.id.weight);
         unit = (TextView) v.findViewById(R.id.unit);
-        choose_unit = (Button) v.findViewById(R.id.choose_unit);
         ok = (Button) v.findViewById(R.id.ok);
         cancel = (Button) v.findViewById(R.id.cancel);
         enter_weight.setTextColor(getResources().getColor(R.color.black));
@@ -45,7 +44,6 @@ public class Weight extends DialogFragment implements OnClickListener {
         prefs_unit = sharedDataWeightUnit.getString("weight_unit", "Kg");
         weight_prefs = sharedDataWeight.getString("weight", 0 + "");
         unit.setText(prefs_unit);
-        choose_unit.setOnClickListener(this);
         cancel.setOnClickListener(this);
         ok.setOnClickListener(this);
     }
@@ -69,28 +67,14 @@ public class Weight extends DialogFragment implements OnClickListener {
             case R.id.cancel:
                 getDialog().dismiss();
                 break;
-            case R.id.choose_unit:
-                FragmentManager manager = getFragmentManager();
-                ChooseUnit unit = new ChooseUnit();
-                unit.show(manager, "Dialog1");
-                getDialog().dismiss();
-                break;
+
             case R.id.ok:
                 String data = enter_weight.getText().toString();
-           //     int todaydate=Integer.parseInt(data);
+                int todaydate=Integer.parseInt(data);
                 SharedPreferences.Editor editor = sharedDataWeight.edit();
                 editor.putString("weight", data);
                 editor.commit();
-               /* Calendar c = Calendar.getInstance();
-                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-                String date = df.format(c.getTime());
 
-                ContentValues values=new ContentValues();
-                values.clear();
-                values.put(WaterDatabase.KEY_WEIGHT,data);
-                values.put(WaterDatabase.KEY_DATE, todaydate);
-                Uri newUri=getActivity().getContentResolver().insert(WaterDbProvider.CONTENT_WEIGHT_URI, values);
-                Log.e("WEIGHT",newUri+"");*/
 
                 Fragment fragment = new DrinkWater();
                 FragmentManager fragmentManager = getFragmentManager();
@@ -99,7 +83,8 @@ public class Weight extends DialogFragment implements OnClickListener {
 
                 getDialog().dismiss();
 
-                Toast.makeText(getActivity(), "weight: " + weight_prefs, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "weight: " +  enter_weight.getText().toString(),
+                        Toast.LENGTH_SHORT).show();
                 break;
         }
     }
