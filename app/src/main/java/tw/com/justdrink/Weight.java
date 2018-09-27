@@ -16,6 +16,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import tw.com.justdrink.drinkwater.DrinkWater;
+
 
 public class Weight extends DialogFragment implements OnClickListener {
 
