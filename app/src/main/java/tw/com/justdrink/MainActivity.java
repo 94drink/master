@@ -1,6 +1,7 @@
 package tw.com.justdrink;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -104,6 +105,8 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
                 case R.id.reminder_setting:
 //                    Intent i =  new Intent(getBaseContext(),Reminders.class);
 //                    startActivity(i);
+                    fragment = new Reminders();
+                    toolbar_text.setText(R.string.reminders);
                     break;
                 case R.id.calendar:
 //                  Intent intent = new Intent(MainActivity.this,CalendarDialog.class);
