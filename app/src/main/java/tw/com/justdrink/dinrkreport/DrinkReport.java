@@ -1,7 +1,6 @@
 package tw.com.justdrink.dinrkreport;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -21,7 +20,7 @@ public class DrinkReport extends Fragment {
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
-    @Nullable
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_drink_report, container, false);

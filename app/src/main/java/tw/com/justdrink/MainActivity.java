@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -33,12 +32,6 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     public Toolbar toolbar;
     private ActionBarDrawerToggle toggle;
     private TextView toolbar_text;
-
-    Fragment fragment = null;
-    FragmentManager fragmentManager = getSupportFragmentManager();
-    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,8 +119,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
                     }, mYear,mMonth, mDay).show();
                     break;
                 case R.id.weight_setting:
-                    Weight weight = new Weight();
-                    weight.show(fragmentManager, "Dialog");
+                    Toast.makeText(MainActivity.this, R.string.weight_setting, Toast.LENGTH_SHORT).show();
                     break;
              }
             return true;

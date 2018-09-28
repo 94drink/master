@@ -15,7 +15,7 @@
     <string name="drinkreport">喝水圖表</string>
     <string name="weightreport">體重圖表</string>
     <string name="reminders">通知設置</string>
-    <string name="nav_settings">基本設置</string>
+    <string name="nav_settings">基本設定</string>
     <!--
     <string name="widgets">小工具</string>
     <string name="nav_share">分享給朋友</string>
@@ -44,14 +44,29 @@
     <string name="monthly_Drink">月飲水量</string>
     <string name="year_average">年平均</string>
     <string name="year_Drink">年飲水量</string>
+    <string name="no_data">沒有資料！</string>
+    <!-- 對話框使用字串 -->
+    <string name="cancel">取消</string>
+    <string name="ok">確定</string>
+    <string name="total">總計：</string>
+    <string name="cold">寒冷</string>
+    <string name="mild">涼爽</string>
+    <string name="warm">溫暖</string>
+    <string name="hot">炎熱</string>
+    <string name="quiet">安靜</string>
+    <string name="normal">正常</string>
+    <string name="lively">活躍</string>
+    <string name="verylively">劇烈</string>
 
     <!--layout/water_settings_list-->
     <string-array name="water_settings_array">
+        <item>基本設定</item>
         <item>體重</item>
         <item>自訂增量</item>
         <item>天氣</item>
         <item>運動</item>
         <item>總計：</item>
+        <item>喝水音效</item>
     </string-array>
 
     <!--設定區fragment_setting-->
