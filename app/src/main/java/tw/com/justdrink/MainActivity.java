@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
                     }, mYear,mMonth, mDay).show();
                     break;
                 case R.id.weight_setting:
-                    Toast.makeText(MainActivity.this, R.string.weight_setting, Toast.LENGTH_SHORT).show();
+                    showWaterSetting();
                     break;
              }
             return true;
@@ -151,8 +151,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
                 toolbar_text.setText(R.string.reminders);
                 break;
             case R.id.nav_settings:
-                fragment = new Setting();
-                toolbar_text.setText(R.string.nav_settings);
+                showWaterSetting();
                 break;
         }
 
@@ -163,5 +162,10 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+    }
+
+    public void showWaterSetting(){
+        WaterSettings waterSettings = new WaterSettings();
+        waterSettings.show(getSupportFragmentManager(), "setting");
     }
 }

@@ -6,8 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class WaterSettings extends DialogFragment {
@@ -27,12 +30,37 @@ public class WaterSettings extends DialogFragment {
         View view = inflater.inflate(R.layout.water_settings, container, false);
         listView = (ListView) view.findViewById(R.id.water_settings_list);
         adapter = new WaterSettingsAdapter(getActivity());
+        TextView tvValue = (TextView)listView.findViewById(R.id.tvValue);
         listView.setAdapter(adapter);
         cancel = (Button) view.findViewById(R.id.cancel);
         save = (Button) view.findViewById(R.id.save);
         cancel.setOnClickListener(new ButtonHandler());
         save.setOnClickListener(new ButtonHandler());
         setCancelable(true);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                //int aa = listView.getId();
+                int itemId = (int)adapter.getItemId(i);
+                switch (itemId){
+                    case 1:
+                        showDialog("weight");
+                        break;
+                    case 2:
+                        showDialog("other");
+                        break;
+                    case 3:
+                        showDialog("weather");
+                        break;
+                    case 4:
+                        showDialog("sport");
+                        break;
+                    case 6:
+                        showDialog("beep");
+                        break;
+                }
+            }
+        });
         return view;
     }
 
@@ -44,10 +72,30 @@ public class WaterSettings extends DialogFragment {
                     getDialog().dismiss();
                     break;
                 case R.id.save:
+                    Toast.makeText(getContext(), "功能尚未完成!!", Toast.LENGTH_SHORT).show();
                     break;
             }
-
         }
     }
+
+    public void showDialog(String tag){
+        if (tag.equals("weight")){
+            Weight_Setting_dialog dialog=new Weight_Setting_dialog();
+            dialog.show(getFragmentManager(), tag);
+        }else if (tag.equals("other")){
+            Other_Setting_Dialog dialog=new Other_Setting_Dialog();
+            dialog.show(getFragmentManager(), tag);
+        }else if (tag.equals("weather")){
+            Other_Setting_Dialog dialog=new Other_Setting_Dialog();
+            dialog.show(getFragmentManager(), tag);
+        }else if (tag.equals("sport")){
+            Other_Setting_Dialog dialog=new Other_Setting_Dialog();
+            dialog.show(getFragmentManager(), tag);
+        }else if (tag.equals("beep")){
+            Other_Setting_Dialog dialog=new Other_Setting_Dialog();
+            dialog.show(getFragmentManager(), tag);
+        }
+    }
+
 }
 
