@@ -69,9 +69,9 @@
     <!--設定Fragment內的RecyclView物件-->
     <string-array name="alarm">
         <item>Time Alarm setting</item>
-        <item>item2</item>
-        <item>item3</item>
-        <item>item4</item>
+        <item>Service</item>
+        <item>MusicSetting</item>
+        <item>NoVoice</item>
     </string-array>
 
 
