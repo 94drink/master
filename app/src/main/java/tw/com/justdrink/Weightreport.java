@@ -1,6 +1,5 @@
 package tw.com.justdrink;
 
-import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import tw.com.justdrink.database.WaterDbProvider;
 import tw.com.justdrink.dinrkreport.GetDates;
 
@@ -40,7 +40,7 @@ public class Weightreport extends Fragment {
         String[] projection = new String[] {"date", "sum(ml) as suml"};
 //        String qureytxt = "date) BETWEEN '2018-09-20' AND '2018-09-24' GROUP BY (date";
         String qureytxt = "date) BETWEEN '" + date_lw + "' AND '" + date_now + "' GROUP BY (date";
-        weight_cursor = getActivity().getContentResolver().query(WaterDbProvider.CONTENT_URI, projection, qureytxt, null, null);
+        weight_cursor = getActivity().getContentResolver().query(WaterDbProvider.CONTENT_URI_WATER, projection, qureytxt, null, null);
         //**--抓取DATE GROUP 飲水量總和**--//
 
         if(weight_cursor.getCount() > 0) {

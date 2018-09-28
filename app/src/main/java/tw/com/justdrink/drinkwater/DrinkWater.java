@@ -2,6 +2,7 @@ package tw.com.justdrink.drinkwater;
 
 import android.content.ContentValues;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -22,20 +23,21 @@ import java.util.TimeZone;
 import tw.com.justdrink.R;
 import tw.com.justdrink.WaterSettings;
 import tw.com.justdrink.database.WaterBottlesData;
-import tw.com.justdrink.database.WaterDatabase;
+import tw.com.justdrink.database.WaterDBHelper;
 import tw.com.justdrink.database.WaterDbProvider;
 
 
 public class DrinkWater extends Fragment {
 
     public FloatingActionButton fabAdd, fabSelect;
-    String time, date, total_weight, prefs_unit;
+    String time, date;
     TextView drinked, goal;
     Button waterSetting;
     static ProgressBar progressBar;
-    public static String weight_flie = "weight_unit", weight = "weight";
-    SharedPreferences sharedDataWeightUnit, sharedDataWeight;
+    public static String weight = "weight";
+    SharedPreferences sharedDataWeight;
     int drink_target, is_drinked;
+    Cursor drink_water_cursor;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -102,11 +104,11 @@ public class DrinkWater extends Fragment {
                 values.clear();
                 int pos = SelectGlass.position;
                 int ml = Integer.parseInt(WaterBottlesData.getData().get(SelectGlass.position).title);
-                values.put(WaterDatabase.KEY_POS, pos);
-                values.put(WaterDatabase.KEY_ML, ml);
-                values.put(WaterDatabase.KEY_DATE, date);
-                values.put(WaterDatabase.KEY_TIME, time);
-                Uri uri = WaterDbProvider.CONTENT_URI;
+                values.put(WaterDBHelper.KEY_POS, pos);
+                values.put(WaterDBHelper.KEY_ML, ml);
+                values.put(WaterDBHelper.KEY_DATE, date);
+                values.put(WaterDBHelper.KEY_TIME, time);
+                Uri uri = WaterDbProvider.CONTENT_URI_WATER;
                 Uri newUri = getActivity().getContentResolver().insert(uri, values);
                 progressBar.incrementProgressBy(ml);
                 is_drinked += ml;
@@ -124,7 +126,6 @@ public class DrinkWater extends Fragment {
 
     private int calTarget(int weight_data) {
         int target = weight_data * 33;
-        //Log.e("TARGET", data_y + "");
         return target;
 
     }

@@ -14,20 +14,20 @@ import android.text.TextUtils;
 
 import java.util.HashMap;
 
-import static tw.com.justdrink.database.WaterDatabase.WATER_TABLE;
+import static tw.com.justdrink.database.WaterDBHelper.WATER_TABLE;
 
 
 public class WaterDbProvider extends ContentProvider {
 
     Context context;
     SQLiteDatabase sqLiteDatabase;
-    WaterDatabase waterDatabase;
+    WaterDBHelper WaterDBHelper;
 
     private static HashMap<String, String> WaterMap;
 
     public static final String PROVIDER_NAME = "tw.com.justdrink.database.WaterProvider";
     public static final String URL = "content://" + PROVIDER_NAME + "/Water";
-    public static final Uri CONTENT_URI = Uri.parse(URL);
+    public static final Uri CONTENT_URI_WATER = Uri.parse(URL);
 
     private static final int Water = 1;
     private static final int Water_Id = 2;
@@ -46,8 +46,8 @@ public class WaterDbProvider extends ContentProvider {
     @Override
     public boolean onCreate() {
         context = getContext();
-        waterDatabase = new WaterDatabase(context);
-        sqLiteDatabase = waterDatabase.getWritableDatabase();
+        WaterDBHelper = new WaterDBHelper(context);
+        sqLiteDatabase = WaterDBHelper.getWritableDatabase();
         if (sqLiteDatabase == null)
             return false;
         else
@@ -65,14 +65,14 @@ public class WaterDbProvider extends ContentProvider {
                 qb.setProjectionMap(WaterMap);
                 break;
             case Water_Id:
-                qb.appendWhere(WaterDatabase.KEY_ID + "=" + uri.getLastPathSegment());
+                qb.appendWhere(WaterDBHelper.KEY_ID + "=" + uri.getLastPathSegment());
                 break;
             default:
                 throw new IllegalArgumentException("Invalid URI: " + uri);
         }
         if (sortOrder == null || sortOrder == "") {
             // No sorting-> sort on names by default
-            sortOrder = WaterDatabase.KEY_DATE + " DESC, " + WaterDatabase.KEY_ID;
+            sortOrder = WaterDBHelper.KEY_DATE + " DESC, " + WaterDBHelper.KEY_ID;
         }
         Cursor cursor = qb.query(sqLiteDatabase, projection, selection, selectionArgs, null, null, sortOrder);
         cursor.setNotificationUri(getContext().getContentResolver(), uri);
@@ -100,7 +100,7 @@ public class WaterDbProvider extends ContentProvider {
             case Water:
                 long rowID = sqLiteDatabase.insert(WATER_TABLE, null, values);
                 if (rowID > 0) {
-                    _uri = ContentUris.withAppendedId(CONTENT_URI, rowID);
+                    _uri = ContentUris.withAppendedId(CONTENT_URI_WATER, rowID);
                     getContext().getContentResolver().notifyChange(_uri, null);
                 }
                 break;
@@ -119,7 +119,7 @@ public class WaterDbProvider extends ContentProvider {
                 break;
             case Water_Id:
                 String id = uri.getLastPathSegment();    //gets the id
-                count = sqLiteDatabase.delete(WATER_TABLE, WaterDatabase.KEY_ID + " = " + id +
+                count = sqLiteDatabase.delete(WATER_TABLE, WaterDBHelper.KEY_ID + " = " + id +
                         (!TextUtils.isEmpty(selection) ? " AND (" +
                                 selection + ')' : ""), selectionArgs);
                 break;
@@ -138,7 +138,7 @@ public class WaterDbProvider extends ContentProvider {
                 count = sqLiteDatabase.update(WATER_TABLE, values, selection, selectionArgs);
                 break;
             case Water_Id:
-                count = sqLiteDatabase.update(WATER_TABLE, values, WaterDatabase.KEY_ID +
+                count = sqLiteDatabase.update(WATER_TABLE, values, WaterDBHelper.KEY_ID +
                         " = " + uri.getLastPathSegment() +
                         (!TextUtils.isEmpty(selection) ? " AND (" +
                                 selection + ')' : ""), selectionArgs);

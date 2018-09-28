@@ -22,6 +22,7 @@ import java.util.Calendar;
 import tw.com.justdrink.dinrkreport.DrinkReport;
 import tw.com.justdrink.drinklog.DrinkLog;
 import tw.com.justdrink.drinkwater.DrinkWater;
+import tw.com.justdrink.reminder.Reminders;
 
 
 public class MainActivity extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener {
@@ -117,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
                     }, mYear,mMonth, mDay).show();
                     break;
                 case R.id.weight_setting:
-                    showWaterSetting();
+                    Toast.makeText(MainActivity.this, R.string.weight_setting, Toast.LENGTH_SHORT).show();
                     break;
              }
             return true;
@@ -151,7 +152,8 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
                 toolbar_text.setText(R.string.reminders);
                 break;
             case R.id.nav_settings:
-                showWaterSetting();
+                fragment = new Setting();
+                toolbar_text.setText(R.string.nav_settings);
                 break;
         }
 
@@ -162,10 +164,5 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-    }
-
-    public void showWaterSetting(){
-        WaterSettings waterSettings = new WaterSettings();
-        waterSettings.show(getSupportFragmentManager(), "setting");
     }
 }

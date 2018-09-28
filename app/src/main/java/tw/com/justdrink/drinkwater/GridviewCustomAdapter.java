@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import tw.com.justdrink.R;
 import tw.com.justdrink.database.WaterBottlesData;
-import tw.com.justdrink.database.WaterDatabase;
+import tw.com.justdrink.database.WaterDBHelper;
 
 
 public class GridviewCustomAdapter extends SimpleCursorAdapter {
@@ -45,10 +45,10 @@ public class GridviewCustomAdapter extends SimpleCursorAdapter {
         }
 
         dataCursor.moveToPosition(position);
-        int title = dataCursor.getColumnIndex(WaterDatabase.KEY_TIME);
+        int title = dataCursor.getColumnIndex(WaterDBHelper.KEY_TIME);
         String task_title = dataCursor.getString(title);
 
-        int description_index = dataCursor.getColumnIndex(WaterDatabase.KEY_POS);
+        int description_index = dataCursor.getColumnIndex(WaterDBHelper.KEY_POS);
         int priority = dataCursor.getInt(description_index);
 
         holder.tvTime.setText(task_title);

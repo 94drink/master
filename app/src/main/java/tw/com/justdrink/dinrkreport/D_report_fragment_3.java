@@ -61,7 +61,7 @@ public class D_report_fragment_3 extends Fragment {
         String date_today = getDates.getDate();
         String[] projection = new String[] {"date", "sum(ml) as suml"};
         String d_now = "date) = '" + date_today + "' GROUP BY (date";
-        st_cursor = getActivity().getContentResolver().query(WaterDbProvider.CONTENT_URI, projection, d_now, null, null);
+        st_cursor = getActivity().getContentResolver().query(WaterDbProvider.CONTENT_URI_WATER, projection, d_now, null, null);
         if(st_cursor.getCount() > 0) {
             st_cursor.moveToFirst();
             String st = st_cursor.getString(1) + "ml";
@@ -197,7 +197,7 @@ public class D_report_fragment_3 extends Fragment {
         String[] projection = new String[] {"substr(date, 1, 7) as month,sum(ml) as total"};
         //chart_cursor.getString(1)，0代表日期"date"、1代表加總"suml"，此處只抓2個欄位
         String qureytxt = "substr(date, 1, 4)) = '" + date + "' group by (substr(date, 1, 7)";
-        chart_cursor = getActivity().getContentResolver().query(WaterDbProvider.CONTENT_URI, projection, qureytxt, null, "date ASC");
+        chart_cursor = getActivity().getContentResolver().query(WaterDbProvider.CONTENT_URI_WATER, projection, qureytxt, null, "date ASC");
         //**--抓取以日期為單位加總之飲水量總和**--//
 
         //**--建立圖表資料--**//
@@ -228,7 +228,7 @@ public class D_report_fragment_3 extends Fragment {
         String[] projection = new String[] {"substr(date, 1, 7) as month,sum(ml) as total"};
         //chart_cursor.getString(1)，0代表日期"date"、1代表加總"suml"，此處只抓2個欄位
         String qureytxt = "substr(date, 1, 4)) = '" + date + "' group by (substr(date, 1, 7)";
-        chart_cursor = getActivity().getContentResolver().query(WaterDbProvider.CONTENT_URI, projection, qureytxt, null, "date ASC");
+        chart_cursor = getActivity().getContentResolver().query(WaterDbProvider.CONTENT_URI_WATER, projection, qureytxt, null, "date ASC");
         //**--抓取以日期為單位加總之飲水量總和**--//
 
         //**--計算期間飲水量總和**--//
