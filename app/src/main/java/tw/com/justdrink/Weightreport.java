@@ -7,15 +7,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import tw.com.justdrink.database.WaterDbProvider;
 import tw.com.justdrink.dinrkreport.GetDates;
 
 public class Weightreport extends Fragment {
 
-    Cursor weight_cursor;
-    //TextView weightreport_text_view;
+    Cursor cursor_single, cursor_muti;
+    TextView weightreport_text_view;
     private String result = "",date_now,date_lw ;
+    WaterDbProvider waterDbProvider;
+    GetDates getDates;
 
 
     @Override
@@ -25,9 +28,10 @@ public class Weightreport extends Fragment {
         TextView weightreport_text_view = (TextView)rootView.findViewById(R.id.weightreport_text_view);
         TextView datestart = (TextView)rootView.findViewById(R.id.datestart);
         TextView dateend = (TextView)rootView.findViewById(R.id.dateend);
+        waterDbProvider = new WaterDbProvider();
 
         //取得今天日期
-        GetDates getDates = new GetDates();
+        getDates = new GetDates();
         date_now = getDates.getDate();
 
         //取得7天前日期
@@ -36,23 +40,37 @@ public class Weightreport extends Fragment {
         datestart.setText(date_lw);
         dateend.setText(date_now);
 
-        //**--抓取DATE GROUP 飲水量總和**--//
-        String[] projection = new String[] {"date", "sum(ml) as suml"};
-//        String qureytxt = "date) BETWEEN '2018-09-20' AND '2018-09-24' GROUP BY (date";
-        String qureytxt = "date) BETWEEN '" + date_lw + "' AND '" + date_now + "' GROUP BY (date";
-        weight_cursor = getActivity().getContentResolver().query(WaterDbProvider.CONTENT_URI_WATER, projection, qureytxt, null, null);
-        //**--抓取DATE GROUP 飲水量總和**--//
+//        //**--顯示當日飲水量--**//
+//        String[] projection = new String[] {"date", "sum(ml) as suml"};
+//        String d_now = "date) = '" + date_now + "' GROUP BY (date";
+//        cursor_single = getActivity().getContentResolver().query(WaterDbProvider.CONTENT_URI_WATER, projection, d_now, null, null);
+//        if(cursor_single.getCount() > 0) {
+//            cursor_single.moveToFirst();
+//            int st = Integer.parseInt(cursor_single.getString(1));
+//            weightreport_text_view.setText(st + "");
+//        }else{
+//            weightreport_text_view.setText("0ml");
+//        }
+//        //**--顯示當日飲水量--**//
 
-        if(weight_cursor.getCount() > 0) {
-            weight_cursor.moveToFirst();
-            do{
-                result += weight_cursor.getString(0) + ","
-                        + weight_cursor.getString(1) + "\n";
-            }while (weight_cursor.moveToNext());
-            weightreport_text_view.setText(result);
+        //**--顯示多日飲水量--**//
+        String[] projection = new String[] {"date", "sum(ml) as suml"};
+        String qureytxt = "date) BETWEEN '" + date_lw + "' AND '" + date_now + "' GROUP BY (date";
+        cursor_muti = getActivity().getContentResolver().query(WaterDbProvider.CONTENT_URI_WATER, projection, qureytxt, null, "date ASC");
+        int[] value = new int[cursor_muti.getCount()];
+        String st = "";
+        if(cursor_muti.getCount() > 0) {
+            cursor_muti.moveToFirst();
+            for (int i=0; i<cursor_muti.getCount(); i++){
+                value[i] = Integer.parseInt(cursor_muti.getString(1));
+                st = st +cursor_muti.getString(1) +"\n";
+                weightreport_text_view.setText(st);
+                cursor_muti.moveToNext();
+            }
         }else{
-            weightreport_text_view.setText("NO DATA!!");
+            weightreport_text_view.setText("0ml");
         }
+        //**--顯示多日飲水量--**//
 
         return rootView;
     }
