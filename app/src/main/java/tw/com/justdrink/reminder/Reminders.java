@@ -4,11 +4,12 @@ import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.provider.AlarmClock;
+import android.os.IBinder;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,6 +32,22 @@ public class Reminders extends Fragment {
     ListView listView;
     Calendar calendar = Calendar.getInstance();
     PendingIntent pi;
+    AlarmService alarmService ;
+
+    private ServiceConnection mConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+
+            AlarmService aService = new AlarmService();
+            AlarmService.MyBinder mBinder  = aService.new MyBinder();
+            alarmService = mBinder.getService();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+            alarmService = null ;
+        }
+    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
@@ -40,7 +57,7 @@ public class Reminders extends Fragment {
         reminderview = inflater.inflate(R.layout.fragment_reminders, container, false);
         listView = (ListView)reminderview.findViewById(R.id.reminderList_item);
 
-        String[] arr = getActivity().getResources().getStringArray(R.array.alarm);
+        String[] arr = getActivity().getResources().getStringArray(R.array.alarm);//帶入Array陣列
         final ArrayAdapter<String> adapter =
                 new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_expandable_list_item_1,arr);
@@ -58,36 +75,52 @@ public class Reminders extends Fragment {
                 } //new OntemSelectedListener
         );
 
+
+
+
         listView.setOnItemClickListener(
                 new AdapterView.OnItemClickListener(){
                     public void onItemClick(AdapterView<?> vg, View view, int position, long id) {
+                        //vg被點的母元件,也就是Listview//View 被點的item本身//position第幾個item被點到//item的id
                         AlertDialog dialog = new AlertDialog.Builder(getActivity()).create();
                         dialog.setTitle("Title");
 
                         switch (position){
                             case 0:
-                                //Intent i = new Intent(context , AlarmService.class);
-//                                //建立PendingIntent pi
-//                                pi = PendingIntent.getService(context,100,i , PendingIntent.FLAG_CANCEL_CURRENT);
-//                                calendar.setTimeInMillis(System.currentTimeMillis());//抓取時間
-//                                int hour = calendar.get(Calendar.DAY_OF_MONTH);//小時傳入
-//                                int minute = calendar.get(Calendar.MINUTE);//分鐘傳入
+//                                Intent intent = new Intent(vg.getContext() , AlarmService.class);
+//                                startActivity(intent);
+
+//                                Intent intent = new Intent (Reminders.this.getContext(),AlarmService.class);
+//                                startActivity(intent);
 //
-//                                TimePickerDialog timePickerDialog = new TimePickerDialog(context ,
-//                                        new MyOnTimeSetListener(),hour,minute , true);
-//                                timePickerDialog.show();
+//                                //建立PendingIntent
+//                               pi = PendingIntent.getService(context,100,intent, PendingIntent.FLAG_UPDATE_CURRENT);
+//                                //取得按下按鈕的時間為TimePickerDialog的預設值
+                                calendar.setTimeInMillis(System.currentTimeMillis());
+                                int hour = calendar.get(Calendar.HOUR_OF_DAY);
+                                int minute = calendar.get(Calendar.MINUTE);
+//
+//                                // 跳出TimePickerDialog來設定時間 */
+                                TimePickerDialog timePickerDialog = new TimePickerDialog(context ,
+                                        new MyOnTimeSetListener(),hour,minute , true);
+                                timePickerDialog.show();
+
+                                Log.i("setting","setting");
                                 break;
                             case 1 :
-                                Log.i("setting","setting");
+                                AlarmManager alarmManager =(AlarmManager)
+                                    context.getSystemService(Context.ALARM_SERVICE);
+                                alarmManager.cancel(pi);
+
+                                Log.i("取消","setting");
                                 break;
                             case 2 :
                                 Log.i("music","music");
                                 break;
                             case 3 :
                                 Log.i("music","music");
-
+                                break;
                         }
-
                     }
                 }
         );
@@ -126,5 +159,13 @@ public class Reminders extends Fragment {
         String s = String.valueOf(x);
         return (s.length() ==  1)?"0" + s:s;
     }
+
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.context = context;
+    }
+
 
 }

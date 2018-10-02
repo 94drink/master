@@ -88,6 +88,7 @@
         <item>提醒音樂設置</item>
         <item>震動＆靜音</item>
     </string-array>
+    <string name="remove_alarm">移除鬧鐘</string>
 
 
 </resources>
