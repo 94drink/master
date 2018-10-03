@@ -1,6 +1,7 @@
 package tw.com.justdrink.drinkwater;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
@@ -31,13 +32,14 @@ public class DrinkWater extends Fragment {
 
     public FloatingActionButton fabAdd, fabSelect;
     String time, date;
-    TextView drinked, goal;
+    TextView goal;
     Button waterSetting;
     static ProgressBar progressBar;
+    static TextView drinked;
     public static String weight = "weight";
     SharedPreferences sharedDataWeight;
     int drink_target, is_drinked;
-    Cursor drink_water_cursor;
+    static Context context;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -48,6 +50,7 @@ public class DrinkWater extends Fragment {
         sdf.setTimeZone(TimeZone.getTimeZone("Asia/Taipei"));
         time = sdf.format(c.getTime());
         date = df.format(c.getTime());
+        context = getActivity();
 
         View view = inflater.inflate(R.layout.fragment_drinkwater, container, false);
 
@@ -70,8 +73,9 @@ public class DrinkWater extends Fragment {
         goal.setText("/" + drink_target + "");
         progressBar.setMax(drink_target);
 
-        // 目前已喝的水量
-        is_drinked = 0;
+        // 單日已喝總水量
+
+        is_drinked = getDrinkedByDate(date);
         drinked.setText("" + is_drinked);
         progressBar.setProgress(is_drinked);
 
@@ -111,8 +115,7 @@ public class DrinkWater extends Fragment {
                 Uri uri = WaterDbProvider.CONTENT_URI_WATER;
                 Uri newUri = getActivity().getContentResolver().insert(uri, values);
                 progressBar.incrementProgressBy(ml);
-                is_drinked += ml;
-                drinked.setText("" + is_drinked);
+                drinked.setText("" + getDrinkedByDate(date));
                 Fragment fragment = new BottleGrid();
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
@@ -129,5 +132,20 @@ public class DrinkWater extends Fragment {
         return target;
 
     }
+
+    public static int getDrinkedByDate(String dateString) {
+        String[] projection = new String[] {"sum(ml) as Total"};
+        String where = "date) = '" + dateString + "' GROUP BY (date";
+        Cursor drink_water_cursor = context.getContentResolver().query(WaterDbProvider.CONTENT_URI_WATER, projection, where, null, null);
+        if (drink_water_cursor.getCount() > 0) {
+            drink_water_cursor.moveToFirst();
+            int is_drinked = drink_water_cursor.getInt(drink_water_cursor.getColumnIndex("Total"));
+            //Log.e("cursor", "date:" + dateString + ", total:"  + drink_water_cursor.getString(drink_water_cursor.getColumnIndexOrThrow("Total")));
+            return is_drinked;
+        } else {
+            return 0;
+        }
+    }
+
 }
 
