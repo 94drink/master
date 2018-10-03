@@ -38,10 +38,17 @@
     <string name="monthly_Drink">Monthly Drinking water</string>
     <string name="year_average">Year average</string>
     <string name="year_Drink">Year Drinking water</string>
+    <string name="no_data">No Data！</string>
+    <string name="weight_now">Weight Now：</string>
+    <string name="weight_avg">Weight Avg：</string>
+    <string name="weight_min">Weight Min：</string>
+    <string name="weight_max">Weight Max：</string>
 
     <!-- 對話框使用字串 -->
     <string name="cancel">CANCEL</string>
     <string name="ok">OK</string>
+    <string name="set_ok">Success！</string>
+    <string name="reinput">Please input the right value！</string>
     <string name="total">Total：</string>
     <string name="ml">  ml</string>
     <string name="cold">Cold</string>
@@ -52,6 +59,7 @@
     <string name="normal">Normal</string>
     <string name="lively">Lively</string>
     <string name="verylively">Very Lively</string>
+    <string name="weight_hander_text">Please input your weight:</string>
 
     <!--設定區-->
     <string name="set_reminder">Reminder</string>
@@ -67,7 +75,6 @@
         <item>Weather</item>
         <item>Sports</item>
         <item>Total</item>
-        <item>Drinking Beep</item>
     </string-array>
 
     <!--設定區fragment_setting-->

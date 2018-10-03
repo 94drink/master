@@ -1,6 +1,7 @@
 package tw.com.justdrink;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -14,12 +15,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
 import java.util.Calendar;
 
-import tw.com.justdrink.dinrkreport.DrinkReport;
+import tw.com.justdrink.dinrkreport.*;
 import tw.com.justdrink.drinklog.DrinkLog;
 import tw.com.justdrink.drinkwater.DrinkWater;
 import tw.com.justdrink.reminder.Reminders;
@@ -124,6 +126,9 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
                     break;
                 case R.id.weight_setting:
                     Weight weight = new Weight();
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("Key01", 0);
+                    weight.setArguments(bundle);
                     weight.show(fragmentManager, "Dialog");
                     break;
              }

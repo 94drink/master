@@ -45,9 +45,15 @@
     <string name="year_average">年平均</string>
     <string name="year_Drink">年飲水量</string>
     <string name="no_data">沒有資料！</string>
+    <string name="weight_now">當前體重：</string>
+    <string name="weight_avg">平均體重：</string>
+    <string name="weight_min">最輕體重：</string>
+    <string name="weight_max">最重體重：</string>
     <!-- 對話框使用字串 -->
     <string name="cancel">取消</string>
     <string name="ok">確定</string>
+    <string name="set_ok">設定成功！</string>
+    <string name="reinput">請輸入正確的資料！</string>
     <string name="total">總計：</string>
     <string name="cold">寒冷</string>
     <string name="mild">涼爽</string>
@@ -57,6 +63,7 @@
     <string name="normal">正常</string>
     <string name="lively">活躍</string>
     <string name="verylively">劇烈</string>
+    <string name="weight_hander_text">請輸入您的體重：</string>
 
     <!--layout/water_settings_list-->
     <string-array name="water_settings_array">
@@ -66,7 +73,6 @@
         <item>天氣</item>
         <item>運動</item>
         <item>總計：</item>
-        <item>喝水音效</item>
     </string-array>
 
     <!--設定區fragment_setting-->
