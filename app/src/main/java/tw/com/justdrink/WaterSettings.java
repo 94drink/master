@@ -45,6 +45,7 @@ public class WaterSettings extends DialogFragment {
                 switch (itemId){
                     case 1:
                         showDialog("weight");
+                        getDialog().dismiss();
                         break;
                     case 2:
                         showDialog("other");
@@ -54,9 +55,6 @@ public class WaterSettings extends DialogFragment {
                         break;
                     case 4:
                         showDialog("sport");
-                        break;
-                    case 6:
-                        showDialog("beep");
                         break;
                 }
             }
@@ -80,7 +78,10 @@ public class WaterSettings extends DialogFragment {
 
     public void showDialog(String tag){
         if (tag.equals("weight")){
-            Weight_Setting_dialog dialog=new Weight_Setting_dialog();
+            Weight dialog=new Weight();
+            Bundle bundle = new Bundle();
+            bundle.putInt("Key01", 1);
+            dialog.setArguments(bundle);
             dialog.show(getFragmentManager(), tag);
         }else if (tag.equals("other")){
             Other_Setting_Dialog dialog=new Other_Setting_Dialog();
@@ -89,9 +90,6 @@ public class WaterSettings extends DialogFragment {
             Other_Setting_Dialog dialog=new Other_Setting_Dialog();
             dialog.show(getFragmentManager(), tag);
         }else if (tag.equals("sport")){
-            Other_Setting_Dialog dialog=new Other_Setting_Dialog();
-            dialog.show(getFragmentManager(), tag);
-        }else if (tag.equals("beep")){
             Other_Setting_Dialog dialog=new Other_Setting_Dialog();
             dialog.show(getFragmentManager(), tag);
         }

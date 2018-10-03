@@ -81,6 +81,8 @@ public class DrinkWater extends Fragment {
             public void onClick(View v) {
                 WaterSettings waterSettings = new WaterSettings();
                 waterSettings.show(fm, "Water");
+
+                //getView().invalidate();
             }
         });
 
