@@ -6,17 +6,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import tw.com.justdrink.R;
 
 
 public class WaterSettingsAdapter extends BaseAdapter {
 
     private Context context;
     String[] mWaterSettinsTitles;
+    String[] mWaterSettinsVvalue={"", "1000ml", "1200ml", "1500ml", "1300ml", "5000ml", ""};
 
     public WaterSettingsAdapter(Context context){
         this.context = context;
@@ -47,23 +46,31 @@ public class WaterSettingsAdapter extends BaseAdapter {
             row = convertView;
         }
         LinearLayout linearLayout=(LinearLayout)row.findViewById(R.id.settings_layout);
-        CheckBox checkBox = (CheckBox) row.findViewById(R.id.checkBox);
+
         TextView tvTitle = (TextView) row.findViewById(R.id.tvTitle);
         TextView tvValue = (TextView) row.findViewById(R.id.tvValue);
+        ImageView tvImage = (ImageView)row.findViewById(R.id.tvImage);
 
-        if(position==0|position==1|position==4) {
-            checkBox.setVisibility(View.INVISIBLE);
-        }else {
-            checkBox.setVisibility(View.VISIBLE);
-        }
-        tvValue.setText("2000ml");
-        tvTitle.setText(mWaterSettinsTitles[position]);
-
-        if(position==4){
+        if (position==0 || position==5){
+            tvTitle.setText(mWaterSettinsTitles[position]);
+            tvValue.setText(mWaterSettinsVvalue[position]);
+            tvImage.setVisibility(View.INVISIBLE);
             linearLayout.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
             tvTitle.setTextColor(Color.parseColor("#FFFFFF"));
             tvValue.setTextColor(Color.parseColor("#FFFFFF"));
+        }else if (position==1){
+            tvTitle.setText(mWaterSettinsTitles[position] + "  70Kg");
+            tvValue.setText(mWaterSettinsVvalue[position]);
         }
+//        else if (position==6){
+//            tvTitle.setText(mWaterSettinsTitles[position]);
+//            tvValue.setVisibility(View.INVISIBLE);
+//        }
+        else {
+            tvTitle.setText(mWaterSettinsTitles[position]);
+            tvValue.setText(mWaterSettinsVvalue[position]);
+        }
+
         return row;
     }
 }

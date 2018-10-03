@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -15,7 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -32,7 +32,9 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     private ActionBarDrawerToggle toggle;
     private TextView toolbar_text;
 
-
+    Fragment fragment = null;
+    FragmentManager fragmentManager = getSupportFragmentManager();
+    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +101,8 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
                 case R.id.reminder_setting:
 //                    Intent i =  new Intent(getBaseContext(),Reminders.class);
 //                    startActivity(i);
+                    fragment = new Reminders();
+                    toolbar_text.setText(R.string.reminders);
                     break;
                 case R.id.calendar:
 //                  Intent intent = new Intent(MainActivity.this,CalendarDialog.class);
@@ -118,7 +122,8 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
                     }, mYear,mMonth, mDay).show();
                     break;
                 case R.id.weight_setting:
-                    Toast.makeText(MainActivity.this, R.string.weight_setting, Toast.LENGTH_SHORT).show();
+                    Weight weight = new Weight();
+                    weight.show(fragmentManager, "Dialog");
                     break;
              }
             return true;
