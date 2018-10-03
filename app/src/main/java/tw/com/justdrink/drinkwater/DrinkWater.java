@@ -32,10 +32,9 @@ public class DrinkWater extends Fragment {
 
     public FloatingActionButton fabAdd, fabSelect;
     String time, date;
-    TextView goal;
     Button waterSetting;
     static ProgressBar progressBar;
-    static TextView drinked;
+    public static TextView drinked, goal;
     public static String weight = "weight";
     SharedPreferences sharedDataWeight;
     int drink_target, is_drinked;
@@ -64,12 +63,13 @@ public class DrinkWater extends Fragment {
         Fragment fragment = new BottleGrid();
         ft.replace(R.id.bottle_container, fragment).commit();
 
-        sharedDataWeight = getActivity().getSharedPreferences(weight, 0);
-        String weight_prefs = sharedDataWeight.getString("weight", "70");
-        int dummy = Integer.parseInt(weight_prefs);
+//        sharedDataWeight = getActivity().getSharedPreferences(weight, 0);
+//        String weight_prefs = sharedDataWeight.getString("weight", "70");
+//        int dummy = Integer.parseInt(weight_prefs);
 
         // 目標總水量
-        drink_target = calTarget(dummy);
+//        drink_target = calTarget(dummy);
+        drink_target = getWeightByDate(date);
         goal.setText("/" + drink_target + "");
         progressBar.setMax(drink_target);
 
@@ -149,5 +149,18 @@ public class DrinkWater extends Fragment {
         }
     }
 
+    public static int getWeightByDate(String dateString) {
+        String[] projection = null;
+        String where = "date) = '" + dateString + "' GROUP BY (date";
+        Cursor drink_water_cursor = context.getContentResolver().query(WaterDbProvider.CONTENT_URI_WEIGHT, projection, where, null, null);
+        if (drink_water_cursor.getCount() > 0) {
+            drink_water_cursor.moveToFirst();
+            int is_drinked = drink_water_cursor.getInt(drink_water_cursor.getColumnIndex("totml"));
+            //Log.e("cursor", "date:" + dateString + ", total:"  + drink_water_cursor.getString(drink_water_cursor.getColumnIndexOrThrow("Total")));
+            return is_drinked;
+        } else {
+            return 0;
+        }
+    }
 }
 

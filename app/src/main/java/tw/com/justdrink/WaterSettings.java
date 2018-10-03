@@ -10,7 +10,9 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import tw.com.justdrink.dinrkreport.GetDates;
+import tw.com.justdrink.drinkwater.DrinkWater;
 
 
 public class WaterSettings extends DialogFragment {
@@ -18,6 +20,7 @@ public class WaterSettings extends DialogFragment {
     ListView listView;
     Button cancel, save;
     WaterSettingsAdapter adapter;
+    GetDates getDates;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -70,7 +73,12 @@ public class WaterSettings extends DialogFragment {
                     getDialog().dismiss();
                     break;
                 case R.id.save:
-                    Toast.makeText(getContext(), "功能尚未完成!!", Toast.LENGTH_SHORT).show();
+                    getDates = new GetDates();
+                    String date = getDates.getDate();
+                    //Toast.makeText(getContext(), "功能尚未完成!!", Toast.LENGTH_SHORT).show();
+                    int drink_target = DrinkWater.getWeightByDate(date);
+                    DrinkWater.goal.setText("/" + drink_target + "");
+                    getDialog().dismiss();
                     break;
             }
         }
