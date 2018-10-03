@@ -99,10 +99,11 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
             switch (menuItem.getItemId())
             {
                 case R.id.reminder_setting:
-//                    Intent i =  new Intent(getBaseContext(),Reminders.class);
-//                    startActivity(i);
                     fragment = new Reminders();
                     toolbar_text.setText(R.string.reminders);
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.content_frame , fragment ,"My FragmentReminder");
+                    transaction.commit();
                     break;
                 case R.id.calendar:
 //                  Intent intent = new Intent(MainActivity.this,CalendarDialog.class);

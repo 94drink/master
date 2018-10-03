@@ -22,4 +22,13 @@
         android:id="@+id/reminderList_item">
     </ListView>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="timeText"
+        android:id="@+id/timeText"
+        android:layout_alignTop="@+id/reminderList_item"
+        android:layout_alignEnd="@+id/reminderList_item" />
+
 </RelativeLayout>

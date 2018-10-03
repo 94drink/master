@@ -91,6 +91,7 @@ public class DrinkWater extends Fragment {
             public void onClick(View view) {
                 SelectGlass selectGlass = new SelectGlass();
                 selectGlass.show(fm, "Glasses");
+
             }
         });
         fabSelect.setImageResource(WaterBottlesData.getData().get(SelectGlass.position).imageId);

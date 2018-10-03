@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -33,14 +34,17 @@ public class Reminders extends Fragment {
     Calendar calendar = Calendar.getInstance();
     PendingIntent pi;
     AlarmService alarmService ;
+    private Intent intent ;
+    TextView timeText ;
 
+    //連接Service 的Function
     private ServiceConnection mConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
 
             AlarmService aService = new AlarmService();
-            AlarmService.MyBinder mBinder  = aService.new MyBinder();
-            alarmService = mBinder.getService();
+            AlarmService.MyBinder mBinder  = aService.new MyBinder(); //建立AlarmService的Binder
+            alarmService = mBinder.getService();//將Binder內的getService方法放進alarmService
         }
 
         @Override
@@ -85,40 +89,40 @@ public class Reminders extends Fragment {
                         AlertDialog dialog = new AlertDialog.Builder(getActivity()).create();
                         dialog.setTitle("Title");
 
+
                         switch (position){
                             case 0:
-//                                Intent intent = new Intent(vg.getContext() , AlarmService.class);
-//                                startActivity(intent);
-
-//                                Intent intent = new Intent (Reminders.this.getContext(),AlarmService.class);
-//                                startActivity(intent);
-//
-//                                //建立PendingIntent
-//                               pi = PendingIntent.getService(context,100,intent, PendingIntent.FLAG_UPDATE_CURRENT);
-//                                //取得按下按鈕的時間為TimePickerDialog的預設值
+                                intent = new Intent (Reminders.this.getContext(),AlarmService.class);
+                                //建立PendingIntent
+                                pi = PendingIntent.getService(context,100,intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                                //取得按下按鈕的時間為TimePickerDialog的預設值
                                 calendar.setTimeInMillis(System.currentTimeMillis());
                                 int hour = calendar.get(Calendar.HOUR_OF_DAY);
                                 int minute = calendar.get(Calendar.MINUTE);
-//
-//                                // 跳出TimePickerDialog來設定時間 */
+
+                                // 跳出TimePickerDialog來設定時間 */
                                 TimePickerDialog timePickerDialog = new TimePickerDialog(context ,
                                         new MyOnTimeSetListener(),hour,minute , true);
                                 timePickerDialog.show();
 
+
+
                                 Log.i("setting","setting");
+
+
                                 break;
                             case 1 :
-                                AlarmManager alarmManager =(AlarmManager)
-                                    context.getSystemService(Context.ALARM_SERVICE);
-                                alarmManager.cancel(pi);
-
-                                Log.i("取消","setting");
+//
+                                Toast.makeText(context , "廣播設定在這"  ,
+                                        Toast.LENGTH_SHORT).show();
                                 break;
                             case 2 :
-                                Log.i("music","music");
+                                Toast.makeText(context , "設定音樂" ,
+                                        Toast.LENGTH_SHORT).show();
                                 break;
                             case 3 :
-                                Log.i("music","music");
+                                Toast.makeText(context , "震動&靜音" ,
+                                        Toast.LENGTH_SHORT).show();
                                 break;
                         }
                     }
@@ -146,11 +150,13 @@ public class Reminders extends Fragment {
                     context.getSystemService(Context.ALARM_SERVICE);
             alarmManager.set(AlarmManager.RTC_WAKEUP,
                     calendar.getTimeInMillis() , pi);
-
+//           alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),long INTERVAL_FIFTEEN_MINUTES);
+            //type：闹钟类型，startTime：闹钟首次执行时间，intervalTime：闹钟两次执行的间隔时间，pi：闹钟响应动作
             String tmpS = format(hourOfDay) + ":" + format(minute);
             // 以Toast提示設定已完成
             Toast.makeText(context , "設定鬧鐘時間為" + tmpS ,
                     Toast.LENGTH_SHORT).show();
+//            timeText.setText(tmpS); 要將抓到的時間顯示在timeText
         }
     }
 
