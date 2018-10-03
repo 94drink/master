@@ -24,7 +24,6 @@ public class BottleGrid extends Fragment {
 
     String time, date;
     static int pos;
-    static String[] bposition;
     private GridView gridView;
     GridviewCustomAdapter gridviewCustomAdapter;
     Uri uri = WaterDbProvider.CONTENT_URI_WATER;
@@ -65,6 +64,5 @@ public class BottleGrid extends Fragment {
         });
         return view;
     }
-
 
 }

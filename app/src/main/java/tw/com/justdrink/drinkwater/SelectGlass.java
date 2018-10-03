@@ -115,7 +115,6 @@ public class SelectGlass extends DialogFragment {
                     @Override
                     public void onClick(View v) {
                         //Database code
-                        WaterDBHelper wdb = new WaterDBHelper(context);
                         Calendar c = Calendar.getInstance();
                         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
@@ -125,6 +124,8 @@ public class SelectGlass extends DialogFragment {
                         position = getPosition();
                         int ml = Integer.parseInt(WaterBottlesData.getData().get(SelectGlass.position).title);
                         DrinkWater.progressBar.incrementProgressBy(ml);
+                        int is_drinked = DrinkWater.getDrinkedByDate(date) + ml;
+                        DrinkWater.drinked.setText("" + is_drinked);
                         ContentValues values = new ContentValues();
                         values.clear();
                         values.put(WaterDBHelper.KEY_POS, position);

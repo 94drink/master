@@ -1,6 +1,7 @@
 package tw.com.justdrink;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
@@ -99,10 +101,11 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
             switch (menuItem.getItemId())
             {
                 case R.id.reminder_setting:
-//                    Intent i =  new Intent(getBaseContext(),Reminders.class);
-//                    startActivity(i);
                     fragment = new Reminders();
                     toolbar_text.setText(R.string.reminders);
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.content_frame , fragment ,"My FragmentReminder");
+                    transaction.commit();
                     break;
                 case R.id.calendar:
 //                  Intent intent = new Intent(MainActivity.this,CalendarDialog.class);
