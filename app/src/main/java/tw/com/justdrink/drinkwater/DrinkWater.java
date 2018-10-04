@@ -9,7 +9,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +22,6 @@ import java.util.TimeZone;
 
 import tw.com.justdrink.R;
 import tw.com.justdrink.WaterSettings;
-import tw.com.justdrink.Weight;
 import tw.com.justdrink.database.WaterBottlesData;
 import tw.com.justdrink.database.WaterDBHelper;
 import tw.com.justdrink.database.WaterDbProvider;
@@ -65,14 +63,6 @@ public class DrinkWater extends Fragment {
 
         // 目標總水量
         drink_target = getWeightByDate(date);
-        if (drink_target == 0) {
-            Weight weight = new Weight();
-            Bundle bundle = new Bundle();
-            bundle.putInt("Key01", 0);
-            weight.setArguments(bundle);
-            weight.show(fm, "Dialog");
-        }
-
         goal.setText("/" + drink_target);
         progressBar.setMax(drink_target);
 
@@ -154,27 +144,16 @@ public class DrinkWater extends Fragment {
         } else {
             ContentValues values = new ContentValues();
             values.clear();
-            weight_cursor = context.getContentResolver().query(WaterDbProvider.CONTENT_URI_WEIGHT, null, null, null, null);
-
-            int weight = 0, tmp_ml = 0;
-            if (weight_cursor.getCount() > 0) {
-                weight_cursor.moveToFirst();
-                weight = weight_cursor.getInt(weight_cursor.getColumnIndex("weight"));
-                Log.e("weight", "last_weight_setting: " + weight);
-                tmp_ml = weight * 33;
-            }
-
-            values.put(WaterDBHelper.KEY_WEIGHT, "" + weight);
+            values.put(WaterDBHelper.KEY_WEIGHT, "0");
             values.put(WaterDBHelper.KEY_WDATE, dateString);
-            values.put(WaterDBHelper.KEY_WIML, tmp_ml);
+            values.put(WaterDBHelper.KEY_WIML, 0);
             values.put(WaterDBHelper.KEY_SEML, 0);
             values.put(WaterDBHelper.KEY_WEML, 0);
             values.put(WaterDBHelper.KEY_SPML, 0);
-            values.put(WaterDBHelper.KEY_TOTML, tmp_ml);
+            values.put(WaterDBHelper.KEY_TOTML, 0);
             Uri uri = WaterDbProvider.CONTENT_URI_WEIGHT;
             Uri newUri = context.getContentResolver().insert(uri, values);
-            progressBar.setMax(tmp_ml);
-            return tmp_ml;
+            return 0;
         }
     }
 }
