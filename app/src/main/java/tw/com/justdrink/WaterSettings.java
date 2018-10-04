@@ -51,13 +51,16 @@ public class WaterSettings extends DialogFragment {
                         getDialog().dismiss();
                         break;
                     case 2:
-                        showDialog("other");
+                        showDialog("self");
+                        getDialog().dismiss();
                         break;
                     case 3:
                         showDialog("weather");
+                        getDialog().dismiss();
                         break;
                     case 4:
                         showDialog("sport");
+                        getDialog().dismiss();
                         break;
                 }
             }
@@ -91,17 +94,16 @@ public class WaterSettings extends DialogFragment {
             bundle.putInt("Key01", 1);
             dialog.setArguments(bundle);
             dialog.show(getFragmentManager(), tag);
-        }else if (tag.equals("other")){
-            Other_Setting_Dialog dialog=new Other_Setting_Dialog();
+        }else if (tag.equals("self")){
+            Self_Setting_Dialog dialog=new Self_Setting_Dialog();
             dialog.show(getFragmentManager(), tag);
         }else if (tag.equals("weather")){
-            Other_Setting_Dialog dialog=new Other_Setting_Dialog();
+            Weather_Setting_Dialog dialog=new Weather_Setting_Dialog();
             dialog.show(getFragmentManager(), tag);
         }else if (tag.equals("sport")){
-            Other_Setting_Dialog dialog=new Other_Setting_Dialog();
+            Sport_Setting_Dialog dialog=new Sport_Setting_Dialog();
             dialog.show(getFragmentManager(), tag);
         }
     }
-
 }
 
