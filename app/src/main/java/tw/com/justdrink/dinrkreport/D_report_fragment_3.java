@@ -69,7 +69,18 @@ public class D_report_fragment_3 extends Fragment {
         }else{
             drep3_text2.setText("0ml");
         }
-        //**--顯示當日飲水量--**//
+
+        //**--顯示當日目標達成率--**//
+        Cursor single_weight = getActivity().getContentResolver().query(WaterDbProvider.CONTENT_URI_WEIGHT, null, d_now, null, null);
+        if(single_weight.getCount() > 0) {
+            single_weight.moveToFirst();
+            st_cursor.moveToFirst();
+            float st = Float.parseFloat(st_cursor.getString(1));
+            float wt =  Float.parseFloat(single_weight.getString(7));
+            int wa = (int) (st / wt * 100);
+            drep3_text3.setText("達成率: " + wa + "%");
+        }else{
+        }
 
         //取得今年數字
         String date_now = getDate();
@@ -216,8 +227,6 @@ public class D_report_fragment_3 extends Fragment {
             }
             j++;
         }
-
-
         return chartData;
     }
 
@@ -251,11 +260,21 @@ public class D_report_fragment_3 extends Fragment {
                 avg = sum / chart_cursor.getCount();
                 chartData.add(new Entry( avg, i));
             }
-            drep3_text5.setText(avg + "ml");
+            drep3_text5.setText((int)(avg) + "ml");
         }else {
             drep3_text5.setText("0ml");
         }
-        //**--建立圖表資料--**//
+
+        //**--顯示平均體重--**//
+        String[] proj_avg = new String[] {"avg(totml) as total"};
+        Cursor avg_cursor = getActivity().getContentResolver().query(WaterDbProvider.CONTENT_URI_WEIGHT, proj_avg, qureytxt, null, null);
+        if(avg_cursor.getCount() > 0){
+            avg_cursor.moveToFirst();
+            float wsum = Float.parseFloat(avg_cursor.getString(0));
+            float wavg = wsum * 30;
+            int wa = (int)(avg / wavg *100);
+            drep3_text6.setText("年達成率: " + wa + "%");
+        }
         return chartData;
     }
 
