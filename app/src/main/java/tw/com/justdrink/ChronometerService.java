@@ -29,7 +29,7 @@ public class ChronometerService extends Service {
                 DrinkWater.getDrinkedByDate(date);
             }
 
-            Log.i("mylog", new Date().toString() + ", date: " + date + ", time: " + time);
+            //Log.i("mylog", new Date().toString() + ", date: " + date + ", time: " + time);
             handler.postDelayed(this, 1000);
         }
     };

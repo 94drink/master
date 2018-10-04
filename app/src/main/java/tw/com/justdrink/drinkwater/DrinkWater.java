@@ -9,6 +9,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -151,20 +152,33 @@ public class DrinkWater extends Fragment {
             weight_cursor.moveToFirst();
             int drink_target = weight_cursor.getInt(weight_cursor.getColumnIndex("totml"));
             progressBar.setMax(drink_target);
+
+            Log.e("drink_target", "" + drink_target);
             return drink_target;
         } else {
+            int tmp_weight = 0, tmp_total = 0;
+            weight_cursor = context.getContentResolver().query(WaterDbProvider.CONTENT_URI_WEIGHT, null, null, null, null);
+            if (weight_cursor.getCount() > 0) {
+                weight_cursor.moveToFirst();
+                tmp_weight = weight_cursor.getInt(weight_cursor.getColumnIndex("weight"));
+                tmp_total = tmp_weight * 33;
+            }
+
             ContentValues values = new ContentValues();
             values.clear();
-            values.put(WaterDBHelper.KEY_WEIGHT, "0");
+            values.put(WaterDBHelper.KEY_WEIGHT, "" + tmp_weight);
             values.put(WaterDBHelper.KEY_WDATE, dateString);
-            values.put(WaterDBHelper.KEY_WIML, 0);
+            values.put(WaterDBHelper.KEY_WIML, tmp_total);
             values.put(WaterDBHelper.KEY_SEML, 0);
             values.put(WaterDBHelper.KEY_WEML, 0);
             values.put(WaterDBHelper.KEY_SPML, 0);
-            values.put(WaterDBHelper.KEY_TOTML, 0);
+            values.put(WaterDBHelper.KEY_TOTML, tmp_total);
             Uri uri = WaterDbProvider.CONTENT_URI_WEIGHT;
             Uri newUri = context.getContentResolver().insert(uri, values);
-            return 0;
+            progressBar.setMax(tmp_total);
+
+            Log.e("tmp_weight", "" + tmp_weight + ", tmp_total: " + tmp_total);
+            return tmp_total;
         }
     }
 }
