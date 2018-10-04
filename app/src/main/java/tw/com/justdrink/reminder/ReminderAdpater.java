@@ -55,7 +55,6 @@ public class ReminderAdpater extends BaseAdapter {
         tl.setText(mReminderSettingTitles[i]);
         IV.setImageResource(images[i]);
 
-
         return row;
     }
 }

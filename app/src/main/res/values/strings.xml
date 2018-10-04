@@ -91,10 +91,11 @@
 
     <!--設定Fragment內的RecyclView物件-->
     <string-array name="alarm">
-        <item>Time Alarm setting</item>
-        <item>Service</item>
-        <item>MusicSetting</item>
-        <item>NoVoice</item>
+        <item name="A">Time Alarm setting</item>
+        <item name="B">Service</item>
+        <item name="C">MusicSetting</item>
+        <item name="D">NoVoice</item>
     </string-array>
+    <string name="remove_alarm">RemoveAlarm</string>
 
 </resources>
