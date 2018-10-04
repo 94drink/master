@@ -1,0 +1,21 @@
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/thanks_you_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:text="【感謝您】
+    水佔身體總體重的70%，
+    每天記得都要準時喝水，健康
+
+    【Thank You】
+
+
+    【製作團隊 Team Member】
+    陳逸鴻(Tom Chen)
+    袁怡君(Jubilee Yuan)
+    黃怡娟(YiChuan Huang)
+    郭怡君(Jean Kuo)
+    石博丞(Mark Shih)"
+    />
+
