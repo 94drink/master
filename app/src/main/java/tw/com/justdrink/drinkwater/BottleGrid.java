@@ -20,6 +20,9 @@ import tw.com.justdrink.database.WaterDBHelper;
 import tw.com.justdrink.database.WaterDbProvider;
 
 
+/**
+ * Created by Yuan on 9/17/2018.
+ */
 public class BottleGrid extends Fragment {
 
     String time, date;

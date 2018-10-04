@@ -5,6 +5,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 
+/**
+ * Created by Yuan on 9/17/2018.
+ */
 public class WaterDBHelper extends SQLiteOpenHelper {
 
     // Database Version
