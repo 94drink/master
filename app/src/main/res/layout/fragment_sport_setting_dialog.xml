@@ -77,10 +77,10 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/imageButton1"
+            android:id="@+id/imageButton"
             android:layout_alignParentStart="true"
             android:layout_weight="1"
-            android:background="@drawable/self_setting_dialog_imgbtn1"/>
+            android:background="@drawable/sport_setting_dialog_imgbtn1"/>
 
         <ImageButton
             android:layout_width="wrap_content"
@@ -88,7 +88,7 @@
             android:id="@+id/imageButton2"
             android:layout_alignParentStart="true"
             android:layout_weight="1"
-            android:background="@drawable/self_setting_dialog_imgbtn1"/>
+            android:background="@drawable/sport_setting_dialog_imgbtn2"/>
     </LinearLayout>
 
     <LinearLayout
@@ -102,7 +102,7 @@
             android:id="@+id/imageButton3"
             android:layout_alignParentStart="true"
             android:layout_weight="1"
-            android:background="@drawable/self_setting_dialog_imgbtn1"/>
+            android:background="@drawable/sport_setting_dialog_imgbtn3"/>
 
         <ImageButton
             android:layout_width="wrap_content"
@@ -110,7 +110,7 @@
             android:id="@+id/imageButton4"
             android:layout_alignParentStart="true"
             android:layout_weight="1"
-            android:background="@drawable/self_setting_dialog_imgbtn1"/>
+            android:background="@drawable/sport_setting_dialog_imgbtn4"/>
     </LinearLayout>
 
     <LinearLayout
