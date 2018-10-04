@@ -32,7 +32,7 @@ public class DrinkWater extends Fragment {
     public FloatingActionButton fabAdd, fabSelect;
     String time, date;
     Button waterSetting;
-    static ProgressBar progressBar;
+    public static ProgressBar progressBar;
     public static TextView drinked, goal;
     public static String weight = "weight";
     int drink_target, is_drinked;
