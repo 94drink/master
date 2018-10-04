@@ -22,6 +22,7 @@ import java.util.TimeZone;
 
 import tw.com.justdrink.R;
 import tw.com.justdrink.WaterSettings;
+import tw.com.justdrink.Weight;
 import tw.com.justdrink.database.WaterBottlesData;
 import tw.com.justdrink.database.WaterDBHelper;
 import tw.com.justdrink.database.WaterDbProvider;
@@ -63,6 +64,13 @@ public class DrinkWater extends Fragment {
 
         // 目標總水量
         drink_target = getWeightByDate(date);
+        if (drink_target == 0) {
+            Weight weight = new Weight();
+            Bundle bundle = new Bundle();
+            bundle.putInt("Key01", 0);
+            weight.setArguments(bundle);
+            weight.show(fm, "Dialog");
+        }
         goal.setText("/" + drink_target);
         progressBar.setMax(drink_target);
 
