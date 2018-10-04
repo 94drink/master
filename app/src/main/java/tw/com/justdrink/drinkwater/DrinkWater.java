@@ -2,7 +2,6 @@ package tw.com.justdrink.drinkwater;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -32,12 +31,10 @@ public class DrinkWater extends Fragment {
 
     public FloatingActionButton fabAdd, fabSelect;
     String time, date;
-    TextView goal;
     Button waterSetting;
-    static ProgressBar progressBar;
-    static TextView drinked;
+    public static ProgressBar progressBar;
+    public static TextView drinked, goal;
     public static String weight = "weight";
-    SharedPreferences sharedDataWeight;
     int drink_target, is_drinked;
     static Context context;
 
@@ -64,17 +61,12 @@ public class DrinkWater extends Fragment {
         Fragment fragment = new BottleGrid();
         ft.replace(R.id.bottle_container, fragment).commit();
 
-        sharedDataWeight = getActivity().getSharedPreferences(weight, 0);
-        String weight_prefs = sharedDataWeight.getString("weight", "70");
-        int dummy = Integer.parseInt(weight_prefs);
-
         // 目標總水量
-        drink_target = calTarget(dummy);
-        goal.setText("/" + drink_target + "");
+        drink_target = getWeightByDate(date);
+        goal.setText("/" + drink_target);
         progressBar.setMax(drink_target);
 
         // 單日已喝總水量
-
         is_drinked = getDrinkedByDate(date);
         drinked.setText("" + is_drinked);
         progressBar.setProgress(is_drinked);
@@ -127,12 +119,6 @@ public class DrinkWater extends Fragment {
         return view;
     }
 
-    private int calTarget(int weight_data) {
-        int target = weight_data * 33;
-        return target;
-
-    }
-
     public static int getDrinkedByDate(String dateString) {
         String[] projection = new String[] {"sum(ml) as Total"};
         String where = "date) = '" + dateString + "' GROUP BY (date";
@@ -147,5 +133,28 @@ public class DrinkWater extends Fragment {
         }
     }
 
+    public static int getWeightByDate(String dateString) {
+        String where = "date = '" + dateString + "'";
+        Cursor weight_cursor = context.getContentResolver().query(WaterDbProvider.CONTENT_URI_WEIGHT, null, where, null, null);
+        if (weight_cursor.getCount() > 0) {
+            weight_cursor.moveToFirst();
+            int drink_target = weight_cursor.getInt(weight_cursor.getColumnIndex("totml"));
+            progressBar.setMax(drink_target);
+            return drink_target;
+        } else {
+            ContentValues values = new ContentValues();
+            values.clear();
+            values.put(WaterDBHelper.KEY_WEIGHT, "0");
+            values.put(WaterDBHelper.KEY_WDATE, dateString);
+            values.put(WaterDBHelper.KEY_WIML, 0);
+            values.put(WaterDBHelper.KEY_SEML, 0);
+            values.put(WaterDBHelper.KEY_WEML, 0);
+            values.put(WaterDBHelper.KEY_SPML, 0);
+            values.put(WaterDBHelper.KEY_TOTML, 0);
+            Uri uri = WaterDbProvider.CONTENT_URI_WEIGHT;
+            Uri newUri = context.getContentResolver().insert(uri, values);
+            return 0;
+        }
+    }
 }
 
