@@ -162,8 +162,9 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
                 toolbar_text.setText(R.string.reminders);
                 break;
             case R.id.nav_settings:
-                fragment = new Setting();
-                toolbar_text.setText(R.string.nav_settings);
+                FragmentManager fm = getSupportFragmentManager();
+                WaterSettings waterSettings = new WaterSettings();
+                waterSettings.show(fm, "Water");
                 break;
         }
 

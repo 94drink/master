@@ -53,7 +53,7 @@
     <string name="cancel">取消</string>
     <string name="ok">確定</string>
     <string name="set_ok">設定成功！</string>
-    <string name="reinput">請輸入正確的資料！</string>
+    <string name="reinput">請輸入資料！</string>
     <string name="total">總計：</string>
     <string name="cold">寒冷</string>
     <string name="mild">涼爽</string>
@@ -63,7 +63,7 @@
     <string name="normal">正常</string>
     <string name="lively">活躍</string>
     <string name="verylively">劇烈</string>
-    <string name="weight_hander_text">請輸入您的體重：</string>
+    <string name="weight_hander_text">輸入體重以便計算喝水量：</string>
 
     <!--layout/water_settings_list-->
     <string-array name="water_settings_array">
@@ -94,6 +94,7 @@
         <item>提醒音樂設置</item>
         <item>震動＆靜音</item>
     </string-array>
+    <string name="remove_alarm">移除鬧鐘</string>
 
 
 </resources>
