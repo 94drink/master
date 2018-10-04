@@ -13,6 +13,7 @@ import android.widget.Toast;
 import tw.com.justdrink.R;
 import tw.com.justdrink.database.WaterBottlesData;
 import tw.com.justdrink.database.WaterDBHelper;
+import tw.com.justdrink.drinkwater.DrinkWater;
 
 
 class CustomAdapter extends SimpleCursorAdapter {
@@ -58,6 +59,7 @@ class CustomAdapter extends SimpleCursorAdapter {
         int description_index = dataCursor.getColumnIndex(WaterDBHelper.KEY_POS);
         int priority = dataCursor.getInt(description_index);
 
+        sec_total = DrinkWater.getDrinkedByDate(task_day);
         String prevDate = null;
 
         if (dataCursor.getPosition() > 0 && dataCursor.moveToPrevious()) {
