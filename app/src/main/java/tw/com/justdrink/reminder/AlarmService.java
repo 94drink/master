@@ -9,6 +9,7 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.widget.TextView;
 
 import tw.com.justdrink.R;
 
@@ -16,7 +17,7 @@ import tw.com.justdrink.R;
 public class AlarmService extends Service  {
 
     public Binder mBinder = new Binder(); //透過Binder來做連接Class
-
+    TextView timechange;
     public class MyBinder extends Binder{
         public AlarmService getService(){
             return AlarmService.this;
@@ -73,7 +74,6 @@ public class AlarmService extends Service  {
                         .setAutoCancel(true);
 
                 builder.setVisibility(Notification.VISIBILITY_SECRET);
-
                 builder.setPriority(Notification.PRIORITY_HIGH);// 亦可帶入Notification.PRIORITY_MAX參數
                 Notification notification = builder.build();
                 notificationManager.notify(nid , notification);// 把指定id到狀態條上(發送通知)
@@ -86,6 +86,8 @@ public class AlarmService extends Service  {
         //return Service.START_STICKY;
         return super.onStartCommand(intent, Service.START_REDELIVER_INTENT ,startId);
     }
+
+
 
     @Override
     public void onDestroy() {

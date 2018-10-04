@@ -22,6 +22,8 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.util.Calendar;
 
 import tw.com.justdrink.R;
@@ -35,13 +37,11 @@ public class Reminders extends Fragment {
     PendingIntent pi;
     AlarmService alarmService ;
     private Intent intent ;
-    TextView timeText ;
-
+    TextView timeset ;
     //連接Service 的Function
     private ServiceConnection mConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-
             AlarmService aService = new AlarmService();
             AlarmService.MyBinder mBinder  = aService.new MyBinder(); //建立AlarmService的Binder
             alarmService = mBinder.getService();//將Binder內的getService方法放進alarmService
@@ -60,6 +60,7 @@ public class Reminders extends Fragment {
         //http://www.codedata.com.tw/mobile/android-tutorial-the-5th-class-1-broadcastreceiver-alarmmanager/ 廣播連結
         reminderview = inflater.inflate(R.layout.fragment_reminders, container, false);
         listView = (ListView)reminderview.findViewById(R.id.reminderList_item);
+        timeset = (TextView)reminderview.findViewById(R.id.timeText);
 
         String[] arr = getActivity().getResources().getStringArray(R.array.alarm);//帶入Array陣列
         final ArrayAdapter<String> adapter =
@@ -105,15 +106,11 @@ public class Reminders extends Fragment {
                                         new MyOnTimeSetListener(),hour,minute , true);
                                 timePickerDialog.show();
 
-
-
                                 Log.i("setting","setting");
-
-
                                 break;
                             case 1 :
 //
-                                Toast.makeText(context , "廣播設定在這"  ,
+                                Toast.makeText(context , "設定時間間距"  ,
                                         Toast.LENGTH_SHORT).show();
                                 break;
                             case 2 :
@@ -121,6 +118,7 @@ public class Reminders extends Fragment {
                                         Toast.LENGTH_SHORT).show();
                                 break;
                             case 3 :
+
                                 Toast.makeText(context , "震動&靜音" ,
                                         Toast.LENGTH_SHORT).show();
                                 break;
@@ -156,7 +154,8 @@ public class Reminders extends Fragment {
             // 以Toast提示設定已完成
             Toast.makeText(context , "設定鬧鐘時間為" + tmpS ,
                     Toast.LENGTH_SHORT).show();
-//            timeText.setText(tmpS); 要將抓到的時間顯示在timeText
+             //要將抓到的時間顯示在timeText
+            timeset.setText( " "+ tmpS );
         }
     }
 
