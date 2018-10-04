@@ -18,6 +18,9 @@ import static tw.com.justdrink.database.WaterDBHelper.WATER_TABLE;
 import static tw.com.justdrink.database.WaterDBHelper.WEIGHT_TABLE;
 
 
+/**
+ * Created by Yuan on 9/17/2018.
+ */
 public class WaterDbProvider extends ContentProvider {
 
     Context context;

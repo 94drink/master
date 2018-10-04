@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import tw.com.justdrink.R;
 import tw.com.justdrink.database.WaterBottlesData;
@@ -16,6 +15,9 @@ import tw.com.justdrink.database.WaterDBHelper;
 import tw.com.justdrink.drinkwater.DrinkWater;
 
 
+/**
+ * Created by Yuan on 9/17/2018.
+ */
 class CustomAdapter extends SimpleCursorAdapter {
 
     Cursor dataCursor;
@@ -50,8 +52,8 @@ class CustomAdapter extends SimpleCursorAdapter {
         }
 
         dataCursor.moveToPosition(position);
-        int title = dataCursor.getColumnIndex(WaterDBHelper.KEY_TIME);
-        String task_title = dataCursor.getString(title);
+        int time = dataCursor.getColumnIndex(WaterDBHelper.KEY_TIME);
+        String task_time = dataCursor.getString(time);
 
         int title_date = dataCursor.getColumnIndex(WaterDBHelper.KEY_DATE);
         String task_day = dataCursor.getString(title_date);
@@ -60,8 +62,14 @@ class CustomAdapter extends SimpleCursorAdapter {
         int priority = dataCursor.getInt(description_index);
 
         sec_total = DrinkWater.getDrinkedByDate(task_day);
-        String prevDate = null;
 
+        holder.sec_hdr.setText(task_day);
+        holder.tvSize.setText(WaterBottlesData.getData().get(priority).title + "ml");
+        holder.imageView.setImageResource(WaterBottlesData.getData().get(priority).imageId);
+        holder.tvTime.setText(task_time);
+        holder.sec_total.setText(String.valueOf(sec_total) + "ml"); //總喝水量
+
+        String prevDate = null;
         if (dataCursor.getPosition() > 0 && dataCursor.moveToPrevious()) {
             prevDate = dataCursor.getString(title_date);
             dataCursor.moveToNext();
@@ -70,90 +78,12 @@ class CustomAdapter extends SimpleCursorAdapter {
         if (task_day.equals(prevDate)) {
             holder.sec_hdr.setVisibility(View.GONE);      //日期(隱藏)
             holder.sec_total.setVisibility(View.GONE);    //總喝水量(隱藏)
-//            sec_total = getSectionTotal(priority);
-//            sec_total = 0;
         } else {
             holder.sec_hdr.setVisibility(View.VISIBLE);   //日期(顯示)
             holder.sec_total.setVisibility(View.VISIBLE); //總喝水量(顯示)
-            holder.sec_hdr.setText(task_day);
-
-            //計算總喝水量
-            //getContentResolver().query(WaterDbProvider.CONTENT_URI, null, null, null, null);
-            holder.sec_total.setText(String.valueOf(sec_total) + "ml");
-
-        }
-
-        holder.tvTime.setText(task_title);
-
-        switch (priority) {
-            case 0:
-                holder.tvSize.setText(WaterBottlesData.getData().get(0).title + "ml");
-                holder.imageView.setImageResource(WaterBottlesData.getData().get(0).imageId);
-                break;
-            case 1:
-                holder.tvSize.setText(WaterBottlesData.getData().get(1).title + "ml");
-                holder.imageView.setImageResource(WaterBottlesData.getData().get(1).imageId);
-                break;
-            case 2:
-                holder.tvSize.setText(WaterBottlesData.getData().get(2).title + "ml");
-                holder.imageView.setImageResource(WaterBottlesData.getData().get(2).imageId);
-                break;
-            case 3:
-                holder.tvSize.setText(WaterBottlesData.getData().get(3).title + "ml");
-                holder.imageView.setImageResource(WaterBottlesData.getData().get(3).imageId);
-                break;
-            case 4:
-                holder.tvSize.setText(WaterBottlesData.getData().get(4).title + "ml");
-                holder.imageView.setImageResource(WaterBottlesData.getData().get(4).imageId);
-                break;
-            case 5:
-                holder.tvSize.setText(WaterBottlesData.getData().get(5).title + "ml");
-                holder.imageView.setImageResource(WaterBottlesData.getData().get(5).imageId);
-                break;
-            case 6:
-                holder.tvSize.setText(WaterBottlesData.getData().get(6).title + "ml");
-                holder.imageView.setImageResource(WaterBottlesData.getData().get(6).imageId);
-                break;
-            case 7:
-                holder.tvSize.setText(WaterBottlesData.getData().get(7).title + "ml");
-                holder.imageView.setImageResource(WaterBottlesData.getData().get(7).imageId);
-                break;
-            default:
-                Toast.makeText(context, "Wrong input", Toast.LENGTH_SHORT).show();
         }
 
         return convertView;
-    }
-
-    private int getSectionTotal(int priority) {
-
-        switch (priority) {
-            case 0:
-                sec_total += 100;
-                break;
-            case 1:
-                sec_total += 150;
-                break;
-            case 2:
-                sec_total += 300;
-                break;
-            case 3:
-                sec_total += 400;
-                break;
-            case 4:
-                sec_total += 500;
-                break;
-            case 5:
-                sec_total += 600;
-                break;
-            case 6:
-                sec_total += 700;
-                break;
-            case 7:
-                sec_total += 800;
-                break;
-        }
-        return sec_total;
     }
 
     public static class ViewHolder {

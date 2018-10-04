@@ -6,6 +6,9 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
 
+/**
+ * Created by Yuan on 9/17/2018.
+ */
 public class WelcomeActivity extends AppCompatActivity {
 
     @Override
