@@ -90,7 +90,7 @@
     <!--設定Fragment內的RecyclView物件-->
     <string-array name="alarm">
         <item>設置時間提醒</item>
-        <item>提醒廣播設定</item>
+        <item>取消時間提醒</item>
         <item>提醒音樂設置</item>
         <item>震動＆靜音</item>
     </string-array>
