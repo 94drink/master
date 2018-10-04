@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
                     new DatePickerDialog(MainActivity.this, new DatePickerDialog.OnDateSetListener() {//OnDateSetListener 為內建方法 將使用者輸入完成後的日期傳回
                         @Override
                         public void onDateSet(DatePicker view, int mYear, int mMonth, int mDay) {
-                             toolbar_text.setText(mYear+"/"+String.valueOf(mMonth+1)+"/"+mDay);//顯示在toolbar上的日期 //轉用到ToolBar上的setTitle
+                             toolbar_text.setText(mYear+"-"+String.valueOf(mMonth+1)+"-"+mDay);//顯示在toolbar上的日期 //轉用到ToolBar上的setTitle
                                   }
                     }, mYear,mMonth, mDay).show();
                     break;
@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
                     weight.setArguments(bundle);
                     weight.show(fragmentManager, "Dialog");
                     break;
-             }
+            }
             return true;
 
         }

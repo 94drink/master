@@ -118,6 +118,8 @@ public class Weight extends DialogFragment implements OnClickListener {
                         values.put(WaterDBHelper.KEY_WEIGHT, weight);
                         values.put(WaterDBHelper.KEY_WIML, weight_ml);
                         values.put(WaterDBHelper.KEY_TOTML, weight_total);
+                        DrinkWater.goal.setText("/" + weight_total);
+                        DrinkWater.progressBar.setMax(weight_total);
                         int result = getActivity().getContentResolver().update(WaterDbProvider.CONTENT_URI_WEIGHT, values, uid, null);
                         Toast.makeText(getActivity(), getString(R.string.set_ok) , Toast.LENGTH_SHORT).show();
                     }else{
