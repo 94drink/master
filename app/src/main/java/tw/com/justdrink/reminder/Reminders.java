@@ -109,8 +109,11 @@ public class Reminders extends Fragment {
                                 Log.i("setting","setting");
                                 break;
                             case 1 :
-//
-                                Toast.makeText(context , "設定時間間距"  ,
+                                AlarmManager alarmManager =
+                                        (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+                                alarmManager.cancel(pi);
+                                // 以Toast提示已刪除設定，並更新顯示的鬧鐘時間
+                                Toast.makeText(context , R.string.remove_alarm,
                                         Toast.LENGTH_SHORT).show();
                                 break;
                             case 2 :
@@ -147,15 +150,18 @@ public class Reminders extends Fragment {
             AlarmManager alarmManager =(AlarmManager)
                     context.getSystemService(Context.ALARM_SERVICE);
             alarmManager.set(AlarmManager.RTC_WAKEUP,
-                    calendar.getTimeInMillis() , pi);
-//           alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),long INTERVAL_FIFTEEN_MINUTES);
+                    calendar.getTimeInMillis() , pi);//設置首次呼叫
+
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),AlarmManager.INTERVAL_HOUR,pi);
+            //設置每小時呼叫一次
             //type：闹钟类型，startTime：闹钟首次执行时间，intervalTime：闹钟两次执行的间隔时间，pi：闹钟响应动作
+
             String tmpS = format(hourOfDay) + ":" + format(minute);
             // 以Toast提示設定已完成
-            Toast.makeText(context , "設定鬧鐘時間為" + tmpS ,
+            Toast.makeText(context , "設定鬧鐘時間為" + tmpS +"\n"+"每小時呼叫一次唷!",
                     Toast.LENGTH_SHORT).show();
              //要將抓到的時間顯示在timeText
-            timeset.setText( " "+ tmpS );
+            timeset.setText( "現在時間為"+ tmpS +"\n" +"每小時喝一次");
         }
     }
 

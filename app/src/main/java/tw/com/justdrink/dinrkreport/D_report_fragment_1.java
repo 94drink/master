@@ -80,8 +80,18 @@ public class D_report_fragment_1 extends Fragment {
         }else{
             drep1_text2.setText("0ml");
         }
-        //**--顯示當日飲水量--**//
 
+        //**--顯示當日目標達成率--**//
+        Cursor single_weight = getActivity().getContentResolver().query(WaterDbProvider.CONTENT_URI_WEIGHT, null, d_now, null, null);
+        if(single_weight.getCount() > 0) {
+            single_weight.moveToFirst();
+            st_cursor.moveToFirst();
+            float st = Float.parseFloat(st_cursor.getString(1));
+            float wt =  Float.parseFloat(single_weight.getString(7));
+            int wa = (int) (st / wt * 100);
+            drep1_text3.setText("達成率: " + wa + "%");
+        }else{
+        }
         //chart.setDescription("說明文字");
         chart.setDescription("");
         chart.fitScreen();
@@ -236,6 +246,7 @@ public class D_report_fragment_1 extends Fragment {
         String date_now = date;
         //取得count天前日期
         String date_lw = getDates.getDateafter(date_now, count);
+        float avg = 0;
 
         //**--抓取以日期為單位加總之飲水量總和**--//
         //String[] projection = new String[] {"date", "sum(ml) as suml"};
@@ -243,7 +254,6 @@ public class D_report_fragment_1 extends Fragment {
         //chart_cursor.getString(1)，0代表日期"date"、1代表加總"suml"，此處只抓2個欄位
         String qureytxt = "date) BETWEEN '" + date_lw + "' AND '" + date_now + "' GROUP BY (date";
         chart_cursor = getActivity().getContentResolver().query(WaterDbProvider.CONTENT_URI_WATER, projection, qureytxt, null, "date ASC");
-        //**--抓取以日期為單位加總之飲水量總和**--//
 
         //**--計算期間飲水量總和**--//
         float sum = 0;
@@ -255,21 +265,28 @@ public class D_report_fragment_1 extends Fragment {
         }else{
             Toast.makeText(context, getString(R.string.no_data), Toast.LENGTH_SHORT).show();
         }
-        //**--計算期間飲水量總和**--//
-
         //**--建立圖表資料--**//
         List<Entry> chartData = new ArrayList<>();
-        float avg = 0;
         if(chart_cursor.getCount() > 0){
             for (int i=0;i<count;i++){
                 avg = sum / chart_cursor.getCount();
                 chartData.add(new Entry( avg, i));
             }
-            drep1_text5.setText(avg + "ml");
+            drep1_text5.setText((int)(avg) + "ml");
         }else {
             drep1_text5.setText("0ml");
         }
-        //**--建立圖表資料--**//
+
+        //**--顯示平均體重--**//
+        String[] proj_avg = new String[] {"avg(totml) as total"};
+        Cursor avg_cursor = getActivity().getContentResolver().query(WaterDbProvider.CONTENT_URI_WEIGHT, proj_avg, qureytxt, null, null);
+        if(avg_cursor.getCount() > 0){
+            avg_cursor.moveToFirst();
+            String wavg = avg_cursor.getString(0);
+            int wa = (int)(avg / Integer.parseInt(wavg) *100);
+            drep1_text6.setText("週達成率: " + wa + "%");
+        }
+
         return chartData;
     }
 
