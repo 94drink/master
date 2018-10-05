@@ -8,13 +8,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import tw.com.justdrink.R;
 import tw.com.justdrink.database.WaterBottlesData;
 import tw.com.justdrink.database.WaterDBHelper;
 
 
+/**
+ * Created by Yuan on 9/17/2018.
+ */
 public class GridviewCustomAdapter extends SimpleCursorAdapter {
 
     Cursor dataCursor;
@@ -52,43 +54,8 @@ public class GridviewCustomAdapter extends SimpleCursorAdapter {
         int priority = dataCursor.getInt(description_index);
 
         holder.tvTime.setText(task_title);
-
-        switch (priority) {
-            case 0:
-                holder.tvSize.setText(WaterBottlesData.getData().get(0).title + "ml");
-                holder.imageView.setImageResource(WaterBottlesData.getData().get(0).imageId);
-                break;
-            case 1:
-                holder.tvSize.setText(WaterBottlesData.getData().get(1).title + "ml");
-                holder.imageView.setImageResource(WaterBottlesData.getData().get(1).imageId);
-                break;
-            case 2:
-                holder.tvSize.setText(WaterBottlesData.getData().get(2).title + "ml");
-                holder.imageView.setImageResource(WaterBottlesData.getData().get(2).imageId);
-                break;
-            case 3:
-                holder.tvSize.setText(WaterBottlesData.getData().get(3).title + "ml");
-                holder.imageView.setImageResource(WaterBottlesData.getData().get(3).imageId);
-                break;
-            case 4:
-                holder.tvSize.setText(WaterBottlesData.getData().get(4).title + "ml");
-                holder.imageView.setImageResource(WaterBottlesData.getData().get(4).imageId);
-                break;
-            case 5:
-                holder.tvSize.setText(WaterBottlesData.getData().get(5).title + "ml");
-                holder.imageView.setImageResource(WaterBottlesData.getData().get(5).imageId);
-                break;
-            case 6:
-                holder.tvSize.setText(WaterBottlesData.getData().get(6).title + "ml");
-                holder.imageView.setImageResource(WaterBottlesData.getData().get(6).imageId);
-                break;
-            case 7:
-                holder.tvSize.setText(WaterBottlesData.getData().get(7).title + "ml");
-                holder.imageView.setImageResource(WaterBottlesData.getData().get(7).imageId);
-                break;
-            default:
-                Toast.makeText(context, "Wrong input", Toast.LENGTH_SHORT).show();
-        }
+        holder.tvSize.setText(WaterBottlesData.getData().get(priority).title + " ml");
+        holder.imageView.setImageResource(WaterBottlesData.getData().get(priority).imageId);
 
         return convertView;
     }

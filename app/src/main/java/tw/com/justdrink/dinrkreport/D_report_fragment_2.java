@@ -1,15 +1,16 @@
 package tw.com.justdrink.dinrkreport;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -17,20 +18,21 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import tw.com.justdrink.R;
+import tw.com.justdrink.database.WaterDbProvider;
 
 public class D_report_fragment_2 extends Fragment {
 
     LineChart chart;
     LineData data;
+    Cursor chart_cursor, st_cursor;
     ArrayList<String> xVals = new ArrayList<String>();
     ArrayList <String> yVals = new ArrayList<String>();
+    private GetDates getDates;
     private Button drep2_btn1;
     private Button drep2_btn2;
     private Button drep2_btn3;
@@ -38,9 +40,8 @@ public class D_report_fragment_2 extends Fragment {
     private TextView drep2_date1,drep2_date2,drep2_text2,drep2_text3,drep2_text5,drep2_text6;
     //private TextView drep2_text1,drep2_text4;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_d_report_fragment_2, container, false);
         context = view.getContext();
         chart = (LineChart) view.findViewById(R.id.monthchart);
@@ -56,19 +57,44 @@ public class D_report_fragment_2 extends Fragment {
         drep2_text5 = (TextView)view.findViewById(R.id.drep2_text5);
         drep2_text6 = (TextView)view.findViewById(R.id.drep2_text6);
 
+        getDates = new GetDates();
         //取得今天日期
-        String date = getDate();
+        String date_now = getDates.getDate();
         //取得7天前日期
-        String date_lw = getDateafter(date, 30);
+        String date_lw = getDates.getDateafter(date_now, 30);
         //設定顯示今天日期
         drep2_date1.setText(date_lw);
-        drep2_date2.setText(date);
+        drep2_date2.setText(date_now);
+
+        //**--顯示當日飲水量--**//
+        String[] projection = new String[] {"date", "sum(ml) as suml"};
+        String d_now = "date) = '" + date_now + "' GROUP BY (date";
+        st_cursor = getActivity().getContentResolver().query(WaterDbProvider.CONTENT_URI_WATER, projection, d_now, null, null);
+        if(st_cursor.getCount() > 0) {
+            st_cursor.moveToFirst();
+            String st = st_cursor.getString(1) + "ml";
+            drep2_text2.setText(st);
+        }else{
+            drep2_text2.setText("0ml");
+        }
+
+        //**--顯示當日目標達成率--**//
+        Cursor single_weight = getActivity().getContentResolver().query(WaterDbProvider.CONTENT_URI_WEIGHT, null, d_now, null, null);
+        if(single_weight.getCount() > 0) {
+            single_weight.moveToFirst();
+            st_cursor.moveToFirst();
+            float st = Float.parseFloat(st_cursor.getString(1));
+            float wt =  Float.parseFloat(single_weight.getString(7));
+            int wa = (int) (st / wt * 100);
+            drep2_text3.setText("達成率: " + wa + "%");
+        }else{
+        }
 
         //chart.setDescription("說明文字");
         chart.setDescription("");
         chart.fitScreen();
         //設置圖表資料
-        chart.setData(getLineData());
+        chart.setData(getLineData(date_now));
         //預設不顯示右邊2顆按鈕
         drep2_btn2.setVisibility(View.INVISIBLE);
         drep2_btn3.setVisibility(View.INVISIBLE);
@@ -81,15 +107,15 @@ public class D_report_fragment_2 extends Fragment {
                 drep2_btn2.setVisibility(View.VISIBLE);
                 drep2_btn3.setVisibility(View.VISIBLE);
                 //取得目前顯示的起始日期放到date
-                String date = drep2_date1.getText().toString();
+                String date_now = drep2_date1.getText().toString();
                 //把date丟到getDateafter函式計算7天前日期
-                String date_lw = getDateafter(date, 30);
+                String date_lw = getDates.getDateafter(date_now, 30);
                 //更新上方日期顯示
                 drep2_date1.setText(date_lw);
-                drep2_date2.setText(date);
+                drep2_date2.setText(date_now);
                 //重新呼叫刷新圖表
                 chart.clear();
-                chart.setData(getLineData());
+                chart.setData(getLineData(date_now));
             }
         });
 
@@ -97,15 +123,15 @@ public class D_report_fragment_2 extends Fragment {
         drep2_btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String date = getDate();
-                String date_lw = getDateafter(date, 30);
+                String date_now = getDates.getDate();
+                String date_lw = getDates.getDateafter(date_now, 30);
                 drep2_date1.setText(date_lw);
-                drep2_date2.setText(date);
+                drep2_date2.setText(date_now);
                 drep2_btn2.setVisibility(View.INVISIBLE);
                 drep2_btn3.setVisibility(View.INVISIBLE);
                 //重新呼叫刷新圖表
                 chart.clear();
-                chart.setData(getLineData());
+                chart.setData(getLineData(date_now));
             }
         });
 
@@ -115,72 +141,34 @@ public class D_report_fragment_2 extends Fragment {
             public void onClick(View v) {
                 drep2_btn2.setVisibility(View.VISIBLE);
                 //取得目前顯示的結束日期放到date
-                String date = drep2_date2.getText().toString();
+                String date_now = drep2_date2.getText().toString();
                 //把date丟到getDatebefore函式計算7天後日期
-                String date_lw = getDatebefore(date, 30);
+                String date_lw = getDates.getDatebefore(date_now, 30);
                 //更新上方日期顯示
-                drep2_date1.setText(date);
+                drep2_date1.setText(date_now);
                 drep2_date2.setText(date_lw);
                 //判斷是否到今天，是則隱藏右方按鈕
-                String tempdate = getDate();
+                String tempdate = getDates.getDate();
                 if (tempdate.equals(date_lw)){
                     drep2_btn2.setVisibility(View.INVISIBLE);
                     drep2_btn3.setVisibility(View.INVISIBLE);
                 }
                 //重新呼叫刷新圖表
                 chart.clear();
-                chart.setData(getLineData());
+                chart.setData(getLineData(date_lw));
             }
         });
 
         return view;
     }
 
-    //取得現在日期
-    private String getDate(){
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        String date_now = df.format(new java.util.Date());
-        return date_now;
-    }
-
-    //計算7天前日期(7天為參數Num)
-    public static String getDateafter(String day,int Num) {
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        Date nowDate = null;
-        try {
-            nowDate = df.parse(day);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        //如果需要向后计算日期 -改为+
-        Date newDate2 = new Date(nowDate.getTime() - (long)Num * 24 * 60 * 60 * 1000);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String dateOk = simpleDateFormat.format(newDate2);
-        return dateOk;
-    }
-
-    //計算7天後日期(7天為參數Num)
-    public static String getDatebefore(String day,int Num) {
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        Date nowDate = null;
-        try {
-            nowDate = df.parse(day);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        //如果需要向后计算日期 +改为-
-        Date newDate2 = new Date(nowDate.getTime() + (long)Num * 24 * 60 * 60 * 1000);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String dateOk = simpleDateFormat.format(newDate2);
-        return dateOk;
-    }
-
     //圖表建立函示
-    private LineData getLineData(){
+    private LineData getLineData(String date){
+        String date_now =date;
         final int DATA_COUNT = 30;  //设置折线图横跨距离
-        LineDataSet dataSetA = new LineDataSet( getChartAvg(DATA_COUNT, 1), getResources().getString(R.string.monthly_average));
+        LineDataSet dataSetA = new LineDataSet( getChartAvg(DATA_COUNT, date_now), getResources().getString(R.string.monthly_average));
         //设置折线数据 getChartData返回一个List<Entry>键值对集合标识 折线点的横纵坐标，"A"代表折线标识
-        LineDataSet dataSetB = new LineDataSet( getChartData(DATA_COUNT, 2), getResources().getString(R.string.monthly_Drink));
+        LineDataSet dataSetB = new LineDataSet( getChartData(DATA_COUNT, date_now), getResources().getString(R.string.monthly_Drink));
 
         List<LineDataSet> dataSets = new ArrayList<>();
         //資料集A加入圖表
@@ -198,6 +186,12 @@ public class D_report_fragment_2 extends Fragment {
         //設定主資料節點不包覆空心圓
         dataSetA.setDrawCircleHole(false);
         dataSetB.setDrawCircleHole(false);
+        //設定不顯示資料文字
+        dataSetA.setDrawValues(false);
+        dataSetB.setDrawValues(false);
+        //設定資料節點大小
+        dataSetA.setCircleSize(2f);
+        dataSetB.setCircleSize(2f);
         //設定被選中時，節點顯示顏色
         dataSetA.setHighLightColor(Color.RED);
         dataSetB.setHighLightColor(Color.RED);
@@ -209,30 +203,83 @@ public class D_report_fragment_2 extends Fragment {
     }
 
     //建立圖表主資料集
-    private List<Entry> getChartData(int count, int ratio){
+    private List<Entry> getChartData(int count, String date){
+        //取得今天日期
+        String date_now = date;
+        //取得count天前日期
+        String date_lw = getDates.getDateafter(date_now, count);
+
+        //**--抓取DATE GROUP 飲水量總和**--//
+        String[] projection = new String[] {"date", "sum(ml) as suml"};
+        String qureytxt = "date) BETWEEN '" + date_lw + "' AND '" + date_now + "' GROUP BY (date";
+        String d_now = "date) = '" + date_now + "' GROUP BY (date";
+        chart_cursor = getActivity().getContentResolver().query(WaterDbProvider.CONTENT_URI_WATER, projection, qureytxt, null, "date ASC");
+        //**--抓取DATE GROUP 飲水量總和**--//
+
         List<Entry> chartData = new ArrayList<>();
-        for(int i=0;i<count;i++){
-            float val = (float) (Math.random() * 49) + 50;
-            chartData.add(new Entry( val, i));
+        int j = 0;
+        chart_cursor.moveToFirst();
+        for (int i=0; i<count; i++){
+            if ((count-j-chart_cursor.getCount()) <= 0){
+                //圖表塞入DB資料
+                float val = Float.valueOf(chart_cursor.getString(1));
+                chartData.add(new Entry( val, i));
+                chart_cursor.moveToNext();
+            }else{
+                //圖表塞入0
+                chartData.add(new Entry( 0, i));
+            }
+            j++;
         }
         return chartData;
     }
 
     //建立圖表平均值資料集
-    private List<Entry> getChartAvg(int count, int ratio){
-        List<Entry> chartData = new ArrayList<>();
-        float sum = 0;
-        //計算期間總和
-        for(int i=0;i<count;i++){
-            float val = (float) (Math.random() * 49) + 50;
+    private List<Entry> getChartAvg(int count, String date){
+        //取得今天日期
+        String date_now = date;
+        //取得count天前日期
+        String date_lw = getDates.getDateafter(date_now, count);
 
-            sum += val;
+        //**--抓取DATE GROUP 飲水量總和**--//
+        String[] projection = new String[] {"date", "sum(ml) as suml"};
+        String qureytxt = "date) BETWEEN '" + date_lw + "' AND '" + date_now + "' GROUP BY (date";
+        chart_cursor = getActivity().getContentResolver().query(WaterDbProvider.CONTENT_URI_WATER, projection, qureytxt, null, "date ASC");
+        //**--抓取DATE GROUP 飲水量總和**--//
+        //**--計算期間飲水量總和**--//
+        float sum = 0;
+        if(chart_cursor.getCount() > 0) {
+            chart_cursor.moveToFirst();
+            do{
+                sum += Float.valueOf(chart_cursor.getString(1));
+            }while (chart_cursor.moveToNext());
+        }else{
+            Toast.makeText(context, getString(R.string.no_data), Toast.LENGTH_SHORT).show();
         }
-        //填入每天平均值
-        for (int i=0;i<count;i++){
-            float avg = sum / count;
-            chartData.add(new Entry( avg, i));
+
+        //**--建立圖表資料--**//
+        List<Entry> chartData = new ArrayList<>();
+        float avg = 0;
+        if(chart_cursor.getCount() > 0){
+            for (int i=0;i<count;i++){
+                avg = sum / chart_cursor.getCount();
+                chartData.add(new Entry( avg, i));
+            }
+            drep2_text5.setText((int)(avg) + "ml");
+        }else {
+            drep2_text5.setText("0ml");
         }
+
+        //**--顯示平均體重--**//
+        String[] proj_avg = new String[] {"avg(totml) as total"};
+        Cursor avg_cursor = getActivity().getContentResolver().query(WaterDbProvider.CONTENT_URI_WEIGHT, proj_avg, qureytxt, null, null);
+        if(avg_cursor.getCount() > 0){
+            avg_cursor.moveToFirst();
+            String wavg = avg_cursor.getString(0);
+            int wa = (int)(avg / Float.parseFloat(wavg) *100);
+            drep2_text6.setText("月達成率: " + wa + "%");
+        }
+
         return chartData;
     }
 
@@ -338,4 +385,5 @@ public class D_report_fragment_2 extends Fragment {
         }
         return chartLabels;
     }
+
 }

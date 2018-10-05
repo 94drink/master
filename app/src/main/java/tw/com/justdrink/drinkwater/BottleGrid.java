@@ -20,11 +20,13 @@ import tw.com.justdrink.database.WaterDBHelper;
 import tw.com.justdrink.database.WaterDbProvider;
 
 
+/**
+ * Created by Yuan on 9/17/2018.
+ */
 public class BottleGrid extends Fragment {
 
     String time, date;
     static int pos;
-    static String[] bposition;
     private GridView gridView;
     GridviewCustomAdapter gridviewCustomAdapter;
     Uri uri = WaterDbProvider.CONTENT_URI_WATER;
@@ -65,6 +67,5 @@ public class BottleGrid extends Fragment {
         });
         return view;
     }
-
 
 }

@@ -1,7 +1,7 @@
 package tw.com.justdrink.drinkwater;
 
 import android.content.ContentValues;
-import android.content.SharedPreferences;
+import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,22 +23,25 @@ import java.util.TimeZone;
 
 import tw.com.justdrink.R;
 import tw.com.justdrink.WaterSettings;
+import tw.com.justdrink.Weight;
 import tw.com.justdrink.database.WaterBottlesData;
 import tw.com.justdrink.database.WaterDBHelper;
 import tw.com.justdrink.database.WaterDbProvider;
 
 
+/**
+ * Created by Yuan on 9/17/2018.
+ */
 public class DrinkWater extends Fragment {
 
     public FloatingActionButton fabAdd, fabSelect;
     String time, date;
-    TextView drinked, goal;
     Button waterSetting;
-    static ProgressBar progressBar;
+    public static ProgressBar progressBar;
+    public static TextView drinked, goal;
     public static String weight = "weight";
-    SharedPreferences sharedDataWeight;
     int drink_target, is_drinked;
-    Cursor drink_water_cursor;
+    static Context context;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -48,6 +52,7 @@ public class DrinkWater extends Fragment {
         sdf.setTimeZone(TimeZone.getTimeZone("Asia/Taipei"));
         time = sdf.format(c.getTime());
         date = df.format(c.getTime());
+        context = getActivity();
 
         View view = inflater.inflate(R.layout.fragment_drinkwater, container, false);
 
@@ -61,17 +66,20 @@ public class DrinkWater extends Fragment {
         Fragment fragment = new BottleGrid();
         ft.replace(R.id.bottle_container, fragment).commit();
 
-        sharedDataWeight = getActivity().getSharedPreferences(weight, 0);
-        String weight_prefs = sharedDataWeight.getString("weight", "70");
-        int dummy = Integer.parseInt(weight_prefs);
-
         // 目標總水量
-        drink_target = calTarget(dummy);
-        goal.setText("/" + drink_target + "");
+        drink_target = getWeightByDate(date);
+        if (drink_target == 0) {
+            Weight weight = new Weight();
+            Bundle bundle = new Bundle();
+            bundle.putInt("Key01", 0);
+            weight.setArguments(bundle);
+            weight.show(fm, "Dialog");
+        }
+        goal.setText("/" + drink_target);
         progressBar.setMax(drink_target);
 
-        // 目前已喝的水量
-        is_drinked = 0;
+        // 單日已喝總水量
+        is_drinked = getDrinkedByDate(date);
         drinked.setText("" + is_drinked);
         progressBar.setProgress(is_drinked);
 
@@ -111,8 +119,7 @@ public class DrinkWater extends Fragment {
                 Uri uri = WaterDbProvider.CONTENT_URI_WATER;
                 Uri newUri = getActivity().getContentResolver().insert(uri, values);
                 progressBar.incrementProgressBy(ml);
-                is_drinked += ml;
-                drinked.setText("" + is_drinked);
+                drinked.setText("" + getDrinkedByDate(date));
                 Fragment fragment = new BottleGrid();
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
@@ -124,10 +131,55 @@ public class DrinkWater extends Fragment {
         return view;
     }
 
-    private int calTarget(int weight_data) {
-        int target = weight_data * 33;
-        return target;
+    public static int getDrinkedByDate(String dateString) {
+        String[] projection = new String[] {"sum(ml) as Total"};
+        String where = "date) = '" + dateString + "' GROUP BY (date";
+        Cursor drink_water_cursor = context.getContentResolver().query(WaterDbProvider.CONTENT_URI_WATER, projection, where, null, null);
+        if (drink_water_cursor.getCount() > 0) {
+            drink_water_cursor.moveToFirst();
+            int is_drinked = drink_water_cursor.getInt(drink_water_cursor.getColumnIndex("Total"));
+            //Log.e("cursor", "date:" + dateString + ", total:"  + drink_water_cursor.getString(drink_water_cursor.getColumnIndexOrThrow("Total")));
+            return is_drinked;
+        } else {
+            return 0;
+        }
+    }
 
+    public static int getWeightByDate(String dateString) {
+        String where = "date = '" + dateString + "'";
+        Cursor weight_cursor = context.getContentResolver().query(WaterDbProvider.CONTENT_URI_WEIGHT, null, where, null, null);
+        if (weight_cursor.getCount() > 0) {
+            weight_cursor.moveToFirst();
+            int drink_target = weight_cursor.getInt(weight_cursor.getColumnIndex("totml"));
+            progressBar.setMax(drink_target);
+
+            Log.e("drink_target", "" + drink_target);
+            return drink_target;
+        } else {
+            int tmp_weight = 0, tmp_total = 0;
+            weight_cursor = context.getContentResolver().query(WaterDbProvider.CONTENT_URI_WEIGHT, null, null, null, null);
+            if (weight_cursor.getCount() > 0) {
+                weight_cursor.moveToFirst();
+                tmp_weight = weight_cursor.getInt(weight_cursor.getColumnIndex("weight"));
+                tmp_total = tmp_weight * 33;
+            }
+
+            ContentValues values = new ContentValues();
+            values.clear();
+            values.put(WaterDBHelper.KEY_WEIGHT, "" + tmp_weight);
+            values.put(WaterDBHelper.KEY_WDATE, dateString);
+            values.put(WaterDBHelper.KEY_WIML, tmp_total);
+            values.put(WaterDBHelper.KEY_SEML, 0);
+            values.put(WaterDBHelper.KEY_WEML, 0);
+            values.put(WaterDBHelper.KEY_SPML, 0);
+            values.put(WaterDBHelper.KEY_TOTML, tmp_total);
+            Uri uri = WaterDbProvider.CONTENT_URI_WEIGHT;
+            Uri newUri = context.getContentResolver().insert(uri, values);
+            progressBar.setMax(tmp_total);
+
+            Log.e("tmp_weight", "" + tmp_weight + ", tmp_total: " + tmp_total);
+            return tmp_total;
+        }
     }
 }
 

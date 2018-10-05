@@ -39,6 +39,28 @@
     <string name="monthly_Drink">Monthly Drinking water</string>
     <string name="year_average">Year average</string>
     <string name="year_Drink">Year Drinking water</string>
+    <string name="no_data">No Data！</string>
+    <string name="weight_now">Weight Now：</string>
+    <string name="weight_avg">Weight Avg：</string>
+    <string name="weight_min">Weight Min：</string>
+    <string name="weight_max">Weight Max：</string>
+
+    <!-- 對話框使用字串 -->
+    <string name="cancel">CANCEL</string>
+    <string name="ok">OK</string>
+    <string name="set_ok">Success！</string>
+    <string name="reinput">Please input the right value！</string>
+    <string name="total">Total：</string>
+    <string name="ml">  ml</string>
+    <string name="cold">Cold</string>
+    <string name="mild">Mild</string>
+    <string name="warm">Warm</string>
+    <string name="hot">Hot</string>
+    <string name="quiet">Quiet</string>
+    <string name="normal">Normal</string>
+    <string name="lively">Lively</string>
+    <string name="verylively">Very Lively</string>
+    <string name="weight_hander_text">Please input your weight:</string>
 
     <!--設定區-->
     <string name="set_reminder">Reminder</string>
@@ -48,6 +70,7 @@
 
     <!--layout/water_settings_list-->
     <string-array name="water_settings_array">
+        <item>Settings...</item>
         <item>Weight</item>
         <item>Adjustment</item>
         <item>Weather</item>
@@ -55,7 +78,7 @@
         <item>Total</item>
     </string-array>
 
-        <!--設定區fragment_setting-->
+    <!--設定區fragment_setting-->
     <string-array name="setting" >
         <item>Reminder</item>
         <item>Cup Size</item>
@@ -65,22 +88,15 @@
 
     <!-- 設定區fragment_settingadapter字串 -->
     <string name="accept">Accept</string>
+    <string name="alarmsetting">AlarmSet</string>
 
     <!--設定Fragment內的RecyclView物件-->
     <string-array name="alarm">
-        <item>物件1提醒設定頁面</item>
-        <item>item2</item>
-        <item>item3</item>
-        <item>item4</item>
-        <item>item5</item>
-        <item>item6</item>
-        <item>item7</item>
-        <item>item8</item>
-        <item>item9</item>
-        <item>item10</item>
-        <item>item11</item>
-        <item>item12</item>
+        <item name="A">Time Alarm setting</item>
+        <item name="B">Service</item>
+        <item name="C">MusicSetting</item>
+        <item name="D">NoVoice</item>
     </string-array>
-
+    <string name="remove_alarm">RemoveAlarm</string>
 
 </resources>

@@ -9,6 +9,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+
         <!--歡迎畫面activity-->
         <activity
             android:name="tw.com.justdrink.WelcomeActivity"
@@ -26,6 +29,11 @@
             android:name="tw.com.justdrink.database.WaterDbProvider"
             android:authorities="tw.com.justdrink.database.WaterProvider"
             android:exported="true" />
+        <service android:name=".reminder.AlarmService" />
+        <uses-permission android:name="android.permission.INTERNET" />
+        <uses-permission android:name = "android.permission.VIBRATE" />
+        <service android:name=".reminder.AlarmService"/>
+        <service android:name=".ChronometerService" />
     </application>
 
 </manifest>
