@@ -72,7 +72,7 @@ public class D_report_fragment_3 extends Fragment {
 
         //**--顯示當日目標達成率--**//
         Cursor single_weight = getActivity().getContentResolver().query(WaterDbProvider.CONTENT_URI_WEIGHT, null, d_now, null, null);
-        if(single_weight.getCount() > 0) {
+        if(single_weight.getCount() > 0 && st_cursor.getCount() > 0) {
             single_weight.moveToFirst();
             st_cursor.moveToFirst();
             float st = Float.parseFloat(st_cursor.getString(1));
@@ -80,6 +80,7 @@ public class D_report_fragment_3 extends Fragment {
             int wa = (int) (st / wt * 100);
             drep3_text3.setText("達成率: " + wa + "%");
         }else{
+            drep3_text3.setText("達成率: 0%");
         }
 
         //取得今年數字
