@@ -1,6 +1,7 @@
 package tw.com.justdrink;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
@@ -13,6 +14,8 @@ import tw.com.justdrink.drinkwater.DrinkWater;
 
 public class ChronometerService extends Service {
 
+    Context context;
+
     private Handler handler = new Handler();
     private Runnable showTime = new Runnable() {
         @Override
@@ -24,12 +27,15 @@ public class ChronometerService extends Service {
             String date = df.format(now_date.getTime());
             String time = sdf.format(now_date.getTime());
 
+            //Log.i("service", "date: " + date + ", time: " + time);
+
             // 每天晚上12點新增一筆體重資料
-            if (time == "00:00:00") {
-                DrinkWater.getDrinkedByDate(date);
+            if (time.equals("00:00:00")) {
+                context = getApplicationContext();
+                int res = DrinkWater.getWeightByDate(date);
+                Log.i("service", "return: " + res);
             }
 
-            //Log.i("mylog", new Date().toString() + ", date: " + date + ", time: " + time);
             handler.postDelayed(this, 1000);
         }
     };
