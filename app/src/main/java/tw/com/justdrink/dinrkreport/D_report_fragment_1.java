@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,7 +84,7 @@ public class D_report_fragment_1 extends Fragment {
 
         //**--顯示當日目標達成率--**//
         Cursor single_weight = getActivity().getContentResolver().query(WaterDbProvider.CONTENT_URI_WEIGHT, null, d_now, null, null);
-        if(single_weight.getCount() > 0) {
+        if(single_weight.getCount() > 0 && st_cursor.getCount() > 0) {
             single_weight.moveToFirst();
             st_cursor.moveToFirst();
             float st = Float.parseFloat(st_cursor.getString(1));
@@ -323,4 +324,6 @@ public class D_report_fragment_1 extends Fragment {
         }
         return chartLabels;
     }
+
+
 }
