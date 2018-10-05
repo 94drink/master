@@ -25,7 +25,6 @@ import tw.com.justdrink.dinrkreport.Weightreport;
 import tw.com.justdrink.drinklog.DrinkLog;
 import tw.com.justdrink.drinkwater.DrinkWater;
 import tw.com.justdrink.reminder.Reminders;
-import tw.com.justdrink.reminder.Thanks;
 
 
 public class MainActivity extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener {
@@ -172,8 +171,8 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
                 waterSettings.show(fm, "Water");
                 break;
             case R.id.thanks_you:
-                fragment = new Thanks();
-                toolbar_text.setText(R.string.thank_you);
+                fragment = new AboutApp();
+                toolbar_text.setText(R.string.about_app);
                 break;
         }
 

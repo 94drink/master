@@ -16,7 +16,7 @@
     <string name="weightreport">Weight report</string>
     <string name="reminders">Reminders</string>
     <string name="nav_settings">Settings</string>
-    <string name="thank_you">Thank you</string>
+    <string name="about_app">About App</string>
     <!--
     <string name="widgets">Widgets</string>
     <string name="nav_share">Share</string>
@@ -62,12 +62,6 @@
     <string name="verylively">Very Lively</string>
     <string name="weight_hander_text">Please input your weight:</string>
 
-    <!--設定區-->
-    <string name="set_reminder">Reminder</string>
-    <string name="set_cup_size">Customize cup Size</string>
-    <string name="set_weight_goal">Weight and Goal</string>
-    <string name="set_units_format">Units and Format</string>
-
     <!--layout/water_settings_list-->
     <string-array name="water_settings_array">
         <item>Settings...</item>
@@ -98,5 +92,9 @@
         <item name="D">NoVoice</item>
     </string-array>
     <string name="remove_alarm">RemoveAlarm</string>
+
+    <!--關於App AboutApp字串 -->
+    <string name="about_message1">【About App】</string>
+    <string name="about_message2">70% of the body is made up of water. Drinking water not only promotes metabolism, enhances resistance, but also makes the cardiovascular healthier, so please remember to drink enough water every day to keep your health! Thank you for your download!</string>
 
 </resources>
