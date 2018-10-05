@@ -1,0 +1,42 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:paddingTop="60dp">
+
+    <TextView
+        android:id="@+id/about_view1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:gravity="center_horizontal"
+        android:paddingTop="10dp"
+        android:textSize = "27sp"
+        android:text="@string/about_message1"
+        android:textColor="#0e2584"/>
+
+    <TextView
+        android:id="@+id/about_view2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:textSize = "20dp"
+        android:text="@string/about_message2"
+        android:textColor="#05444e"
+        android:layout_marginTop="10dp"
+        android:gravity="fill_horizontal|fill_vertical|center_horizontal"
+        android:layout_margin="20dp"
+        android:textStyle="italic" />
+
+    <ImageView
+        android:id="@+id/about_view3"
+        android:layout_width="320dp"
+        android:layout_height="320dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/group_pic"  />
+
+
+</LinearLayout>

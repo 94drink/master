@@ -170,6 +170,10 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
                 WaterSettings waterSettings = new WaterSettings();
                 waterSettings.show(fm, "Water");
                 break;
+            case R.id.thanks_you:
+                fragment = new AboutApp();
+                toolbar_text.setText(R.string.about_app);
+                break;
         }
 
         if (fragment != null) {

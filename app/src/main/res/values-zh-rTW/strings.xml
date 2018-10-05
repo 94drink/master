@@ -15,18 +15,14 @@
     <string name="drinkreport">喝水圖表</string>
     <string name="weightreport">體重圖表</string>
     <string name="reminders">通知設置</string>
-    <string name="nav_settings">基本設定</string>
+    <string name="nav_settings">基本設置</string>
+    <string name="about_app">關於App</string>
+
     <!--
     <string name="widgets">小工具</string>
     <string name="nav_share">分享給朋友</string>
     <string name="backup">備份及恢復</string>
     -->
-
-    <!--設定區-->
-    <string name="set_reminder">提醒設定</string>
-    <string name="set_cup_size">客製化杯子容量</string>
-    <string name="set_weight_goal">體重與目標</string>
-    <string name="set_units_format">備份和恢復</string>
 
     <!--layout/fragment_drinkwater-->
     <string name="drink_target">喝水目標</string>
@@ -96,5 +92,8 @@
     </string-array>
     <string name="remove_alarm">移除鬧鐘</string>
 
+    <!--關於App About App字串 -->
+    <string name="about_message1">【關於App】</string>
+    <string name="about_message2">人體有 70%由水分所組成的，喝水不僅能促進新陳代謝、提升抵抗力、更能讓心血管保持健康，所以請記得每天都要喝足夠的水量，以維持身體健康喔! 感謝您的下載!</string>
 
 </resources>
