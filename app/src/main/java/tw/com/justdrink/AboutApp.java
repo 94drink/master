@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import tw.com.justdrink.R;
+import tw.com.justdrink.dinrkreport.GetDates;
 
 //s1005
 import android.hardware.Sensor;
@@ -26,11 +27,12 @@ public class AboutApp extends Fragment {
 
     private TextView textView1, textView2;
     private ImageView imageView1;
+    Context context;
 
     //s1005
-    private Vibrator vib;
-    private SensorManager sensor_manager;
-    private MySensorEventListener listener;
+    Vibrator vib;
+    SensorManager sensor_manager;
+    MySensorEventListener listener;
     //1005e
 
     @Override
@@ -43,10 +45,8 @@ public class AboutApp extends Fragment {
         textView2 = (TextView) rootView.findViewById(R.id.about_view2);
 
         //s1005
-        //sensor_manager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
-        //vib = (Vibrator) getActivity().getApplication().getSystemService(Service.VIBRATOR_SERVICE);
         sensor_manager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
-        vib = (Vibrator)getActivity().getSystemService(Service.VIBRATOR_SERVICE);
+        vib = (Vibrator) getActivity().getSystemService(Service.VIBRATOR_SERVICE);
         //1005e
         imageView1 = (ImageView) rootView.findViewById(R.id.about_view3);
 
@@ -68,12 +68,11 @@ public class AboutApp extends Fragment {
         public void onSensorChanged(SensorEvent event) {
             final float proxyValue = event.values[0];
 
-
                     if (proxyValue < 1) {
-                        //vib.vibrate(3000);
+                        vib.vibrate(3000);
                         imageView1.setImageResource(R.drawable.group_pic2);
                     } else {
-                        //vib.vibrate(1000);
+                        vib.vibrate(1000);
                         imageView1.setImageResource(R.drawable.group_pic);
                     }
                 }
@@ -82,7 +81,5 @@ public class AboutApp extends Fragment {
         public void onAccuracyChanged(Sensor sensor, int i) {
 
         }
-
-
-    };
+    }
 }
