@@ -17,6 +17,7 @@
         android:orientation="vertical"
         android:layout_marginTop="50dp"
         android:layout_marginBottom="20dp"
+        android:layout_below="@+id/textView"
         android:weightSum="1"
         android:id="@+id/reminderList_item">
     </ListView>

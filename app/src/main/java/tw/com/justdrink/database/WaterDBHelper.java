@@ -25,8 +25,15 @@ public class WaterDBHelper extends SQLiteOpenHelper {
     public static final String KEY_POS = "position";
     public static final String KEY_DATE = "date";
     public static final String KEY_TIME = "time";
+    public static final String KEY_WID = "_id";
     public static final String KEY_WEIGHT = "weight";
+    public static final String KEY_WDATE = "date";
     public static final String KEY_ML = "ml";
+    public static final String KEY_WIML = "wiml";
+    public static final String KEY_SEML = "seml";
+    public static final String KEY_WEML = "weml";
+    public static final String KEY_SPML = "spml";
+    public static final String KEY_TOTML = "totml";
 
     public WaterDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -44,9 +51,14 @@ public class WaterDBHelper extends SQLiteOpenHelper {
                 + " ) ";
 
         String weight_sql = "CREATE TABLE " + WEIGHT_TABLE + " ( "
-                + KEY_ID + " integer PRIMARY KEY, "
-                + KEY_WEIGHT + " int NOT NULL, "
-                + KEY_DATE + " text NOT NULL"
+                + KEY_WID + " integer PRIMARY KEY, "
+                + KEY_WEIGHT + " text NOT NULL, "
+                + KEY_WDATE + " text NOT NULL, "
+                + KEY_WIML + " int NOT NULL, "
+                + KEY_SEML + " int NOT NULL, "
+                + KEY_WEML + " int NOT NULL, "
+                + KEY_SPML + " int NOT NULL, "
+                + KEY_TOTML + " int NOT NULL"
                 + " ) ";
 
         db.execSQL(water_sql);

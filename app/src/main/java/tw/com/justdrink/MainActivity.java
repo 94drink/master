@@ -17,11 +17,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Calendar;
 
 import tw.com.justdrink.dinrkreport.DrinkReport;
+import tw.com.justdrink.dinrkreport.Weightreport;
 import tw.com.justdrink.drinklog.DrinkLog;
 import tw.com.justdrink.drinkwater.DrinkWater;
 import tw.com.justdrink.reminder.Reminders;
@@ -38,8 +38,6 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     Fragment fragment = null;
     FragmentManager fragmentManager = getSupportFragmentManager();
     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,8 +104,11 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
             switch (menuItem.getItemId())
             {
                 case R.id.reminder_setting:
-//                    Intent i =  new Intent(getBaseContext(),Reminders.class);
-//                    startActivity(i);
+                    fragment = new Reminders();
+                    toolbar_text.setText(R.string.reminders);
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.content_frame , fragment ,"My FragmentReminder");
+                    transaction.commit();
                     break;
                 case R.id.calendar:
 //                  Intent intent = new Intent(MainActivity.this,CalendarDialog.class);
@@ -122,15 +123,18 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
                     new DatePickerDialog(MainActivity.this, new DatePickerDialog.OnDateSetListener() {//OnDateSetListener 為內建方法 將使用者輸入完成後的日期傳回
                         @Override
                         public void onDateSet(DatePicker view, int mYear, int mMonth, int mDay) {
-                             toolbar_text.setText(mYear+"/"+String.valueOf(mMonth+1)+"/"+mDay);//顯示在toolbar上的日期 //轉用到ToolBar上的setTitle
+                             toolbar_text.setText(mYear+"-"+String.valueOf(mMonth+1)+"-"+mDay);//顯示在toolbar上的日期 //轉用到ToolBar上的setTitle
                                   }
                     }, mYear,mMonth, mDay).show();
                     break;
                 case R.id.weight_setting:
                     Weight weight = new Weight();
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("Key01", 0);
+                    weight.setArguments(bundle);
                     weight.show(fragmentManager, "Dialog");
                     break;
-             }
+            }
             return true;
 
         }
@@ -162,8 +166,9 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
                 toolbar_text.setText(R.string.reminders);
                 break;
             case R.id.nav_settings:
-                fragment = new Setting();
-                toolbar_text.setText(R.string.nav_settings);
+                FragmentManager fm = getSupportFragmentManager();
+                WaterSettings waterSettings = new WaterSettings();
+                waterSettings.show(fm, "Water");
                 break;
             case R.id.thanks_you:
                 fragment = new AboutApp();
