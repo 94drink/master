@@ -68,18 +68,24 @@ public class AboutApp extends Fragment {
         public void onSensorChanged(SensorEvent event) {
             final float proxyValue = event.values[0];
 
-                    if (proxyValue < 1) {
-                        vib.vibrate(3000);
-                        imageView1.setImageResource(R.drawable.group_pic2);
-                    } else {
-                        vib.vibrate(1000);
-                        imageView1.setImageResource(R.drawable.group_pic);
-                    }
-                }
+            if (proxyValue < 1) {
+                vib.vibrate(3000);//接近螢幕時最多震動(最多3秒)
+                imageView1.setImageResource(R.drawable.group_pic2);
+            } else {
+                vib.cancel(); //遠離螢幕時不震動
+                imageView1.setImageResource(R.drawable.group_pic);
+            }
+        }
 
         @Override
         public void onAccuracyChanged(Sensor sensor, int i) {
 
         }
+    }
+    //當其他頁面或app啟動時(onPause狀態),自動將listener關閉
+    @Override
+    public void onPause() {
+        super.onPause();
+        sensor_manager.unregisterListener(listener);
     }
 }
