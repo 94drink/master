@@ -91,6 +91,13 @@
         <item>震動＆靜音</item>
     </string-array>
     <string name="remove_alarm">移除鬧鐘</string>
+    <string-array name="music">
+        <item>Blues 藍調</item>
+        <item>Classical 古典音樂</item>
+        <item>Country 鄉村音樂</item>
+        <item>WhatEver 隨時喝</item>
+        <item>Folk 民謠音樂</item>
+    </string-array>
 
     <!--關於App About App字串 -->
     <string name="about_message1">【關於App】</string>

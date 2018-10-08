@@ -11,7 +11,9 @@ import android.widget.TextView;
 
 import tw.com.justdrink.R;
 
-
+/**
+ * Created by Ｍark on 10/08/2018.
+ */
 public class ReminderAdpater extends BaseAdapter {
 
     private Context context;

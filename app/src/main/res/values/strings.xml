@@ -92,6 +92,13 @@
         <item name="D">NoVoice</item>
     </string-array>
     <string name="remove_alarm">RemoveAlarm</string>
+    <string-array name="music">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>>
+    </string-array>
 
     <!--關於App AboutApp字串 -->
     <string name="about_message1">【About App】</string>
