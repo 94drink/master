@@ -1,6 +1,7 @@
 package tw.com.justdrink;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -24,7 +25,6 @@ import tw.com.justdrink.dinrkreport.DrinkReport;
 import tw.com.justdrink.drinklog.DrinkLog;
 import tw.com.justdrink.drinkwater.DrinkWater;
 import tw.com.justdrink.reminder.Reminders;
-import tw.com.justdrink.reminder.Thanks;
 
 
 public class MainActivity extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener {
@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     public Toolbar toolbar;
     private ActionBarDrawerToggle toggle;
     private TextView toolbar_text;
+    private Intent intent;
 
     Fragment fragment = null;
     FragmentManager fragmentManager = getSupportFragmentManager();
@@ -44,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        intent = new Intent(MainActivity.this, ChronometerService.class);
+        startService(intent);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar_text = (TextView)findViewById(R.id.tbtext);
@@ -163,8 +166,8 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
                 toolbar_text.setText(R.string.nav_settings);
                 break;
             case R.id.thanks_you:
-                fragment = new Thanks();
-                toolbar_text.setText(R.string.thank_you);
+                fragment = new AboutApp();
+                toolbar_text.setText(R.string.about_app);
                 break;
         }
 

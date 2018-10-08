@@ -15,6 +15,9 @@ import tw.com.justdrink.database.WaterBottlesData;
 import tw.com.justdrink.database.WaterDBHelper;
 
 
+/**
+ * Created by Yuan on 9/17/2018.
+ */
 public class GridviewCustomAdapter extends SimpleCursorAdapter {
 
     Cursor dataCursor;

@@ -1,11 +1,13 @@
 package tw.com.justdrink.database;
 
 
-import tw.com.justdrink.R;
-
 import java.util.ArrayList;
 
+import tw.com.justdrink.R;
 
+/**
+ * Created by Yuan on 9/17/2018.
+ */
 public class WaterBottlesData {
     public static ArrayList<Information> getData() {
 
