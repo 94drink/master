@@ -24,4 +24,5 @@
         android:textColor="@color/black"
         android:layout_weight="0.70" />
 
+
 </LinearLayout>

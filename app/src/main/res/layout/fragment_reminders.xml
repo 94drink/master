@@ -42,12 +42,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="開啟震動"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:id="@+id/checkBox4"
+        android:id="@+id/checkBox3"
+        android:layout_weight="0.23"
+        android:gravity="center_vertical"
+        android:minHeight="?android:attr/listPreferredItemHeightSmall"
+        android:paddingLeft="@dimen/activity_vertical_margin"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_centerVertical="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignEnd="@+id/reminderList_item" />
 
 </RelativeLayout>

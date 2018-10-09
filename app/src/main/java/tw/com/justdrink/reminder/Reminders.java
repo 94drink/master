@@ -6,11 +6,16 @@ import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.support.v4.media.MediaBrowserServiceCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,11 +27,14 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
 
 import java.util.Calendar;
 
 import tw.com.justdrink.R;
+
+/**
+ * Created by Ｍark on 10/08/2018.
+ */
 
 public class Reminders extends Fragment {
     //設定Adapter,RecyclerView 變數
@@ -36,7 +44,7 @@ public class Reminders extends Fragment {
     Calendar calendar = Calendar.getInstance();
     PendingIntent pi;
     AlarmService alarmService ;
-    private Intent intent ;
+    Intent intent ;
     TextView timeset ;
     //連接Service 的Function
     private ServiceConnection mConnection = new ServiceConnection() {
@@ -87,9 +95,8 @@ public class Reminders extends Fragment {
                 new AdapterView.OnItemClickListener(){
                     public void onItemClick(AdapterView<?> vg, View view, int position, long id) {
                         //vg被點的母元件,也就是Listview//View 被點的item本身//position第幾個item被點到//item的id
-                        AlertDialog dialog = new AlertDialog.Builder(getActivity()).create();
-                        dialog.setTitle("Title");
-
+                        //AlertDialog dialog = new AlertDialog.Builder(getActivity()).create();
+                        AlertDialog.Builder builder = new AlertDialog.Builder(context,1);
 
                         switch (position){
                             case 0:
@@ -117,11 +124,17 @@ public class Reminders extends Fragment {
                                         Toast.LENGTH_SHORT).show();
                                 break;
                             case 2 :
-                                Toast.makeText(context , "設定音樂" ,
-                                        Toast.LENGTH_SHORT).show();
+                                //建立內建的音樂選擇器 -- 可用於來電鈴聲.通知聲等
+                                Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
+                                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "選擇提示聲:");//設置內建標題
+                                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, true);//是否顯示沉默的項目 . 是
+                                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true);//是否顯示預設的項目 是
+                                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE,RingtoneManager.TYPE_ALL); //選擇器內的鈴聲類型. 可選擇來電聲.或通知聲
+                                startActivity(intent);//啟動
+                                //Toast.makeText( getContext (),"設置成功！", Toast.LENGTH_SHORT ).show();
                                 break;
-                            case 3 :
 
+                            case 3 :
                                 Toast.makeText(context , "震動&靜音" ,
                                         Toast.LENGTH_SHORT).show();
                                 break;
@@ -176,6 +189,13 @@ public class Reminders extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         this.context = context;
+    }
+
+   //默認聲音選完會調用至onActivityResult方法
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.i("onActivityResult","onActivityResult");
+
     }
 
 

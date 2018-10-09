@@ -30,7 +30,8 @@ public class Weather_Setting_Dialog extends DialogFragment implements View.OnCli
     //--**資料庫相關類別宣告**--//
     Cursor cursor_single;
     GetDates getDates;
-    int seml=0, wiml=0, totml=0, final_tot = 0, final_self = 0;
+    int seml=0, totml=0, final_tot = 0, final_self = 0;
+    float wiml=0;
 
     private void init() {
         ok = (Button) v.findViewById(R.id.btn_cancel);
@@ -50,10 +51,10 @@ public class Weather_Setting_Dialog extends DialogFragment implements View.OnCli
         cursor_single = getActivity().getContentResolver().query(WaterDbProvider.CONTENT_URI_WEIGHT, null, d_now, null, null);
         if(cursor_single.getCount() > 0) {
             cursor_single.moveToFirst();
-            wiml = Integer.parseInt(cursor_single.getString(3));
+            wiml = Float.parseFloat(cursor_single.getString(3));
             seml = Integer.parseInt(cursor_single.getString(5));
             totml = Integer.parseInt(cursor_single.getString(7));
-            seekBar.setMax((int)(wiml * 0.5));
+            seekBar.setMax((int)(wiml * 0.2));
             seekBar.setProgress(seml);
             textView4.setText(seml + " ml");
             textView_tot.setText(totml + " ");
@@ -71,7 +72,7 @@ public class Weather_Setting_Dialog extends DialogFragment implements View.OnCli
             @Override
             public void onProgressChanged(SeekBar seekBar, int progresValue, boolean fromUser) {
                 // 当拖动条的滑块位置发生改变时触发该方法,在这里直接使用参数progress，即当前滑块代表的进度值
-                seekBar.setMax(wiml / 2);
+                seekBar.setMax((int)(wiml * 0.2));
                 final_self = progresValue;
                 final_tot = totml - seml + progresValue;
                 textView4.setText(final_self + " ml");
@@ -102,15 +103,7 @@ public class Weather_Setting_Dialog extends DialogFragment implements View.OnCli
         int temp = 0;
         switch (view.getId()) {
             case R.id.imageButton1:
-                seekBar.setMax((int)(wiml * 0.5));
-                seekBar.setProgress(0);
-                final_self = 0;
-                final_tot = totml - seml;
-                textView4.setText(final_self + " ml");
-                textView_tot.setText(final_tot + " ");
-                break;
-            case R.id.imageButton2:
-                seekBar.setMax((int)(wiml * 0.5));
+                seekBar.setMax((int)(wiml * 0.2));
                 temp = (int)(wiml*0.1);
                 seekBar.setProgress(temp);
                 final_self = temp;
@@ -118,9 +111,18 @@ public class Weather_Setting_Dialog extends DialogFragment implements View.OnCli
                 textView4.setText(final_self + " ml");
                 textView_tot.setText(final_tot + " ");
                 break;
+            case R.id.imageButton2:
+                seekBar.setMax((int)(wiml * 0.2));
+                temp = (int)(wiml*0.05);
+                seekBar.setProgress(temp);
+                final_self = temp;
+                final_tot = totml- seml + temp;
+                textView4.setText(final_self + " ml");
+                textView_tot.setText(final_tot + " ");
+                break;
             case R.id.imageButton3:
-                seekBar.setMax((int)(wiml * 0.5));
-                temp = (int)(wiml*0.3);
+                seekBar.setMax((int)(wiml * 0.2));
+                temp = (int)(wiml*0.1);
                 seekBar.setProgress(temp);
                 final_self = temp;
                 final_tot = totml- seml + temp;
@@ -128,8 +130,8 @@ public class Weather_Setting_Dialog extends DialogFragment implements View.OnCli
                 textView_tot.setText(final_tot + " ");
                 break;
             case R.id.imageButton4:
-                seekBar.setMax((int)(wiml * 0.5));
-                temp = (int)(wiml * 0.5);
+                seekBar.setMax((int)(wiml * 0.2));
+                temp = (int)(wiml * 0.2);
                 seekBar.setProgress(temp);
                 final_self = temp;
                 final_tot = totml- seml + temp;

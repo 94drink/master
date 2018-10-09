@@ -2,15 +2,18 @@ package tw.com.justdrink.reminder;
 
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Binder;
 import android.os.IBinder;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.TextView;
 
+import tw.com.justdrink.MainActivity;
 import tw.com.justdrink.R;
 
 
@@ -47,7 +50,7 @@ public class AlarmService extends Service  {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        //final String connect = intent.getExtras().getString("connect");
+
         // 抓取
         Log.i("mylog","onStartCommand()");
         new Thread() {
@@ -60,9 +63,14 @@ public class AlarmService extends Service  {
                 NotificationManager notificationManager =
                         (NotificationManager)getApplicationContext()
                                 .getSystemService(NOTIFICATION_SERVICE);
+
                 //step3.透過Notifaction Builder來建構　notifaction
                 Notification.Builder builder =
                         new Notification.Builder(getApplicationContext());
+                builder.setVisibility(Notification.VISIBILITY_SECRET);
+                builder.setPriority(Notification.PRIORITY_HIGH);// 亦可帶入Notification.PRIORITY_MAX參數(2,1,0,-1,-2)優先順序從高至低
+                Notification notification = builder.build();
+
                 builder.setSmallIcon(R.mipmap.ic_drink_water) //通知服務圖片連結icon  statusbar上的icon
                         .setLargeIcon(BitmapFactory.decodeResource(getResources(),R.mipmap.ic_launcher))//LargIcon大圖示//顯示列圖示
                         .setContentTitle("該喝水囉!俊男美女")// 標題MainText
@@ -73,13 +81,22 @@ public class AlarmService extends Service  {
                         .setDefaults(Notification.DEFAULT_ALL) // 使用所有默認值，比如聲音，震動，閃屏等等
                         .setAutoCancel(true);
 
-                builder.setVisibility(Notification.VISIBILITY_SECRET);
-                builder.setPriority(Notification.PRIORITY_HIGH);// 亦可帶入Notification.PRIORITY_MAX參數
-                Notification notification = builder.build();
-                notificationManager.notify(nid , notification);// 把指定id到狀態條上(發送通知)
+                // 為您的應用中的活動創建明確的意圖
+                Intent resultIntent = new Intent(AlarmService.this,tw.com.justdrink.WelcomeActivity.class);
+
+                TaskStackBuilder stackBuilder = TaskStackBuilder.create(AlarmService.this); //建立TaskStackBuilder方法,藉此與提醒服務連接
+                // Adds the back stack for the Intent (but not the Intent itself)
+                stackBuilder.addParentStack(tw.com.justdrink.WelcomeActivity.class); //stackBuilder下的addParentStack方法連接Manifest name需要引導到的畫面
+                // Adds the Intent that starts the Activity to the top of the stack
+                stackBuilder.addNextIntent(resultIntent); //加入點擊之後的連接畫面
+                PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
+                builder.setContentIntent(resultPendingIntent);
+
+                notificationManager.notify(nid , builder.build());// 把指定id到狀態條上(發送通知) 原為notification　修正為 builder.build()
             }
 
         }.start();
+
 
         // 關閉服務
         stopSelf();
