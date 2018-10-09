@@ -1,4 +1,4 @@
-package tw.com.justdrink;
+package tw.com.justdrink.settings;
 
 import java.util.ArrayList;
 
@@ -17,6 +17,8 @@ import android.widget.TextView;
 import android.content.Context;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+
+import tw.com.justdrink.R;
 
 public class Setting extends Fragment{
     View v;

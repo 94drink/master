@@ -1,4 +1,4 @@
-package tw.com.justdrink;
+package tw.com.justdrink.settings;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import tw.com.justdrink.R;
 import tw.com.justdrink.database.WaterDbProvider;
 import tw.com.justdrink.dinrkreport.GetDates;
 

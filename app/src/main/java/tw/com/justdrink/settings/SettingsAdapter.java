@@ -1,4 +1,4 @@
-package tw.com.justdrink;
+package tw.com.justdrink.settings;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import tw.com.justdrink.R;
 
 
 public class SettingsAdapter extends BaseAdapter {

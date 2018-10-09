@@ -1,4 +1,4 @@
-package tw.com.justdrink;
+package tw.com.justdrink.settings;
 
 import android.content.ContentValues;
 import android.content.SharedPreferences;
@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import tw.com.justdrink.R;
 import tw.com.justdrink.database.WaterDBHelper;
 import tw.com.justdrink.database.WaterDbProvider;
 import tw.com.justdrink.dinrkreport.GetDates;

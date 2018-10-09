@@ -1,5 +1,4 @@
-package tw.com.justdrink;
-
+package tw.com.justdrink.settings;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -15,16 +14,15 @@ import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import tw.com.justdrink.R;
 import tw.com.justdrink.database.WaterDBHelper;
 import tw.com.justdrink.database.WaterDbProvider;
 import tw.com.justdrink.dinrkreport.GetDates;
 
-
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Sport_Setting_Dialog extends DialogFragment implements View.OnClickListener {
-
+public class Weather_Setting_Dialog extends DialogFragment implements View.OnClickListener {
     ImageButton imageButton1, imageButton2, imageButton3, imageButton4;
     TextView textView4, textView_tot;
     SeekBar seekBar;
@@ -35,6 +33,7 @@ public class Sport_Setting_Dialog extends DialogFragment implements View.OnClick
     GetDates getDates;
     int seml=0, totml=0, final_tot = 0, final_self = 0;
     float wiml=0;
+
     private void init() {
         ok = (Button) v.findViewById(R.id.btn_cancel);
         cancel = (Button) v.findViewById(R.id.btn_ok);
@@ -54,9 +53,9 @@ public class Sport_Setting_Dialog extends DialogFragment implements View.OnClick
         if(cursor_single.getCount() > 0) {
             cursor_single.moveToFirst();
             wiml = Float.parseFloat(cursor_single.getString(3));
-            seml = Integer.parseInt(cursor_single.getString(6));
+            seml = Integer.parseInt(cursor_single.getString(5));
             totml = Integer.parseInt(cursor_single.getString(7));
-            seekBar.setMax((int)(wiml * 0.4));
+            seekBar.setMax((int)(wiml * 0.2));
             seekBar.setProgress(seml);
             textView4.setText(seml + " ml");
             textView_tot.setText(totml + " ");
@@ -74,7 +73,7 @@ public class Sport_Setting_Dialog extends DialogFragment implements View.OnClick
             @Override
             public void onProgressChanged(SeekBar seekBar, int progresValue, boolean fromUser) {
                 // 当拖动条的滑块位置发生改变时触发该方法,在这里直接使用参数progress，即当前滑块代表的进度值
-                seekBar.setMax((int)(wiml * 0.4));
+                seekBar.setMax((int)(wiml * 0.2));
                 final_self = progresValue;
                 final_tot = totml - seml + progresValue;
                 textView4.setText(final_self + " ml");
@@ -92,7 +91,7 @@ public class Sport_Setting_Dialog extends DialogFragment implements View.OnClick
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        v=inflater.inflate(R.layout.fragment_sport_setting_dialog, container);
+        v=inflater.inflate(R.layout.fragment_weather_setting_dialog, container);
         init();
         setCancelable(true);
         return v;
@@ -105,15 +104,7 @@ public class Sport_Setting_Dialog extends DialogFragment implements View.OnClick
         int temp = 0;
         switch (view.getId()) {
             case R.id.imageButton1:
-                seekBar.setMax((int)(wiml * 0.4));
-                seekBar.setProgress(0);
-                final_self = 0;
-                final_tot = totml - seml;
-                textView4.setText(final_self + " ml");
-                textView_tot.setText(final_tot + " ");
-                break;
-            case R.id.imageButton2:
-                seekBar.setMax((int)(wiml * 0.4));
+                seekBar.setMax((int)(wiml * 0.2));
                 temp = (int)(wiml*0.1);
                 seekBar.setProgress(temp);
                 final_self = temp;
@@ -121,9 +112,18 @@ public class Sport_Setting_Dialog extends DialogFragment implements View.OnClick
                 textView4.setText(final_self + " ml");
                 textView_tot.setText(final_tot + " ");
                 break;
+            case R.id.imageButton2:
+                seekBar.setMax((int)(wiml * 0.2));
+                temp = (int)(wiml*0.05);
+                seekBar.setProgress(temp);
+                final_self = temp;
+                final_tot = totml- seml + temp;
+                textView4.setText(final_self + " ml");
+                textView_tot.setText(final_tot + " ");
+                break;
             case R.id.imageButton3:
-                seekBar.setMax((int)(wiml * 0.4));
-                temp = (int)(wiml*0.2);
+                seekBar.setMax((int)(wiml * 0.2));
+                temp = (int)(wiml*0.1);
                 seekBar.setProgress(temp);
                 final_self = temp;
                 final_tot = totml- seml + temp;
@@ -131,8 +131,8 @@ public class Sport_Setting_Dialog extends DialogFragment implements View.OnClick
                 textView_tot.setText(final_tot + " ");
                 break;
             case R.id.imageButton4:
-                seekBar.setMax((int)(wiml * 0.4));
-                temp = (int)(wiml * 0.4);
+                seekBar.setMax((int)(wiml * 0.2));
+                temp = (int)(wiml * 0.2);
                 seekBar.setProgress(temp);
                 final_self = temp;
                 final_tot = totml- seml + temp;
@@ -158,7 +158,7 @@ public class Sport_Setting_Dialog extends DialogFragment implements View.OnClick
                     cursor_single.moveToFirst();
                     String uid = "_id=" + cursor_single.getString(0);
 
-                    values.put(WaterDBHelper.KEY_SPML, final_self);
+                    values.put(WaterDBHelper.KEY_WEML, final_self);
                     values.put(WaterDBHelper.KEY_TOTML, final_tot);
                     int result = getActivity().getContentResolver().update(WaterDbProvider.CONTENT_URI_WEIGHT, values, uid, null);
                     //Toast.makeText(getActivity(), getString(R.string.set_ok) , Toast.LENGTH_SHORT).show();

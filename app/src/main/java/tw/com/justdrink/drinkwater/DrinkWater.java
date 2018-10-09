@@ -22,8 +22,8 @@ import java.util.Calendar;
 import java.util.TimeZone;
 
 import tw.com.justdrink.R;
-import tw.com.justdrink.WaterSettings;
-import tw.com.justdrink.Weight;
+import tw.com.justdrink.settings.WaterSettings;
+import tw.com.justdrink.settings.Weight;
 import tw.com.justdrink.database.WaterBottlesData;
 import tw.com.justdrink.database.WaterDBHelper;
 import tw.com.justdrink.database.WaterDbProvider;
