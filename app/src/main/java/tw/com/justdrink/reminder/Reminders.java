@@ -43,6 +43,8 @@ public class Reminders extends Fragment {
     ListView listView;
     Calendar calendar = Calendar.getInstance();
     PendingIntent pi;
+    PendingIntent pi1;
+    PendingIntent pi2;
     AlarmService alarmService ;
     Intent intent ;
     TextView timeset ;
@@ -93,26 +95,46 @@ public class Reminders extends Fragment {
 
         listView.setOnItemClickListener(
                 new AdapterView.OnItemClickListener(){
-                    public void onItemClick(AdapterView<?> vg, View view, int position, long id) {
+                    public void onItemClick(AdapterView<?> vg, View view, final int position, long id) {
                         //vg被點的母元件,也就是Listview//View 被點的item本身//position第幾個item被點到//item的id
                         //AlertDialog dialog = new AlertDialog.Builder(getActivity()).create();
-                        AlertDialog.Builder builder = new AlertDialog.Builder(context,1);
+                        final AlertDialog.Builder builder = new AlertDialog.Builder(context,1);
 
                         switch (position){
                             case 0:
-                                intent = new Intent (Reminders.this.getContext(),AlarmService.class);
-                                //建立PendingIntent
-                                pi = PendingIntent.getService(context,100,intent, PendingIntent.FLAG_UPDATE_CURRENT);
-                                //取得按下按鈕的時間為TimePickerDialog的預設值
-                                calendar.setTimeInMillis(System.currentTimeMillis());
-                                int hour = calendar.get(Calendar.HOUR_OF_DAY);
-                                int minute = calendar.get(Calendar.MINUTE);
 
-                                // 跳出TimePickerDialog來設定時間 */
-                                TimePickerDialog timePickerDialog = new TimePickerDialog(context ,
-                                        new MyOnTimeSetListener(),hour,minute , true);
-                                timePickerDialog.show();
+                                builder.setTitle(R.string.alarm_time)
+                                        .setSingleChoiceItems(R.array.time, 0, new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                calendar.setTimeInMillis(System.currentTimeMillis());
+                                                return;
+                                            }
+                                        })
+                                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                int hour = calendar.get(Calendar.HOUR_OF_DAY);
+                                                int minute = calendar.get(Calendar.MINUTE);
+                                                // 跳出TimePickerDialog來設定時間 */
+                                                TimePickerDialog timePickerDialog = new TimePickerDialog(context ,
+                                                        new MyOnTimeSetListener(),hour,minute , true);
+                                                timePickerDialog.show();
 
+                                                intent = new Intent (Reminders.this.getContext(),AlarmService.class);
+                                                //建立PendingIntent
+                                                pi1 = PendingIntent.getService(context,100,intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                                                return;
+                                            }
+                                        })
+                                        .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                return;
+                                            }
+                                        });
+
+                                builder.show();
                                 Log.i("setting","setting");
                                 break;
                             case 1 :
@@ -135,8 +157,13 @@ public class Reminders extends Fragment {
                                 break;
 
                             case 3 :
-                                Toast.makeText(context , "震動&靜音" ,
+                                Toast.makeText(context , "震動" ,
                                         Toast.LENGTH_SHORT).show();
+                                break;
+                            case 4 :
+                                Toast.makeText(context , "靜音" ,
+                                        Toast.LENGTH_SHORT).show();
+
                                 break;
                         }
                     }
@@ -165,16 +192,18 @@ public class Reminders extends Fragment {
             alarmManager.set(AlarmManager.RTC_WAKEUP,
                     calendar.getTimeInMillis() , pi);//設置首次呼叫
 
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),AlarmManager.INTERVAL_HOUR,pi);
+
             //設置每小時呼叫一次
             //type：闹钟类型，startTime：闹钟首次执行时间，intervalTime：闹钟两次执行的间隔时间，pi：闹钟响应动作
-
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),AlarmManager.INTERVAL_FIFTEEN_MINUTES,pi2);
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),AlarmManager.INTERVAL_HALF_HOUR,pi1);
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),AlarmManager.INTERVAL_HOUR,pi);
             String tmpS = format(hourOfDay) + ":" + format(minute);
             // 以Toast提示設定已完成
-            Toast.makeText(context , "設定鬧鐘時間為" + tmpS +"\n"+"每小時呼叫一次唷!",
+            Toast.makeText(context , "設定鬧鐘時間為" + tmpS +"\n",
                     Toast.LENGTH_SHORT).show();
              //要將抓到的時間顯示在timeText
-            timeset.setText( "現在時間為"+ tmpS +"\n" +"每小時喝一次");
+            timeset.setText( "現在時間為"+ tmpS +"\n" );
         }
     }
 

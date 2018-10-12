@@ -88,7 +88,14 @@
         <item>設置時間提醒</item>
         <item>取消時間提醒</item>
         <item>提醒音樂設置</item>
-        <item>震動＆靜音</item>
+        <item>震動</item>
+        <item>靜音</item>
+    </string-array>
+    <string name="alarm_time">選擇時間間距</string>>
+    <string-array name="time">
+        <item>每15分提醒一次</item>
+        <item>每30分提醒一次</item>
+        <item>每1小時提醒一次</item>
     </string-array>
     <string name="remove_alarm">移除鬧鐘</string>
     <string-array name="music">

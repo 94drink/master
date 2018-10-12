@@ -91,20 +91,15 @@ public class AlarmService extends Service  {
                 stackBuilder.addNextIntent(resultIntent); //加入點擊之後的連接畫面
                 PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
                 builder.setContentIntent(resultPendingIntent);
-
                 notificationManager.notify(nid , builder.build());// 把指定id到狀態條上(發送通知) 原為notification　修正為 builder.build()
+
             }
-
         }.start();
-
 
         // 關閉服務
         stopSelf();
-        //return Service.START_STICKY;
         return super.onStartCommand(intent, Service.START_REDELIVER_INTENT ,startId);
     }
-
-
 
     @Override
     public void onDestroy() {

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -62,6 +63,8 @@ public class BottleGrid extends Fragment {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 pos = position;
+                Toast.makeText(getActivity() , "longclick" ,
+                        Toast.LENGTH_SHORT).show();
                 return true;
             }
         });

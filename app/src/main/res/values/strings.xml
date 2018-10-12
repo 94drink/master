@@ -99,6 +99,11 @@
         <item>4</item>
         <item>5</item>>
     </string-array>
+    <string-array name="time">
+        <item>15mins</item>
+        <item>30mins</item>
+        <item>1hour</item>
+    </string-array>
 
     <!--關於App AboutApp字串 -->
     <string name="about_message1">【About App】</string>

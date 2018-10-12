@@ -13,6 +13,7 @@ public class RecyclerViewAdpater extends BaseAdapter {
     private Context context;
     String[] mReminderSettingTitles;
 
+
     public RecyclerViewAdpater(Context context){
         this.context = context ;
         mReminderSettingTitles = context.getResources().getStringArray(R.array.alarm);
@@ -32,6 +33,7 @@ public class RecyclerViewAdpater extends BaseAdapter {
     @Override
     public int getCount() {
         return mReminderSettingTitles.length;
+
     }
 
     @Override
