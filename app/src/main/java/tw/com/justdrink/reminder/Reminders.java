@@ -336,10 +336,10 @@ public class Reminders extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);//系統內建聲音
-        Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);//聲音的URI回傳值 至uri
-        RingtoneManager.getActualDefaultRingtoneUri(context,RingtoneManager.getDefaultType(uri));
+//        resultCode = 1;
+          Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);//系統內建聲音
+//        Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);//聲音的URI回傳值 至uri
+//        RingtoneManager.getActualDefaultRingtoneUri(context,RingtoneManager.getDefaultType(uri));
 
         //判斷按下取消以及確認之後
         if (resultCode != Activity.RESULT_OK) {//按下取消
@@ -357,7 +357,7 @@ public class Reminders extends Fragment {
 //                        Toast.makeText(context, notification + "",Toast.LENGTH_SHORT).show();
 //                        Toast.makeText(context, uri +"",Toast.LENGTH_SHORT).show();
                         Log.i("String","String"+ path);
-                        
+
                         return;
                     default:
                         break;
