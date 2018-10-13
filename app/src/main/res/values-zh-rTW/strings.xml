@@ -85,25 +85,23 @@
 
     <!--設定Fragment內的RecyclView物件-->
     <string-array name="alarm">
-        <item>設置時間提醒</item>
-        <item>取消時間提醒</item>
-        <item>提醒音樂設置</item>
-        <item>震動</item>
-        <item>靜音</item>
+        <item>設置提醒</item>
+        <item>取消提醒</item>
+        <item>音樂設置</item>
+        <item>音量調整</item>
     </string-array>
-    <string name="alarm_time">選擇時間間距</string>>
+    <string name="alarm_time">忘記喝水嗎？選擇提醒時間囉</string>
     <string-array name="time">
-        <item>每15分提醒一次</item>
-        <item>每30分提醒一次</item>
-        <item>每1小時提醒一次</item>
+        <item>每15分</item>
+        <item>每30分</item>
+        <item>每小時</item>
     </string-array>
     <string name="remove_alarm">移除鬧鐘</string>
-    <string-array name="music">
-        <item>Blues 藍調</item>
-        <item>Classical 古典音樂</item>
-        <item>Country 鄉村音樂</item>
-        <item>WhatEver 隨時喝</item>
-        <item>Folk 民謠音樂</item>
+    <string name="voiceTitle">選擇模式</string>
+    <string-array name= "voiceSetting">
+        <item>正常模式</item>
+        <item>震動模式</item>
+        <item>靜音模式</item>
     </string-array>
 
     <!--關於App About App字串 -->

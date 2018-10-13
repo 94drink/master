@@ -97,12 +97,17 @@
         <item>2</item>
         <item>3</item>
         <item>4</item>
-        <item>5</item>>
     </string-array>
     <string-array name="time">
         <item>15mins</item>
         <item>30mins</item>
         <item>1hour</item>
+    </string-array>
+    <string name="voiceTitle">選擇模式</string>
+    <string-array name= "voiceSetting">
+        <item>normal</item>
+        <item>Vibrate</item>
+        <item>Mute</item>
     </string-array>
 
     <!--關於App AboutApp字串 -->

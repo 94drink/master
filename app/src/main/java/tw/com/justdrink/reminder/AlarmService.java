@@ -6,6 +6,9 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.v4.app.TaskStackBuilder;
@@ -71,17 +74,21 @@ public class AlarmService extends Service  {
                 builder.setPriority(Notification.PRIORITY_HIGH);// 亦可帶入Notification.PRIORITY_MAX參數(2,1,0,-1,-2)優先順序從高至低
                 Notification notification = builder.build();
 
+//                Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
+                Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                builder.setSound(alarmSound);
+//                RingtoneManager.getRingtone(getActivity(), Uri.parse("uri")).play();
                 builder.setSmallIcon(R.mipmap.ic_drink_water) //通知服務圖片連結icon  statusbar上的icon
                         .setLargeIcon(BitmapFactory.decodeResource(getResources(),R.mipmap.ic_launcher))//LargIcon大圖示//顯示列圖示
                         .setContentTitle("該喝水囉!俊男美女")// 標題MainText
                         .setContentText("立即點下即刻補充.....水份") //內文/副標題
                         .setContentInfo("目前時間")             //顯示欄右下文字
                         .setColor((ContextCompat.getColor(getApplicationContext(),R.color.lightblue)))//小圈圈顏色
-                        .setWhen(System.currentTimeMillis())// 設置時間發生時間
-                        .setDefaults(Notification.DEFAULT_ALL) // 使用所有默認值，比如聲音，震動，閃屏等等
+                        .setWhen(System.currentTimeMillis())// 設置時間發生時間 .setDefaults(Notification.DEFAULT_ALL) // 使用所有默認值，比如聲音，震動，閃屏等等
+
                         .setAutoCancel(true);
 
-                // 為您的應用中的活動創建明確的意圖
+                // 為您的應用中的活動創建明確的意圖 點下通知列會連結至歡迎畫面
                 Intent resultIntent = new Intent(AlarmService.this,tw.com.justdrink.WelcomeActivity.class);
 
                 TaskStackBuilder stackBuilder = TaskStackBuilder.create(AlarmService.this); //建立TaskStackBuilder方法,藉此與提醒服務連接
@@ -92,7 +99,13 @@ public class AlarmService extends Service  {
                 PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
                 builder.setContentIntent(resultPendingIntent);
                 notificationManager.notify(nid , builder.build());// 把指定id到狀態條上(發送通知) 原為notification　修正為 builder.build()
-
+                try {
+                    Uri ring_uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                    Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), ring_uri);
+                    r.play();
+                } catch (Exception e) {
+                    // Error playing sound
+                }
             }
         }.start();
 
@@ -106,5 +119,7 @@ public class AlarmService extends Service  {
         Log.i("mylog","onDestroy()");
         super.onDestroy();
     }
+
+
 }
 
