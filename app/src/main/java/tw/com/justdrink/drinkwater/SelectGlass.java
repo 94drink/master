@@ -140,6 +140,7 @@ public class SelectGlass extends DialogFragment {
                         FragmentManager fm = getFragmentManager();
                         FragmentTransaction ft = fm.beginTransaction();
                         ft.replace(R.id.bottle_container, fragment).addToBackStack(null).commit();
+                        DrinkWater.checkAchieveGoal();
                         dialog.dismiss();
 
                     }

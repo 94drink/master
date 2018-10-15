@@ -2,6 +2,8 @@ package tw.com.justdrink.drinkwater;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,6 +11,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -35,24 +39,21 @@ import tw.com.justdrink.database.WaterDbProvider;
 public class DrinkWater extends Fragment {
 
     public FloatingActionButton fabAdd, fabSelect;
-    String time, date;
     Button waterSetting;
     public static ProgressBar progressBar;
     public static TextView drinked, goal;
-    public static String weight = "weight";
-    int drink_target, is_drinked;
+    public static int drink_target, is_drinked;
     static Context context;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        context = getActivity();
-
         View view = inflater.inflate(R.layout.fragment_drinkwater, container, false);
 
         drinked = (TextView) view.findViewById(R.id.drinked);
         goal = (TextView) view.findViewById(R.id.goal);
         waterSetting = (Button) view.findViewById(R.id.water_setting);
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+        context = getActivity();
 
         final FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
@@ -113,6 +114,7 @@ public class DrinkWater extends Fragment {
                 Uri newUri = getActivity().getContentResolver().insert(uri, values);
                 progressBar.incrementProgressBy(ml);
                 drinked.setText("" + getDrinkedByDate(getTime("date")));
+                checkAchieveGoal();
                 Fragment fragment = new BottleGrid();
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
@@ -146,7 +148,7 @@ public class DrinkWater extends Fragment {
             int drink_target = weight_cursor.getInt(weight_cursor.getColumnIndex("totml"));
             progressBar.setMax(drink_target);
 
-            Log.e("drink_target", "" + drink_target);
+            //Log.e("drink_target", "" + drink_target);
             return drink_target;
         } else {
             int tmp_weight = 0, tmp_total = 0;
@@ -175,7 +177,7 @@ public class DrinkWater extends Fragment {
         }
     }
 
-    private String getTime(String type) {
+    private static String getTime(String type) {
         Calendar c = Calendar.getInstance();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
@@ -188,6 +190,41 @@ public class DrinkWater extends Fragment {
             res = df.format(c.getTime());
         }
         return res;
+    }
+
+    //檢查是否已達成當日喝水目標
+    public static void checkAchieveGoal() {
+        String date = getTime("date");
+        is_drinked = getDrinkedByDate(date);
+        drink_target = getWeightByDate(date);
+        //Log.e("checkAchieveGoal", "is_drinked:" + is_drinked + ", drink_target:"  + drink_target);
+
+        if (is_drinked >= drink_target) {
+            String achieveDate = "achieveDate", achieve_prefs;
+            SharedPreferences sharedDataAchieve;
+
+            sharedDataAchieve = context.getSharedPreferences(achieveDate, 0);
+            achieve_prefs = sharedDataAchieve.getString("achieveDate", "");
+            //Log.e("checkAchieveGoal", "achieve_prefs: " + achieve_prefs + ", date: "  + date);
+
+            //檢查是否已寫入過SharedPreferences
+            if (achieve_prefs == "" || !achieve_prefs.equals(date)) {
+                //寫入SharedPreferences
+                SharedPreferences.Editor editor = sharedDataAchieve.edit();
+                editor.putString("achieveDate", date);
+                editor.commit();
+
+                //show Dialog
+                new AlertDialog.Builder(context)
+                        .setMessage("您已達成本日喝水目標！")
+                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        })
+                        .show();
+            }
+        }
     }
 }
 
