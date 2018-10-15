@@ -45,13 +45,6 @@ public class DrinkWater extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        Calendar c = Calendar.getInstance();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-        sdf.setTimeZone(TimeZone.getTimeZone("Asia/Taipei"));
-        time = sdf.format(c.getTime());
-        date = df.format(c.getTime());
         context = getActivity();
 
         View view = inflater.inflate(R.layout.fragment_drinkwater, container, false);
@@ -67,7 +60,7 @@ public class DrinkWater extends Fragment {
         ft.replace(R.id.bottle_container, fragment).commit();
 
         // 目標總水量
-        drink_target = getWeightByDate(date);
+        drink_target = getWeightByDate(getTime("date"));
         if (drink_target == 0) {
             Weight weight = new Weight();
             Bundle bundle = new Bundle();
@@ -79,7 +72,7 @@ public class DrinkWater extends Fragment {
         progressBar.setMax(drink_target);
 
         // 單日已喝總水量
-        is_drinked = getDrinkedByDate(date);
+        is_drinked = getDrinkedByDate(getTime("date"));
         drinked.setText("" + is_drinked);
         progressBar.setProgress(is_drinked);
 
@@ -114,12 +107,12 @@ public class DrinkWater extends Fragment {
                 int ml = Integer.parseInt(WaterBottlesData.getData().get(SelectGlass.position).title);
                 values.put(WaterDBHelper.KEY_POS, pos);
                 values.put(WaterDBHelper.KEY_ML, ml);
-                values.put(WaterDBHelper.KEY_DATE, date);
-                values.put(WaterDBHelper.KEY_TIME, time);
+                values.put(WaterDBHelper.KEY_DATE, getTime("date"));
+                values.put(WaterDBHelper.KEY_TIME, getTime("time"));
                 Uri uri = WaterDbProvider.CONTENT_URI_WATER;
                 Uri newUri = getActivity().getContentResolver().insert(uri, values);
                 progressBar.incrementProgressBy(ml);
-                drinked.setText("" + getDrinkedByDate(date));
+                drinked.setText("" + getDrinkedByDate(getTime("date")));
                 Fragment fragment = new BottleGrid();
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
@@ -180,6 +173,21 @@ public class DrinkWater extends Fragment {
             Log.e("tmp_weight", "" + tmp_weight + ", tmp_total: " + tmp_total);
             return tmp_total;
         }
+    }
+
+    private String getTime(String type) {
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        sdf.setTimeZone(TimeZone.getTimeZone("Asia/Taipei"));
+
+        String res;
+        if (type == "time") {
+            res = sdf.format(c.getTime());
+        } else {
+            res = df.format(c.getTime());
+        }
+        return res;
     }
 }
 
