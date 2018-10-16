@@ -21,6 +21,7 @@ import tw.com.justdrink.R;
 
 
 public class AlarmService extends Service  {
+    String newAlarmSound ;
 
     public Binder mBinder = new Binder(); //透過Binder來做連接Class
     TextView timechange;
@@ -74,9 +75,12 @@ public class AlarmService extends Service  {
                 builder.setPriority(Notification.PRIORITY_HIGH);// 亦可帶入Notification.PRIORITY_MAX參數(2,1,0,-1,-2)優先順序從高至低
                 Notification notification = builder.build();
 
-//                Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
-                Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-                builder.setSound(alarmSound);
+
+//              Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
+//                Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+//                newAlarmSound = alarmSound.getPath().toString();
+//                Uri uri = Uri.parse((newAlarmSound));
+
 //                RingtoneManager.getRingtone(getActivity(), Uri.parse("uri")).play();
                 builder.setSmallIcon(R.mipmap.ic_drink_water) //通知服務圖片連結icon  statusbar上的icon
                         .setLargeIcon(BitmapFactory.decodeResource(getResources(),R.mipmap.ic_launcher))//LargIcon大圖示//顯示列圖示
@@ -85,8 +89,9 @@ public class AlarmService extends Service  {
                         .setContentInfo("目前時間")             //顯示欄右下文字
                         .setColor((ContextCompat.getColor(getApplicationContext(),R.color.lightblue)))//小圈圈顏色
                         .setWhen(System.currentTimeMillis())// 設置時間發生時間 .setDefaults(Notification.DEFAULT_ALL) // 使用所有默認值，比如聲音，震動，閃屏等等
-
                         .setAutoCancel(true);
+
+
 
                 // 為您的應用中的活動創建明確的意圖 點下通知列會連結至歡迎畫面
                 Intent resultIntent = new Intent(AlarmService.this,tw.com.justdrink.WelcomeActivity.class);

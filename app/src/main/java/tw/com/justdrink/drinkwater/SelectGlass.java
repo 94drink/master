@@ -21,6 +21,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -143,8 +144,11 @@ public class SelectGlass extends DialogFragment {
                         DrinkWater.checkAchieveGoal();
                         dialog.dismiss();
 
+                        Toast.makeText(getContext() , "longclick" ,
+                                Toast.LENGTH_SHORT).show();
                     }
                 });
+
                 imageView = (ImageView) itemView.findViewById(R.id.image_row);
                 textView = (TextView) itemView.findViewById(R.id.title_row);
             }

@@ -58,12 +58,11 @@ public class BottleGrid extends Fragment {
         gridView.invalidateViews();
         gridView.setSelection(gridView.getAdapter().getCount() - 1);
 
-        final FragmentManager fm = getFragmentManager();
         gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 pos = position;
-                Toast.makeText(getActivity() , "longclick" ,
+                Toast.makeText(getContext() , "longclick" ,
                         Toast.LENGTH_SHORT).show();
                 return true;
             }

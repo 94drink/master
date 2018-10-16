@@ -1,5 +1,6 @@
 package tw.com.justdrink.reminder;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
@@ -15,16 +16,21 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.UriMatcher;
+import android.content.pm.PackageManager;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Vibrator;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
+import android.support.annotation.RequiresPermission;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,6 +71,7 @@ public class Reminders extends Fragment {
     String path ;
     private static final int Ringtone = 0;
     AudioManager audioManager ;
+    String uriIndex ;
 
     //連接Service 的Function
     private ServiceConnection mConnection = new ServiceConnection() {
@@ -208,17 +215,22 @@ public class Reminders extends Fragment {
                                 timeset.setText("");
                                 break;
                             case 2:
-                                //建立內建的音樂選擇器 -- 可用於來電鈴聲.通知聲等
-                                Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);//內建系統鈴聲設置
-                                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "選擇提示聲:");//設置內建標題
-                                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, false);//是否顯示沉默的項目 .否
-                                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true);//是否顯示預設的項目 是
-                                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_INCLUDE_DRM, false);//靜音選項 否
-                                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_NOTIFICATION); //選擇器內的鈴聲類型. 可選擇來電聲.或通知聲
-                                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI,RingtoneManager.getActualDefaultRingtoneUri(getActivity(),RingtoneManager.TYPE_RINGTONE));
-                                //intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI,RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
-                                startActivityForResult(intent, Ringtone);//這邊採startActivityForResult來跳轉，０代表一個根據，可寫其他的值　但一定要>=0
 
+                                //建立內建的音樂選擇器 -- 可用於來電鈴聲.通知聲等
+                                Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);//系統設置的音樂
+                                alarmSound.getPath().toString();
+                                Log.i("alarmSound","    "+alarmSound);
+
+                                    Intent intent = new Intent(Settings.ACTION_SOUND_SETTINGS);
+                                    //Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);//內建系統鈴聲設置
+                                    intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "選擇提示聲:");//設置內建標題 |原為聲音選擇器
+                                    intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, false);//是否顯示沉默的項目 .否
+                                    intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true);//是否顯示預設的項目 是
+                                    intent.putExtra(RingtoneManager.EXTRA_RINGTONE_INCLUDE_DRM, false);//靜音選項 否
+                                    intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_NOTIFICATION); //選擇器內的鈴聲類型. 可選擇來電聲.或通知聲
+                                    intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, RingtoneManager.getActualDefaultRingtoneUri(getContext(), RingtoneManager.TYPE_NOTIFICATION));
+
+                                    startActivityForResult(intent, Ringtone);//這邊採startActivityForResult來跳轉，０代表一個根據，可寫其他的值　但一定要>=0
                                 break;
 
                             case 3:
@@ -253,7 +265,7 @@ public class Reminders extends Fragment {
                                                     }else if(voiceType == 1){
                                                         audioManager.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
                                                         vib.vibrate(500);
-                                                        Toast.makeText(context, "Vrbrate/震動開啟",
+                                                        Toast.makeText(context, "Vibrate/震動開啟",
                                                                 Toast.LENGTH_SHORT).show();
                                                     }else if(voiceType == 2){
                                                         audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
@@ -306,8 +318,7 @@ public class Reminders extends Fragment {
             alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_HOUR, pi);            //1hour   1次
             String tmpS = format(hourOfDay) + ":" + format(minute);
             // 以Toast提示設定已完成
-//            Toast.makeText(context, "設定鬧鐘時間為" + tmpS ,
-//                    Toast.LENGTH_SHORT).show();
+
             //要將抓到的時間顯示在timeText
             if(timeNumber==0) {
                 timeset.setText("現在時間為" + tmpS + "\n" +"15分鐘提醒一次");
@@ -332,36 +343,31 @@ public class Reminders extends Fragment {
         this.context = context;
     }
 
+
     //默認聲音選完會調用至onActivityResult方法
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-//        resultCode = 1;
+//        Settings.System.canWrite(context)
+
           Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);//系統內建聲音
-//        Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);//聲音的URI回傳值 至uri
-//        RingtoneManager.getActualDefaultRingtoneUri(context,RingtoneManager.getDefaultType(uri));
 
         //判斷按下取消以及確認之後
         if (resultCode != Activity.RESULT_OK) {//按下取消
             Toast.makeText(context, "取消",Toast.LENGTH_SHORT).show();
-
             return;
         } else if (notification != null)
         {
            switch (requestCode)
            {
                     case Ringtone:
-//                        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,voiceType,0);
-//                        MediaPlayer player = MediaPlayer.create(getContext(),uri);
-//                        player.start();
-//                        Toast.makeText(context, notification + "",Toast.LENGTH_SHORT).show();
-//                        Toast.makeText(context, uri +"",Toast.LENGTH_SHORT).show();
-                        Log.i("String","String"+ path);
-
+                        Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);//獲取選擇的音樂
+                        Toast.makeText(context, "設定成功" ,Toast.LENGTH_SHORT).show();
+                        RingtoneManager.setActualDefaultRingtoneUri(getContext(),RingtoneManager.TYPE_RINGTONE,uri);
                         return;
                     default:
                         break;
-                 }
+                     }
                 }
             }
 

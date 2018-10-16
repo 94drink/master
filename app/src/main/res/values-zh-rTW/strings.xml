@@ -87,7 +87,7 @@
     <string-array name="alarm">
         <item>設置提醒</item>
         <item>取消提醒</item>
-        <item>音樂設置</item>
+        <item>音效通知</item>
         <item>音量調整</item>
     </string-array>
     <string name="alarm_time">忘記喝水嗎？選擇提醒時間囉</string>
