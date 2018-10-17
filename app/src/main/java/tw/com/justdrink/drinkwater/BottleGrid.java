@@ -62,8 +62,7 @@ public class BottleGrid extends Fragment {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 pos = position;
-                Toast.makeText(getContext() , "longclick" ,
-                        Toast.LENGTH_SHORT).show();
+
                 return true;
             }
         });

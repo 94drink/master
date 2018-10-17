@@ -144,8 +144,6 @@ public class SelectGlass extends DialogFragment {
                         DrinkWater.checkAchieveGoal();
                         dialog.dismiss();
 
-                        Toast.makeText(getContext() , "longclick" ,
-                                Toast.LENGTH_SHORT).show();
                     }
                 });
 
