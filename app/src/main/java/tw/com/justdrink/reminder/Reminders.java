@@ -217,8 +217,8 @@ public class Reminders extends Fragment {
                                 alarmSound.getPath().toString();
                                 Log.i("alarmSound","    "+alarmSound);
 
-                                    Intent intent = new Intent(Settings.ACTION_SOUND_SETTINGS);//利用Intent建立　內建音效設定選單
-                                    //Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);//內建系統鈴聲設置
+                                    //Intent intent = new Intent(Settings.ACTION_SOUND_SETTINGS);//利用Intent建立　內建音效設定選單
+                                    Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);//內建系統鈴聲設置
                                     intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "選擇提示聲:");//設置內建標題 |原為聲音選擇器
                                     intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, false);//是否顯示沉默的項目 .否
                                     intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true);//是否顯示預設的項目 是
@@ -356,15 +356,13 @@ public class Reminders extends Fragment {
                     case Ringtone:
                         Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);//獲取選擇的音樂
                         Toast.makeText(context, "設定成功" ,Toast.LENGTH_SHORT).show();
-                        RingtoneManager.setActualDefaultRingtoneUri(getContext(),RingtoneManager.TYPE_RINGTONE,uri);
+                        RingtoneManager.setActualDefaultRingtoneUri(getContext(),RingtoneManager.TYPE_NOTIFICATION,uri);
                         return;
                     default:
                         break;
                      }
                 }
             }
-
-
 
         }
 
