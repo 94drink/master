@@ -65,13 +65,12 @@ public class Reminders extends Fragment {
     AlarmService alarmService;
     Intent intent;
     TextView timeset;
-    int timeNumber = 0 ;
-    int voiceType = 0 ;
+    int timeNumber = 0 ;//設定時間次數變數
+    int voiceType = 0 ; //模式的變數
     Vibrator vib;
-    String path ;
     private static final int Ringtone = 0;
     AudioManager audioManager ;
-    String uriIndex ;
+
 
     //連接Service 的Function
     private ServiceConnection mConnection = new ServiceConnection() {
@@ -81,7 +80,6 @@ public class Reminders extends Fragment {
             AlarmService.MyBinder mBinder = aService.new MyBinder(); //建立AlarmService的Binder
             alarmService = mBinder.getService();//將Binder內的getService方法放進alarmService
         }
-
         @Override
         public void onServiceDisconnected(ComponentName componentName) {
             alarmService = null;
@@ -117,7 +115,6 @@ public class Reminders extends Fragment {
                     }
                 } //new OntemSelectedListener
         );
-
 
         listView.setOnItemClickListener(
                 new AdapterView.OnItemClickListener() {
@@ -215,13 +212,12 @@ public class Reminders extends Fragment {
                                 timeset.setText("");
                                 break;
                             case 2:
-
                                 //建立內建的音樂選擇器 -- 可用於來電鈴聲.通知聲等
                                 Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);//系統設置的音樂
                                 alarmSound.getPath().toString();
                                 Log.i("alarmSound","    "+alarmSound);
 
-                                    Intent intent = new Intent(Settings.ACTION_SOUND_SETTINGS);
+                                    Intent intent = new Intent(Settings.ACTION_SOUND_SETTINGS);//利用Intent建立　內建音效設定選單
                                     //Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);//內建系統鈴聲設置
                                     intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "選擇提示聲:");//設置內建標題 |原為聲音選擇器
                                     intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, false);//是否顯示沉默的項目 .否
@@ -312,9 +308,9 @@ public class Reminders extends Fragment {
                     calendar.getTimeInMillis(), pi);//設置首次呼叫
 
             //設置每小時呼叫一次
-            //type：鬧鐘類型，startTime：鬧鐘首次執行時間，intervalTime：鬧鐘執行的間隔時間，pi：闹钟响应动作
+            //type：鬧鐘類型，startTime：鬧鐘首次執行時間，intervalTime：鬧鐘執行的間隔時間，pi：鬧鐘提示的傳遞參數
             alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_FIFTEEN_MINUTES, pi2);//每15min 1 次
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_HALF_HOUR, pi1);     //30min   1 次
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_HALF_HOUR, pi1);      //30min   1 次
             alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_HOUR, pi);            //1hour   1次
             String tmpS = format(hourOfDay) + ":" + format(minute);
             // 以Toast提示設定已完成
@@ -336,29 +332,26 @@ public class Reminders extends Fragment {
         return (s.length() == 1) ? "0" + s : s;
     }
 
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         this.context = context;
     }
 
-
     //默認聲音選完會調用至onActivityResult方法
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-//        Settings.System.canWrite(context)
+        //Settings.System.canWrite(context)
 
           Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);//系統內建聲音
-
-        //判斷按下取消以及確認之後
+        //判斷按下取消以及確認or取消後
         if (resultCode != Activity.RESULT_OK) {//按下取消
             Toast.makeText(context, "取消",Toast.LENGTH_SHORT).show();
             return;
         } else if (notification != null)
         {
-           switch (requestCode)
+           switch (requestCode)//點下確認
            {
                     case Ringtone:
                         Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);//獲取選擇的音樂
